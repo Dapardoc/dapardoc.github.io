@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio Interactiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #334155;
+        }
+        .container-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .header {
+            background-color: #6366f1;
+            color: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .section-card {
+            background-color: #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .subject-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #4338ca;
+            cursor: pointer;
+        }
+        .topic-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e40af;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .content {
+            display: none;
+            padding: 1rem 0;
+        }
+        .content.active {
+            display: block;
+        }
+        .explanation {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .problem-container {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .problem-solution {
+            background-color: #f0f9ff;
+            border-left: 4px solid #06b6d4;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .tips {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .question-card {
+            background-color: #fce7f3;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #ec4899;
+        }
+        .question-card p {
+            font-weight: 700;
+        }
+        .question-card button {
+            background-color: #9333ea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .correct-answer {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="container-main">
+        <div class="header">
+            <h1>📚 Guía de Estudio 🚀</h1>
+            <p class="mt-2 text-xl font-medium">¡Aprende y diviértete!</p>
+            <p class="mt-2 text-xl font-medium">¡Te quiero muchisimo BIGOTICO! 😎</p>
+            <p class="mt-2 text-xl font-medium">¡No olvides que si tienes dudas puedes preguntar SIEMPRE! 🐒</p>
+        </div>
+
+        <div class="flex flex-col space-y-8">
+
+            <!-- Matemáticas Fundamentales -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('matematicas')">1. Matemáticas Fundamentales ➕➖✖️➗</h2>
+                <div id="matematicas" class="content">
+
+                    <!-- Tema: Números y operaciones -->
+                    <h3 class="topic-title" onclick="toggleContent('numeros-operaciones')">Números y operaciones</h3>
+                    <div id="numeros-operaciones" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                <strong>Números Naturales, Pares e Impares:</strong> Los números naturales son aquellos que usamos para contar y ordenar las cosas. Son el 1, 2, 3, 4, 5, 6, y así sucesivamente hasta el infinito. No incluyen números negativos ni decimales. Dentro de los números naturales, tenemos dos grupos especiales: los números pares y los impares. Los números pares son aquellos que se pueden dividir exactamente por 2, sin que sobre nada. Por ejemplo, 2, 4, 6, 8, 10... siempre terminan en 0, 2, 4, 6, u 8. Imagina que tienes 6 galletas, puedes darle 3 a tu amigo y 3 a tu amiga, ¡se dividen en partes iguales! Por otro lado, los números impares son aquellos que no se pueden dividir exactamente por 2. Si intentas dividirlos, siempre sobra 1. Por ejemplo, 1, 3, 5, 7, 9... siempre terminan en 1, 3, 5, 7, o 9. Si tienes 5 galletas, puedes darle 2 a cada amigo, ¡pero te sobra una! Entender la diferencia entre pares e impares es la base para muchas otras operaciones y conceptos en matemáticas.
+                            </p>
+                            <p class="mt-4">
+                                <strong>Valor posicional y comparación de números:</strong> Cada dígito en un número tiene un valor especial que depende del lugar que ocupa. Este es el valor posicional. Por ejemplo, en el número 235, el 5 está en la posición de las unidades, el 3 en la de las decenas y el 2 en la de las centenas. Esto significa que el 5 vale 5, el 3 vale 30 y el 2 vale 200. Sabiendo esto, es mucho más fácil comparar números. Para comparar, siempre empezamos por el dígito que está más a la izquierda, que es el de mayor valor posicional. Si los dígitos de la izquierda son iguales, pasamos al siguiente, y así sucesivamente. Por ejemplo, para comparar 456 y 458, el 4 es igual, el 5 es igual, pero el 8 es mayor que el 6, por lo tanto, 458 es mayor que 456.
+                            </p>
+                            <p class="mt-4">
+                                <strong>Suma, resta, multiplicación y división:</strong> Estas son las cuatro operaciones matemáticas básicas. La suma es la operación de combinar o añadir dos o más cantidades. Es como si tuvieras 2 manzanas y te dan 3 más, ahora tienes 5. La resta es lo opuesto a la suma, es quitar una cantidad de otra. Si tienes 5 manzanas y te comes 2, te quedan 3. La multiplicación es una forma rápida de sumar. En lugar de sumar 3 + 3 + 3 + 3, puedes multiplicar 3 por 4, que es 12. Es como si tuvieras 4 grupos de 3 manzanas cada uno, en total tienes 12. Y la división es la operación de repartir una cantidad en partes iguales. Si tienes 12 galletas y las repartes entre 4 amigos, a cada uno le tocan 3. Es el opuesto a la multiplicación. Cada una de estas operaciones tiene sus propias reglas y son la base de casi todo lo que hacemos en matemáticas. Entenderlas bien es como aprender a caminar antes de correr.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/4pB_ki1EmNc" title="OPERACIONES BASICAS (Suma, resta, multiplicación y division) Super facil - Para principiantes." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/Ir-dcsEoUfs" title="Reto viral  - JERARQUÍA DE LAS OPERACIONES" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Juan tiene 15 canicas. Su amigo le regala 8 más. ¿Cuántas canicas tiene ahora Juan?</p>
+                                <p><strong>Solución:</strong> Es una suma. 15 + 8 = 23. Juan tiene 23 canicas.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> En la clase de Laura hay 24 estudiantes. Si la profesora los divide en 4 grupos iguales para un juego, ¿cuántos estudiantes hay en cada grupo?</p>
+                                <p><strong>Solución:</strong> Es una división. 24 ÷ 4 = 6. Hay 6 estudiantes en cada grupo.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Un bus viaja a 60 kilómetros por hora. Si el viaje dura 3 horas, ¿cuántos kilómetros recorre el bus?</p>
+                                <p><strong>Solución:</strong> Es una multiplicación. 60 x 3 = 180. El bus recorre 180 kilómetros.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Suma y resta para niños</li>
+                                <li>Videos: Aprende a multiplicar y dividir</li>
+                                <li>Videos: Valor posicional de números</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>1. ¿Cuál de los siguientes números es impar?</p>
+                                <button onclick="toggleAnswer('q1-answer')">A) 12</button>
+                                <button onclick="toggleAnswer('q1-answer')">B) 24</button>
+                                <button onclick="toggleAnswer('q1-answer')">C) 37</button>
+                                <button onclick="toggleAnswer('q1-answer')">D) 40</button>
+                                <div id="q1-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) 37</strong><br>
+                                    <strong>Explicación:</strong> Los números impares son aquellos que no pueden dividirse de manera exacta entre 2. El número 37 termina en 7, que es un dígito impar, por lo tanto, 37 es un número impar.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>2. En el número 584, el valor posicional del dígito 8 es:</p>
+                                <button onclick="toggleAnswer('q2-answer')">A) 8 unidades</button>
+                                <button onclick="toggleAnswer('q2-answer')">B) 8 decenas</button>
+                                <button onclick="toggleAnswer('q2-answer')">C) 800 unidades</button>
+                                <button onclick="toggleAnswer('q2-answer')">D) 8 centenas</button>
+                                <div id="q2-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) 8 decenas</strong><br>
+                                    <strong>Explicación:</strong> En el número 584, el dígito 4 está en la posición de las unidades, el dígito 8 en la posición de las decenas y el dígito 5 en la posición de las centenas. Por lo tanto, el valor posicional del 8 es 8 decenas.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tema: Fracciones y decimales -->
+                    <h3 class="topic-title" onclick="toggleContent('fracciones-decimales')">Fracciones y decimales</h3>
+                    <div id="fracciones-decimales" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                <strong>Representación y equivalencias:</strong> Una fracción es una forma de representar una parte de un todo. Imagina que tienes una pizza dividida en 4 pedazos iguales. Si te comes 1 pedazo, te has comido 1/4 (un cuarto) de la pizza. El número de arriba de la fracción se llama <strong>numerador</strong> y nos dice cuántas partes tenemos. El número de abajo se llama <strong>denominador</strong> y nos dice en cuántas partes iguales se dividió el todo. Las fracciones equivalentes son fracciones que representan la misma cantidad, aunque se escriban con números diferentes. Por ejemplo, 1/2 es lo mismo que 2/4 y que 4/8. Si tienes una pizza y te comes la mitad (1/2), es lo mismo que si la divides en 4 y te comes 2 pedazos (2/4).
+                            </p>
+                            <p class="mt-4">
+                                Los <strong>decimales</strong> son otra forma de representar partes de un todo, pero en base 10. Son números que tienen una coma o un punto decimal. Por ejemplo, 0.5 es un decimal. La parte a la izquierda de la coma es la parte entera y la parte a la derecha es la parte fraccionaria. El primer dígito después de la coma representa las décimas (partes de 10), el segundo las centésimas (partes de 100), y así sucesivamente. Para convertir una fracción a un decimal, solo necesitas dividir el numerador por el denominador. Por ejemplo, 1/2 es 1 dividido por 2, que es 0.5. Esto nos ayuda a entender que fracciones y decimales son dos caras de la misma moneda.
+                            </p>
+                            <p class="mt-4">
+                                <strong>Operaciones básicas:</strong> Para <strong>sumar y restar fracciones</strong> con el mismo denominador, solo sumas o restas los numeradores y el denominador se queda igual. Por ejemplo, 1/4 + 2/4 = 3/4. Para fracciones con denominadores diferentes, necesitas encontrar un denominador común. Esto lo haces buscando un múltiplo común de ambos denominadores y ajustando los numeradores. Para <strong>multiplicar fracciones</strong>, multiplicas los numeradores entre sí y los denominadores entre sí. Por ejemplo, 1/2 x 1/4 = 1/8. Para <strong>dividir fracciones</strong>, inviertes la segunda fracción (el divisor) y luego multiplicas.
+                            </p>
+                            <p class="mt-4">
+                                Las operaciones con decimales son muy parecidas a las operaciones con números enteros. Cuando <strong>sumas o restas decimales</strong>, es crucial alinear la coma decimal. Por ejemplo, para sumar 2.5 y 1.25, los escribes uno debajo del otro de forma que la coma esté en la misma columna. La <strong>multiplicación de decimales</strong> es como multiplicar números enteros, y luego cuentas los decimales en los números originales para colocar la coma en el resultado final. La <strong>división de decimales</strong> es un poco más compleja, pero el truco es convertir el divisor en un número entero moviendo la coma, y luego mover la coma del dividendo la misma cantidad de veces. Comprender las operaciones con fracciones y decimales te prepara para problemas más avanzados en la vida real.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative">
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/zBAOT2vUFPI" title="FRACCIONES DECIMALES Super facil - Para principiantes." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Sofía comió 1/8 de una torta y su hermano comió 2/8. ¿Qué fracción de la torta comieron en total?</p>
+                                <p><strong>Solución:</strong> Se suman los numeradores: 1/8 + 2/8 = (1+2)/8 = 3/8. Comieron 3/8 de la torta.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> Un sastre tiene 2.75 metros de tela y utiliza 1.5 metros para hacer un vestido. ¿Cuánta tela le queda?</p>
+                                <p><strong>Solución:</strong> Se resta: 2.75 - 1.50 = 1.25. Le queda 1.25 metros de tela.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Un vaso de jugo contiene 0.25 litros. ¿Cuántos litros de jugo hay en 4 vasos?</p>
+                                <p><strong>Solución:</strong> Se multiplica: 0.25 x 4 = 1.00. Hay 1 litro de jugo.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Fracciones para niños</li>
+                                <li>Videos: Suma y resta de fracciones</li>
+                                <li>Videos: Cómo convertir fracciones a decimales</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>3. ¿Cuál de las siguientes fracciones es equivalente a 1/2?</p>
+                                <button onclick="toggleAnswer('q3-answer')">A) 3/4</button>
+                                <button onclick="toggleAnswer('q3-answer')">B) 2/5</button>
+                                <button onclick="toggleAnswer('q3-answer')">C) 4/8</button>
+                                <button onclick="toggleAnswer('q3-answer')">D) 1/3</button>
+                                <div id="q3-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) 4/8</strong><br>
+                                    <strong>Explicación:</strong> La fracción 4/8 es equivalente a 1/2 porque si divides el numerador (4) y el denominador (8) por el mismo número (4), obtienes 1/2.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>4. El decimal 0.75 representa la misma cantidad que la fracción:</p>
+                                <button onclick="toggleAnswer('q4-answer')">A) 1/4</button>
+                                <button onclick="toggleAnswer('q4-answer')">B) 3/4</button>
+                                <button onclick="toggleAnswer('q4-answer')">C) 1/2</button>
+                                <button onclick="toggleAnswer('q4-answer')">D) 2/5</button>
+                                <div id="q4-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) 3/4</strong><br>
+                                    <strong>Explicación:</strong> El decimal 0.75 se puede leer como "setenta y cinco centésimas" o 75/100. Al simplificar esta fracción (dividiendo el numerador y el denominador por 25), obtenemos 3/4.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tema: Proporcionalidad y regla de tres simple -->
+                    <h3 class="topic-title" onclick="toggleContent('proporcionalidad')">Proporcionalidad y regla de tres simple</h3>
+                    <div id="proporcionalidad" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                La <strong>proporcionalidad</strong> es la relación que existe entre dos cantidades cuando aumentan o disminuyen de manera constante. Hay dos tipos principales: la proporcionalidad directa y la inversa. En la <strong>proporcionalidad directa</strong>, si una cantidad aumenta, la otra también lo hace en la misma proporción. Por ejemplo, si un helado cuesta $2, dos helados costarán $4. A más helados, más dinero. La <strong>proporcionalidad inversa</strong> es lo opuesto: si una cantidad aumenta, la otra disminuye. Un ejemplo es el tiempo que se tarda en hacer algo: si 2 personas tardan 4 horas en pintar una pared, 4 personas tardarán menos tiempo, solo 2 horas. A más personas, menos tiempo.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>regla de tres simple</strong> es una herramienta matemática muy útil para resolver problemas de proporcionalidad. Nos ayuda a encontrar un valor desconocido cuando conocemos otros tres valores. Funciona de manera diferente para la proporcionalidad directa e inversa.
+                            </p>
+                            <p class="mt-4">
+                                Para la <strong>regla de tres directa</strong>, se usa la fórmula: (valor A) x (valor B) / (valor C) = (valor X). Por ejemplo, si 3 manzanas cuestan $6, ¿cuánto costarán 5 manzanas? Organizaríamos la información así: 3 manzanas = $6 y 5 manzanas = $X. La fórmula sería: (5 x 6) / 3 = 10. Así sabemos que 5 manzanas cuestan $10.
+                            </p>
+                            <p class="mt-4">
+                                Para la <strong>regla de tres inversa</strong>, se usa otra fórmula: (valor A) x (valor B) / (valor C) = (valor X). Por ejemplo, si 2 trabajadores tardan 4 días en construir un muro, ¿cuánto tardarán 4 trabajadores? Se organiza así: 2 trabajadores = 4 días y 4 trabajadores = X días. La fórmula sería: (2 x 4) / 4 = 2. Los 4 trabajadores tardarán 2 días.
+                            </p>
+                            <p class="mt-4">
+                                La clave para usar la regla de tres es identificar si el problema es de proporcionalidad directa o inversa. Si las dos cantidades se mueven en la misma dirección (ambas suben o ambas bajan), es directa. Si se mueven en direcciones opuestas (una sube y la otra baja), es inversa. Con un poco de práctica, te darás cuenta de que la regla de tres es una de las herramientas más poderosas y versátiles para resolver problemas de la vida cotidiana, desde calcular el precio de las compras hasta estimar el tiempo que te tomará llegar a un lugar.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative" >
+                                    <iframe width="800" height="699" src="https://www.youtube.com/embed/Xphb-tzJj24" title="REGLA DE 3 SIMPLE Super Facil - Para principiantes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="800" height="699" src="https://www.youtube.com/embed/WzcLzSY9JLA" title="REGLA DE 3 INVERSA Super facil - PROPORCIONALIDAD INVERSA para principiantes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Si 5 kilogramos de arroz cuestan $10,000, ¿cuánto costarán 8 kilogramos?</p>
+                                <p><strong>Solución:</strong> Es una regla de tres simple directa. (8 kg * $10,000) / 5 kg = $16,000.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> Un grifo llena una piscina en 12 horas. ¿Cuánto tiempo tardarán 3 grifos iguales en llenar la misma piscina?</p>
+                                <p><strong>Solución:</strong> Es una regla de tres simple inversa. (1 grifo * 12 horas) / 3 grifos = 4 horas.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Un grupo de 6 amigos hace una recolecta para comprar un regalo. Si cada uno pone $10,000, ¿cuánto dinero recolectarían si fueran 4 amigos?</p>
+                                <p><strong>Solución:</strong> Es una regla de tres simple directa. (4 amigos * $10,000) / 6 amigos = $6,666.67. Es un problema de proporcionalidad para un regalo, por lo tanto, la cantidad total disminuye si hay menos personas. La solución es simplemente (4 amigos) * $10,000, que no es correcto. El problema es: si 6 amigos ponen X cada uno, el costo total del regalo es 6*X. Si ahora son 4, el costo total es el mismo. Entonces 4*Y = 6*10,000. Y = 60,000 / 4 = 15,000. Cada amigo tendría que poner $15,000.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Regla de tres simple directa</li>
+                                <li>Videos: Proporcionalidad para niños</li>
+                                <li>Videos: Regla de tres simple inversa</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>5. Si 2 cajas de lápices contienen 24 lápices en total, ¿cuántos lápices hay en 5 cajas iguales?</p>
+                                <button onclick="toggleAnswer('q5-answer')">A) 36</button>
+                                <button onclick="toggleAnswer('q5-answer')">B) 48</button>
+                                <button onclick="toggleAnswer('q5-answer')">C) 60</button>
+                                <button onclick="toggleAnswer('q5-answer')">D) 72</button>
+                                <div id="q5-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) 60</strong><br>
+                                    <strong>Explicación:</strong> Es una regla de tres simple directa. (5 cajas * 24 lápices) / 2 cajas = 60 lápices.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>6. En una granja, 5 gallinas se comen un bulto de comida en 10 días. ¿Cuánto tiempo durará el mismo bulto si hay 10 gallinas?</p>
+                                <button onclick="toggleAnswer('q6-answer')">A) 20 días</button>
+                                <button onclick="toggleAnswer('q6-answer')">B) 10 días</button>
+                                <button onclick="toggleAnswer('q6-answer')">C) 5 días</button>
+                                <button onclick="toggleAnswer('q6-answer')">D) 2 días</button>
+                                <div id="q6-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) 5 días</strong><br>
+                                    <strong>Explicación:</strong> Es una regla de tres simple inversa. A más gallinas, menos días. (5 gallinas * 10 días) / 10 gallinas = 5 días.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tema: Geometría -->
+                    <h3 class="topic-title" onclick="toggleContent('geometria')">Geometría</h3>
+                    <div id="geometria" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                La <strong>geometría</strong> es la rama de las matemáticas que estudia las formas, el tamaño, la posición relativa de las figuras y las propiedades del espacio. Empezamos con las <strong>figuras planas</strong>, que son aquellas que podemos dibujar en una hoja de papel, como cuadrados, rectángulos, círculos y triángulos.
+                            </p>
+                            <p class="mt-4">
+                                El <strong>área</strong> es la medida de la superficie de una figura. Imagina que el área es la cantidad de pintura que necesitas para cubrir la figura por completo. El <strong>perímetro</strong>, en cambio, es la medida de la distancia alrededor del borde de la figura. Piensa en el perímetro como la longitud de la cerca que necesitas para rodear un jardín.
+                            </p>
+                            <p class="mt-4">
+                                Para calcular el área de un <strong>cuadrado</strong>, que tiene todos sus lados iguales, multiplicas un lado por sí mismo. Fórmula: Área = lado x lado. Para el perímetro, sumas la longitud de los 4 lados. Para el <strong>rectángulo</strong>, que tiene dos lados largos y dos cortos, el área se calcula multiplicando el largo por el ancho. Fórmula: Área = largo x ancho. El perímetro es la suma de sus 4 lados. Para el <strong>triángulo</strong>, el área es la mitad de la base por la altura. Fórmula: Área = (base x altura) / 2. El perímetro es la suma de la longitud de sus tres lados. El <strong>círculo</strong> es un poco diferente; su área se calcula con la fórmula: Área = π (pi) x radio al cuadrado. El perímetro del círculo se llama circunferencia, y es C = 2 x π x radio.
+                            </p>
+                            <p class="mt-4">
+                                Los <strong>ángulos</strong> son la apertura que se forma entre dos líneas que se encuentran en un punto. Los medimos en grados. Un ángulo recto es de 90°, como la esquina de una hoja de papel. Un ángulo agudo es menor de 90° y un ángulo obtuso es mayor de 90°.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative" >
+
+                                    <iframe width="800" height="699" src="https://www.youtube.com/embed/wYNvY_bOGdc" title="ÁREAS Y PERÍMETROS Super Facil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="800" height="699" src="https://www.youtube.com/embed/2yfkEAt2ew0" title="TEOREMA DE PITÁGORAS Super facil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Un terreno cuadrado tiene un lado de 10 metros. ¿Cuál es su área y su perímetro?</p>
+                                <p><strong>Solución:</strong> Área = 10 x 10 = 100 m². Perímetro = 10 + 10 + 10 + 10 = 40 m.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> Un jardín rectangular mide 8 metros de largo y 5 metros de ancho. Si quieres poner una cerca, ¿cuántos metros de cerca necesitas?</p>
+                                <p><strong>Solución:</strong> Necesitas el perímetro. P = 8 + 5 + 8 + 5 = 26 metros.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> El área de un triángulo con base 6 cm y altura 4 cm es:</p>
+                                <p><strong>Solución:</strong> Área = (6 cm * 4 cm) / 2 = 24 / 2 = 12 cm².</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Área y perímetro para niños</li>
+                                <li>Videos: Tipos de ángulos</li>
+                                <li>Videos: Fórmulas de geometría básica</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>7. Un parque circular tiene un radio de 5 metros. ¿Cuál es su área aproximada? (Usa π ≈ 3.14)</p>
+                                <button onclick="toggleAnswer('q7-answer')">A) 15.7 m²</button>
+                                <button onclick="toggleAnswer('q7-answer')">B) 31.4 m²</button>
+                                <button onclick="toggleAnswer('q7-answer')">C) 78.5 m²</button>
+                                <button onclick="toggleAnswer('q7-answer')">D) 100 m²</button>
+                                <div id="q7-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) 78.5 m²</strong><br>
+                                    <strong>Explicación:</strong> El área de un círculo es A = π * r². A = 3.14 * 5² = 3.14 * 25 = 78.5 m².
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>8. Un ángulo de 120° se clasifica como:</p>
+                                <button onclick="toggleAnswer('q8-answer')">A) Recto</button>
+                                <button onclick="toggleAnswer('q8-answer')">B) Agudo</button>
+                                <button onclick="toggleAnswer('q8-answer')">C) Obtuso</button>
+                                <button onclick="toggleAnswer('q8-answer')">D) Llano</button>
+                                <div id="q8-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) Obtuso</strong><br>
+                                    <strong>Explicación:</strong> Un ángulo obtuso es aquel que mide más de 90° pero menos de 180°. Como 120° es mayor que 90°, es un ángulo obtuso.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tema: Resolución de problemas matemáticos con situaciones cotidianas -->
+                    <h3 class="topic-title" onclick="toggleContent('resolucion-problemas')">Resolución de problemas</h3>
+                    <div id="resolucion-problemas" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                La habilidad más importante en matemáticas no es solo hacer cálculos, sino saber cómo aplicarlos para resolver problemas de la vida real. Esto se llama <strong>resolución de problemas</strong>. No es tan difícil como parece, solo necesitas seguir unos pasos sencillos.
+                            </p>
+                            <p class="mt-4">
+                                El <strong>primer paso</strong> es <strong>entender el problema</strong>. Lee con calma y cuidado. Identifica qué te pregunta el problema y qué información te da. Subraya los datos clave y las palabras importantes. Pregúntate: "¿Qué necesito encontrar?" y "¿Qué datos tengo para encontrarlo?". El <strong>segundo paso</strong> es <strong>hacer un plan</strong>. Una vez que sabes lo que buscas, piensa en qué operaciones matemáticas necesitas usar (suma, resta, multiplicación, división) y en qué orden. A veces, un problema necesita más de una operación. Puedes dibujar un esquema o hacer un pequeño mapa mental para organizar tus ideas.
+                            </p>
+                            <p class="mt-4">
+                                El <strong>tercer paso</strong> es <strong>ejecutar el plan</strong>. Resuelve las operaciones matemáticas que planeaste. Sé cuidadoso con cada paso y cada cálculo. El <strong>cuarto y último paso</strong> es <strong>verificar tu respuesta</strong>. Mira el resultado y pregúntate si tiene sentido en el contexto del problema. Si el problema era sobre el número de manzanas que le quedaron a un niño, ¿el resultado es un número positivo? Si no, algo hiciste mal. Usa la operación contraria para revisar tus cálculos (por ejemplo, si usaste la resta, usa la suma para verificar).
+                            </p>
+                            <p class="mt-4">
+                                La resolución de problemas es como ser un detective. Tienes pistas (los datos del problema), una misión (la pregunta) y herramientas (las operaciones matemáticas). Si sigues un método, podrás resolver casi cualquier misterio matemático que se te presente. Practicar con problemas de la vida cotidiana, como cuántas galletas tienes si le das algunas a tus amigos o cómo repartir tus juguetes equitativamente, te ayudará a dominar esta habilidad.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative">
+                                    <iframe width="800" height="699" src="https://www.youtube.com/embed/3cKEq2tEYoI" title="✅ Como saber que OPERACIÓN hay que hacer en un PROBLEMA matemático [TRUCO]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/NAIjmDMNF10" title="PLANTEAR Y RESOLVER ECUACIONES LINEALES  - Parte1 - Super fácil / Para principiantes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Ana compra un cuaderno por $2,500 y un lápiz por $1,200. Si paga con un billete de $5,000, ¿cuánto dinero le queda?</p>
+                                <p><strong>Solución:</strong> Primero, suma el costo de los dos artículos: $2,500 + $1,200 = $3,700. Luego, resta el total del costo del billete: $5,000 - $3,700 = $1,300. Le quedan $1,300.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> En un colegio hay 400 estudiantes. Si hay 25 estudiantes en cada salón, ¿cuántos salones hay en total?</p>
+                                <p><strong>Solución:</strong> Para encontrar el número de salones, se divide el total de estudiantes por el número de estudiantes por salón: 400 ÷ 25 = 16. Hay 16 salones.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Un ascensor tiene capacidad para 8 personas. Si 5 personas ya están dentro, ¿cuántas personas más pueden subir?</p>
+                                <p><strong>Solución:</strong> Se resta el número de personas que ya están del total de capacidad: 8 - 5 = 3. Pueden subir 3 personas más.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Estrategias para resolver problemas matemáticos</li>
+                                <li>Videos: Pasos para resolver problemas de lógica</li>
+                                <li>Videos: Problemas matemáticos de la vida real</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>9. Un panadero hornea 150 galletas. Si vende 95 galletas, ¿cuántas galletas le quedan?</p>
+                                <button onclick="toggleAnswer('q9-answer')">A) 45</button>
+                                <button onclick="toggleAnswer('q9-answer')">B) 55</button>
+                                <button onclick="toggleAnswer('q9-answer')">C) 65</button>
+                                <button onclick="toggleAnswer('q9-answer')">D) 245</button>
+                                <div id="q9-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) 55</strong><br>
+                                    <strong>Explicación:</strong> Para saber cuántas galletas le quedan, debes restar las que vendió del total de galletas que horneó: 150 - 95 = 55.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>10. Si un paquete de galletas cuesta $2,000 y se compran 4 paquetes, ¿cuál es el costo total?</p>
+                                <button onclick="toggleAnswer('q10-answer')">A) $6,000</button>
+                                <button onclick="toggleAnswer('q10-answer')">B) $8,000</button>
+                                <button onclick="toggleAnswer('q10-answer')">C) $10,000</button>
+                                <button onclick="toggleAnswer('q10-answer')">D) $4,000</button>
+                                <div id="q10-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) $8,000</strong><br>
+                                    <strong>Explicación:</strong> Para encontrar el costo total, se multiplica el costo de un paquete por el número de paquetes: $2,000 x 4 = $8,000.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Razonamiento Abstracto y Lógico -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('razonamiento')">2. Razonamiento Abstracto y Lógico 🧠</h2>
+                <div id="razonamiento" class="content">
+
+                    <!-- Tema: Identificación de patrones y secuencias -->
+                    <h3 class="topic-title" onclick="toggleContent('patrones-secuencias')">Identificación de patrones y secuencias</h3>
+                    <div id="patrones-secuencias" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                El <strong>razonamiento abstracto</strong> es la capacidad de pensar y resolver problemas utilizando conceptos, símbolos y relaciones en lugar de objetos concretos. Es la base de la lógica y nos ayuda a entender el mundo que nos rodea. Uno de sus componentes más importantes es la <strong>identificación de patrones y secuencias</strong>.
+                            </p>
+                            <p class="mt-4">
+                                Un <strong>patrón</strong> es una forma o diseño que se repite. Por ejemplo, en un patrón de colores, puedes ver "rojo, azul, rojo, azul, rojo...". La regla es simple: los colores se alternan. Las <strong>secuencias numéricas</strong> son una serie de números que siguen una regla específica. Por ejemplo, en la secuencia 2, 4, 6, 8..., la regla es que a cada número se le suma 2 para obtener el siguiente. También hay secuencias que se multiplican (2, 4, 8, 16...), que se restan o que se dividen.
+                            </p>
+                            <p class="mt-4">
+                                El truco para resolver estos problemas es observar con atención. Busca la "regla secreta" que une cada elemento de la secuencia. No siempre es una suma o una resta simple. A veces, la regla puede ser más compleja, como sumar un número que aumenta cada vez (1, 3, 6, 10... la regla es sumar 2, luego 3, luego 4...).
+                            </p>
+                            <p class="mt-4">
+                                La identificación de patrones y secuencias no solo se aplica a los números. También se usa para resolver <strong>series de figuras</strong>. En este tipo de problemas, ves una serie de formas que cambian de alguna manera: se hacen más grandes, rotan, cambian de color, se les añade un elemento... Tu trabajo es descubrir esa regla y aplicarla para encontrar la figura que sigue. Esta habilidad te ayuda a desarrollar el pensamiento lógico y a ver el mundo de una forma más organizada y predecible.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative">
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/FA2SY2WTtUM?list=PLDjtbBXUusIxLyNbBXxV3lHxT0kogmvU4" title="GUÍA ADMISIÓN SECUNDARIA - Habilidad para el razonamiento - Super facil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/vDcFs0oqUfY" title="🧠 Test psicotecnico razonamiento abstracto con respuestas | con 20 ejercicios explicados" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/25Kp5Y__q8A" title="Secuencias gráficas, razonamiento abstracto" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> ¿Cuál es el siguiente número en la secuencia: 1, 4, 7, 10, ...?</p>
+                                <p><strong>Solución:</strong> La regla es sumar 3 a cada número. 10 + 3 = 13. El siguiente número es 13.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> ¿Cuál es el siguiente dibujo en la secuencia: círculo rojo, cuadrado azul, círculo rojo, ...?</p>
+                                <p><strong>Solución:</strong> La secuencia alterna entre círculo rojo y cuadrado azul. La figura que sigue es un cuadrado azul.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Un triángulo apunta hacia arriba, luego hacia la derecha, luego hacia abajo. ¿Hacia dónde apuntará en el siguiente paso?</p>
+                                <p><strong>Solución:</strong> La figura rota 90° en el sentido de las agujas del reloj. El siguiente paso es que apunte hacia la izquierda.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Patrones numéricos y de figuras</li>
+                                <li>Videos: Razonamiento lógico para niños</li>
+                                <li>Videos: Ejercicios de secuencias de figuras</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>11. Observa la serie: 5, 10, 15, 20, ... ¿Qué número sigue?</p>
+                                <button onclick="toggleAnswer('q11-answer')">A) 25</button>
+                                <button onclick="toggleAnswer('q11-answer')">B) 30</button>
+                                <button onclick="toggleAnswer('q11-answer')">C) 22</button>
+                                <button onclick="toggleAnswer('q11-answer')">D) 10</button>
+                                <div id="q11-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: A) 25</strong><br>
+                                    <strong>Explicación:</strong> La regla de la secuencia es sumar 5 a cada número anterior. Por lo tanto, 20 + 5 = 25.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>12. ¿Qué figura continúa la serie: cuadrado, círculo, triángulo, cuadrado, ...?</p>
+                                <button onclick="toggleAnswer('q12-answer')">A) Círculo</button>
+                                <button onclick="toggleAnswer('q12-answer')">B) Triángulo</button>
+                                <button onclick="toggleAnswer('q12-answer')">C) Cuadrado</button>
+                                <button onclick="toggleAnswer('q12-answer')">D) Rectángulo</button>
+                                <div id="q12-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: A) Círculo</strong><br>
+                                    <strong>Explicación:</strong> La serie de figuras se repite en el siguiente orden: cuadrado, círculo, triángulo. Después del cuadrado, vuelve a empezar la serie con un círculo.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lenguaje y Comprensión Lectora (Español) -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('lenguaje')">3. Lenguaje y Comprensión Lectora (Español) 📖</h2>
+                <div id="lenguaje" class="content">
+
+                    <!-- Tema: Lectura de textos cortos y comprensión de ideas principales -->
+                    <h3 class="topic-title" onclick="toggleContent('lectura-comprension')">Lectura y comprensión de textos</h3>
+                    <div id="lectura-comprension" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                La <strong>comprensión lectora</strong> es la habilidad de entender lo que lees. No es solo pronunciar las palabras, sino también captar el mensaje, las ideas principales y los detalles importantes de un texto. Un <strong>texto corto</strong> puede ser un cuento, un poema, un fragmento de una noticia o unas instrucciones.
+                            </p>
+                            <p class="mt-4">
+                                Para entender un texto, es importante seguir una estrategia. Primero, haz una <strong>lectura general</strong> para tener una idea del tema. Luego, vuelve a leer el texto con más cuidado. A medida que lees, puedes hacerte preguntas como: "¿De qué trata este texto?", "¿Quiénes son los personajes?", "¿Dónde y cuándo ocurren los hechos?", "¿Por qué pasa esto?". La <strong>idea principal</strong> es la información más importante que el autor quiere transmitir. A menudo se encuentra al principio o al final de un párrafo, pero a veces necesitas deducirla de todo el texto. Los <strong>detalles</strong> son la información extra que apoya la idea principal.
+                            </p>
+                            <p class="mt-4">
+                                También es vital <strong>identificar personajes, lugar y tiempo</strong> en los relatos. Los <strong>personajes</strong> son las personas o animales que participan en la historia. El <strong>lugar</strong> es el sitio donde ocurre la acción (un bosque, una casa, un colegio). Y el <strong>tiempo</strong> es el momento en que sucede (en la mañana, por la noche, en el verano pasado).
+                            </p>
+                            <p class="mt-4">
+                                El <strong>vocabulario</strong> también es clave. Cuando encuentres una palabra que no conoces, intenta adivinar su significado por el contexto de la oración. También es útil conocer <strong>sinónimos</strong> (palabras que significan lo mismo, como "feliz" y "contento") y <strong>antónimos</strong> (palabras con significados opuestos, como "alto" y "bajo"). Las <strong>familias de palabras</strong> son conjuntos de palabras que comparten la misma raíz, por ejemplo, de la raíz "sol" tenemos "soleado", "solar" o "solazo".
+                            </p>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Lee el siguiente párrafo: "Ayer por la tarde, en el parque, el pequeño perro saltarín de mi abuela persiguió una mariposa hasta que se cansó y se acostó a dormir." ¿Quiénes son los personajes?</p>
+                                <p><strong>Solución:</strong> Los personajes son el pequeño perro y la abuela.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> ¿Cuál es el sinónimo de la palabra "rápido"?</p>
+                                <p><strong>Solución:</strong> Un sinónimo de "rápido" es "veloz".</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> ¿Qué palabra no pertenece a la familia de "mar"? Mar, marino, marea, mesa.</p>
+                                <p><strong>Solución:</strong> La palabra "mesa" no pertenece a la familia de "mar" porque no tiene la misma raíz.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Cómo mejorar la comprensión lectora</li>
+                                <li>Videos: Sinónimos y antónimos para niños</li>
+                                <li>Videos: Ejercicios de familias de palabras</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>13. Lee el texto: "El sol brillaba sobre el bosque. Un conejo salió de su madriguera para buscar zanahorias. Encontró una grande y dulce y se la llevó a su familia." ¿Cuál es la idea principal del texto?</p>
+                                <button onclick="toggleAnswer('q13-answer')">A) El sol brilla en el bosque.</button>
+                                <button onclick="toggleAnswer('q13-answer')">B) Un conejo busca comida para su familia.</button>
+                                <button onclick="toggleAnswer('q13-answer')">C) Un conejo encontró una zanahoria grande.</button>
+                                <button onclick="toggleAnswer('q13-answer')">D) Los conejos viven en madrigueras.</button>
+                                <div id="q13-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) Un conejo busca comida para su familia.</strong><br>
+                                    <strong>Explicación:</strong> La idea principal es el propósito del conejo, que es encontrar alimento para su familia. Los demás puntos son detalles de la historia.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>14. ¿Cuál es el antónimo de la palabra "noche"?</p>
+                                <button onclick="toggleAnswer('q14-answer')">A) Oscuridad</button>
+                                <button onclick="toggleAnswer('q14-answer')">B) Día</button>
+                                <button onclick="toggleAnswer('q14-answer')">C) Mañana</button>
+                                <button onclick="toggleAnswer('q14-answer')">D) Tarde</button>
+                                <div id="q14-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) Día</strong><br>
+                                    <strong>Explicación:</strong> Un antónimo es una palabra con significado opuesto. El opuesto de "noche" es "día".
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lengua Inglesa -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('ingles')">4. Lengua Inglesa 🇬🇧</h2>
+                <div id="ingles" class="content">
+
+                    <!-- Tema: Fundamentos y vocabulario -->
+                    <h3 class="topic-title" onclick="toggleContent('fundamentos-ingles')">Fundamentos y vocabulario</h3>
+                    <div id="fundamentos-ingles" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                Aprender inglés es como aprender un juego nuevo. Empezamos por lo más básico: el <strong>alfabeto</strong>, que es muy similar al español pero con diferentes pronunciaciones. También es importante aprender los <strong>saludos</strong> como "Hello" (hola), "Good morning" (buenos días) y "How are you?" (¿cómo estás?). Saber presentarte es clave, diciendo "My name is..." (mi nombre es...).
+                            </p>
+                            <p class="mt-4">
+                                El <strong>vocabulario esencial</strong> te ayudará a comunicarte en situaciones cotidianas. Algunas palabras útiles son los <strong>colores</strong> (red, blue, green), los <strong>números</strong> (one, two, three), los <strong>días de la semana</strong> (Monday, Tuesday) y los <strong>meses</strong> (January, February). También es importante conocer las palabras para describir tu <strong>familia</strong> (mother, father), la <strong>escuela</strong> (school, teacher), tu <strong>casa</strong> (house, room), los <strong>animales</strong> (cat, dog), los <strong>alimentos</strong> (apple, milk) y las <strong>profesiones</strong> (doctor, police officer). Cuanto más vocabulario aprendas, más fácil será entender y hablar inglés.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>gramática básica</strong> es como las reglas del juego. Los <strong>pronombres personales</strong> (I, you, he, she, it, we, they) nos dicen quién hace la acción. El <strong>verbo 'to be'</strong> (am, is, are) es uno de los más importantes y significa "ser" o "estar". Por ejemplo, "I am happy" (Yo estoy feliz). El <strong>verbo 'have got'</strong> significa "tener". Por ejemplo, "I have got a ball" (Yo tengo una pelota). El <strong>plural de los sustantivos</strong> se forma generalmente añadiendo una 's' al final (dog -> dogs, cat -> cats). Los <strong>adjetivos</strong> describen a las personas o cosas (big, small, beautiful).
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative" >
+                                 <a href="https://youtu.be/dFJvNYdKGrA?list=PLgrNDDl9MxYmUmf19zPiljdg8FKIRmP78" target="_blank">LISTA COMPLETA EN YOUTUBE CLIC AQUI!!!  🔥🔥🔥</a>
+                                <iframe width="800" height="699" src="https://www.youtube.com/embed/dFJvNYdKGrA" title="✅ Lección 1: Pronombres personales + Verbo TO BE explicado fácil y rápido" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> ¿Cómo se dice "libro" en inglés?</p>
+                                <p><strong>Solución:</strong> Book.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> ¿Cuál es el plural de "cat"?</p>
+                                <p><strong>Solución:</strong> Cats.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Traduce la frase: "I am a student".</p>
+                                <p><strong>Solución:</strong> Yo soy un estudiante.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Vocabulario básico en inglés para niños</li>
+                                <li>Videos: Verbo to be para principiantes</li>
+                                <li>Videos: Saludos y presentaciones en inglés</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>15. ¿Qué palabra completa correctamente la oración? "She ___ a doctor."</p>
+                                <button onclick="toggleAnswer('q15-answer')">A) am</button>
+                                <button onclick="toggleAnswer('q15-answer')">B) are</button>
+                                <button onclick="toggleAnswer('q15-answer')">C) is</button>
+                                <button onclick="toggleAnswer('q15-answer')">D) have</button>
+                                <div id="q15-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) is</strong><br>
+                                    <strong>Explicación:</strong> Con el pronombre personal "She" (ella) se usa el verbo "to be" en la forma "is".
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>16. ¿Qué significa la palabra "brother"?</p>
+                                <button onclick="toggleAnswer('q16-answer')">A) Padre</button>
+                                <button onclick="toggleAnswer('q16-answer')">B) Hermana</button>
+                                <button onclick="toggleAnswer('q16-answer')">C) Hermano</button>
+                                <button onclick="toggleAnswer('q16-answer')">D) Madre</button>
+                                <div id="q16-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) Hermano</strong><br>
+                                    <strong>Explicación:</strong> "Brother" es la palabra en inglés para "hermano".
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ciencias Naturales -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('ciencias-naturales')">5. Ciencias Naturales 🔬</h2>
+                <div id="ciencias-naturales" class="content">
+
+                    <!-- Tema: El cuerpo humano -->
+                    <h3 class="topic-title" onclick="toggleContent('cuerpo-humano')">El cuerpo humano y los seres vivos</h3>
+                    <div id="cuerpo-humano" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                Las <strong>Ciencias Naturales</strong> nos ayudan a entender el mundo que nos rodea. El <strong>cuerpo humano</strong> es una máquina increíble, formada por diferentes <strong>órganos y sistemas</strong> que trabajan juntos para mantenernos vivos y sanos. Algunos sistemas básicos son el sistema circulatorio (corazón y vasos sanguíneos), el sistema respiratorio (pulmones) y el sistema digestivo (estómago e intestinos).
+                            </p>
+                            <p class="mt-4">
+                                Los <strong>seres vivos</strong> son aquellos que nacen, crecen, se reproducen y mueren. Se clasifican en diferentes grupos, como los <strong>animales</strong>, las <strong>plantas</strong> y los <strong>hongos</strong>. Los animales se mueven, se alimentan de otros seres vivos y reaccionan al entorno. Las plantas fabrican su propio alimento con la luz del sol (fotosíntesis), no se mueven y son una fuente de alimento vital. Los hongos no son ni plantas ni animales; se alimentan de materia en descomposición.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>materia</strong> es todo lo que ocupa espacio y tiene masa. La materia existe en tres <strong>estados</strong> principales: <strong>sólido</strong>, <strong>líquido</strong> y <strong>gas</strong>. El hielo es agua en estado sólido, el agua que bebemos es líquida y el vapor que sale de una olla es gas. La materia puede cambiar de un estado a otro con el calor o el frío. Por ejemplo, si calientas el hielo, se derrite y se convierte en agua líquida.
+                            </p>
+                            <p class="mt-4">
+                                Los <strong>recursos naturales</strong> son elementos de la naturaleza que las personas usamos para vivir. El <strong>agua</strong> es esencial para la vida. El <strong>aire</strong> que respiramos es una mezcla de gases. El <strong>suelo</strong> es la capa de la Tierra donde crecen las plantas.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative" >
+                                    <iframe width="200" height="100" src="https://www.youtube.com/embed/przV9YavZmI" title="Organización de los seres vivos 🦠🦴🧍🏻‍♂️ Células, tejidos, órganos, sistemas y organismos 🔬" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="200" height="100" src="https://www.youtube.com/embed/6tttZ_7Q9a8" title="Clasificación de los SERES VIVOS 🦠 🐰 5 REINOS 🌱 Ciencias para niños" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> ¿Qué sistema del cuerpo humano se encarga de transportar sangre y oxígeno?</p>
+                                <p><strong>Solución:</strong> El sistema circulatorio.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> ¿A qué grupo de seres vivos pertenece un árbol?</p>
+                                <p><strong>Solución:</strong> A las plantas.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> ¿Qué estado de la materia se puede ver en el vapor que sale de una olla de agua hirviendo?</p>
+                                <p><strong>Solución:</strong> El estado gaseoso.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: El cuerpo humano para niños</li>
+                                <li>Videos: Estados de la materia explicados</li>
+                                <li>Videos: Clasificación de seres vivos</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>17. ¿Cuál es la función principal de los pulmones?</p>
+                                <button onclick="toggleAnswer('q17-answer')">A) Bombear sangre</button>
+                                <button onclick="toggleAnswer('q17-answer')">B) Digerir alimentos</button>
+                                <button onclick="toggleAnswer('q17-answer')">C) Respirar</button>
+                                <button onclick="toggleAnswer('q17-answer')">D) Pensar</button>
+                                <div id="q17-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) Respirar</strong><br>
+                                    <strong>Explicación:</strong> Los pulmones son órganos principales del sistema respiratorio y se encargan de la respiración.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>18. ¿Cuál de los siguientes es un recurso natural?</p>
+                                <button onclick="toggleAnswer('q18-answer')">A) Una silla</button>
+                                <button onclick="toggleAnswer('q18-answer')">B) El aire</button>
+                                <button onclick="toggleAnswer('q18-answer')">C) Un carro</button>
+                                <button onclick="toggleAnswer('q18-answer')">D) Un televisor</button>
+                                <div id="q18-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) El aire</strong><br>
+                                    <strong>Explicación:</strong> Los recursos naturales son aquellos que se encuentran en la naturaleza y no son creados por el ser humano. El aire es un ejemplo de ello.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ciencias Sociales -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('ciencias-sociales')">6. Ciencias Sociales 🌎</h2>
+                <div id="ciencias-sociales" class="content">
+
+                    <!-- Tema: Historia y símbolos de Colombia -->
+                    <h3 class="topic-title" onclick="toggleContent('historia-colombia')">Historia y símbolos de Colombia</h3>
+                    <div id="historia-colombia" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                Las <strong>Ciencias Sociales</strong> nos ayudan a comprender nuestra sociedad, nuestra historia y cómo vivimos en comunidad. <strong>Colombia</strong>, nuestro país, tiene una rica historia y unos <strong>símbolos</strong> que nos identifican. La bandera, con sus colores amarillo, azul y rojo, representa la riqueza, los océanos y la sangre de nuestros héroes. El escudo de armas, con su cóndor y su gorro frigio, simboliza la libertad. El himno nacional, por su parte, es una canción que nos une como pueblo.
+                            </p>
+                            <p class="mt-4">
+                                Los <strong>principios básicos de ciudadanía</strong> son las reglas de convivencia que nos permiten vivir en armonía con los demás. El <strong>respeto</strong> por las ideas y los derechos de los demás es fundamental. Las <strong>normas</strong>, como las reglas de la escuela o las leyes, nos ayudan a organizar la sociedad. La <strong>convivencia</strong> es la capacidad de vivir juntos pacíficamente.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>geografía</strong> nos enseña sobre los lugares. Colombia tiene diversas <strong>regiones</strong> (Andina, Caribe, Pacífica, Orinoquía, Amazonía) con diferentes <strong>relieves</strong> (montañas, valles, llanuras) y <strong>climas</strong>. La <strong>cultura y diversidad</strong> del país se refleja en la música, la comida, las fiestas y las tradiciones de cada región.
+                            </p>
+                            <p class="mt-4">
+                                Las <strong>nociones de economía familiar</strong> nos enseñan a cuidar el dinero y los bienes. Aprender a ahorrar y a no desperdiciar nos ayuda a tener un futuro más seguro. El <strong>cuidado de los bienes comunes</strong>, como los parques y los colegios, es responsabilidad de todos.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative">
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/g2CiCEfn9dk" title="✅ La historia de COLOMBIA en 15 minutos | Resumen rápido y fácil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> ¿Qué color de la bandera de Colombia representa el océano?</p>
+                                <p><strong>Solución:</strong> El color azul.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> ¿A qué región natural de Colombia pertenece la Sierra Nevada de Santa Marta?</p>
+                                <p><strong>Solución:</strong> A la región Caribe.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> ¿Qué principio de ciudadanía aplicas cuando esperas tu turno para hablar?</p>
+                                <p><strong>Solución:</strong> El respeto.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Símbolos de Colombia para niños</li>
+                                <li>Videos: Regiones naturales de Colombia</li>
+                                <li>Videos: Historia de Colombia para niños</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>19. El color amarillo en la bandera de Colombia representa:</p>
+                                <button onclick="toggleAnswer('q19-answer')">A) Los océanos</button>
+                                <button onclick="toggleAnswer('q19-answer')">B) La sangre de los héroes</button>
+                                <button onclick="toggleAnswer('q19-answer')">C) La riqueza y el sol</button>
+                                <button onclick="toggleAnswer('q19-answer')">D) El relieve montañoso</button>
+                                <div id="q19-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) La riqueza y el sol</strong><br>
+                                    <strong>Explicación:</strong> El color amarillo representa la riqueza del suelo de Colombia y el sol.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>20. ¿Qué significa tener un buen "cuidado de los bienes comunes"?</p>
+                                <button onclick="toggleAnswer('q20-answer')">A) Cuidar tus propios juguetes</button>
+                                <button onclick="toggleAnswer('q20-answer')">B) Recoger la basura en el parque</button>
+                                <button onclick="toggleAnswer('q20-answer')">C) Comprar dulces con tu mesada</button>
+                                <button onclick="toggleAnswer('q20-answer')">D) No compartir tus cosas</button>
+                                <div id="q20-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) Recoger la basura en el parque</strong><br>
+                                    <strong>Explicación:</strong> Los bienes comunes son aquellos que pertenecen a la comunidad, como los parques y las escuelas. Cuidarlos es un deber ciudadano.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tecnologías e Innovación -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('tecnologias')">7. Tecnologías e Innovación 💻</h2>
+                <div id="tecnologias" class="content">
+
+                    <!-- Tema: Pensamiento computacional -->
+                    <h3 class="topic-title" onclick="toggleContent('pensamiento-computacional')">Pensamiento computacional</h3>
+                    <div id="pensamiento-computacional" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                La <strong>tecnología y la innovación</strong> están en todas partes. El <strong>pensamiento computacional</strong> no es solo programar, es una forma de resolver problemas. Se trata de descomponer un problema grande en partes más pequeñas, reconocer patrones, crear instrucciones sencillas (<strong>algoritmos</strong>) y pensar de manera abstracta.
+                            </p>
+                            <p class="mt-4">
+                                Los <strong>algoritmos</strong> son una serie de pasos que sigues para hacer algo. Por ejemplo, la receta de un pastel es un algoritmo. En programación, un algoritmo le dice al computador exactamente qué hacer. A veces, estos algoritmos se crean con <strong>programación visual</strong>, usando bloques de colores que se unen como si fueran fichas de LEGO. Herramientas como Scratch o Blockly son perfectas para esto.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>robótica escolar</strong> es la aplicación de la tecnología para crear robots. Puedes aprender a programar un robot para que se mueva, encienda luces o evite obstáculos.
+                            </p>
+                            <p class="mt-4">
+                                También es importante hablar del <strong>uso responsable de internet y la seguridad digital</strong>. Internet es una herramienta increíble, pero debemos usarla con cuidado. Nunca des información personal a extraños, no compartas contraseñas y pregunta a un adulto antes de descargar algo.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative">
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/ibsOa90EYq0" title="¿Qué es el pensamiento computacional? | PBS KIDS for Parents" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="200" height="100" src="https://www.youtube.com/embed/VZe9tjqa9xw" title="PROGRAMACIÓN para niños 👦 Conceptos básicos 💻 Parte 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="200" height="100" src="https://www.youtube.com/embed/NBtbTtYJ1so" title="PROGRAMACIÓN para niños 👦 Programación por bloques 💻 Parte 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Escribe un algoritmo sencillo para lavarte los dientes.</p>
+                                <p><strong>Solución:</strong> 1. Abrir la llave del agua. 2. Mojar el cepillo. 3. Poner crema dental. 4. Cepillar los dientes. 5. Enjuagar. 6. Cerrar la llave.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> Un robot avanza 3 pasos y luego gira a la derecha 90°. Si lo programas para que repita esto 4 veces, ¿qué figura geométrica dibuja?</p>
+                                <p><strong>Solución:</strong> Un cuadrado.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> ¿Qué debes hacer si un extraño te pide tu dirección en internet?</p>
+                                <p><strong>Solución:</strong> No darle la información y avisar a un adulto de inmediato.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Pensamiento computacional para niños</li>
+                                <li>Videos: Cómo programar en Scratch</li>
+                                <li>Videos: Consejos de seguridad en internet</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>21. ¿Qué es un algoritmo?</p>
+                                <button onclick="toggleAnswer('q21-answer')">A) Una persona que usa la computadora</button>
+                                <button onclick="toggleAnswer('q21-answer')">B) Un tipo de videojuego</button>
+                                <button onclick="toggleAnswer('q21-answer')">C) Una serie de pasos para resolver un problema</button>
+                                <button onclick="toggleAnswer('q21-answer')">D) Un robot</button>
+                                <div id="q21-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) Una serie de pasos para resolver un problema</strong><br>
+                                    <strong>Explicación:</strong> Un algoritmo es un conjunto de instrucciones o pasos definidos y ordenados para resolver un problema o realizar una tarea.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>22. ¿Cuál de las siguientes acciones NO es segura al usar internet?</p>
+                                <button onclick="toggleAnswer('q22-answer')">A) Jugar en un sitio web seguro</button>
+                                <button onclick="toggleAnswer('q22-answer')">B) Hablar con tus amigos en un chat privado</button>
+                                <button onclick="toggleAnswer('q22-answer')">C) Compartir tus fotos con extraños en redes sociales</button>
+                                <button onclick="toggleAnswer('q22-answer')">D) Usar un nombre de usuario diferente a tu nombre real</button>
+                                <div id="q22-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) Compartir tus fotos con extraños en redes sociales</strong><br>
+                                    <strong>Explicación:</strong> Compartir información personal, como fotos, con extraños en línea es una acción peligrosa y no es segura.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preparación Personal y Habilidades Socioemocionales -->
+            <div class="section-card">
+                <h2 class="subject-title" onclick="toggleContent('habilidades-socioemocionales')">8. Preparación Personal y Habilidades Socioemocionales ❤️</h2>
+                <div id="habilidades-socioemocionales" class="content">
+
+                    <!-- Tema: Técnicas de concentración y manejo del tiempo -->
+                    <h3 class="topic-title" onclick="toggleContent('concentracion-tiempo')">Concentración y manejo del tiempo</h3>
+                    <div id="concentracion-tiempo" class="content">
+                        <div class="explanation">
+                            <p class="font-bold text-lg text-blue-800 mb-2">Explicación detallada:</p>
+                            <p>
+                                La <strong>preparación personal y las habilidades socioemocionales</strong> son tan importantes como las matemáticas o el lenguaje. Nos ayudan a ser más felices y a llevarnos bien con los demás. Una de las primeras habilidades que debes aprender es la <strong>concentración y el manejo del tiempo</strong>.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>concentración</strong> es la habilidad de enfocar toda tu atención en una sola cosa. En un examen, es vital para evitar errores. Puedes mejorarla haciendo ejercicios de respiración, o tomando pequeños descansos. El <strong>manejo del tiempo</strong> es la habilidad de organizar tus actividades para que te dé tiempo de hacer todo lo que necesitas, como estudiar, jugar y descansar.
+                            </p>
+                            <p class="mt-4">
+                                El <strong>trabajo en equipo</strong> es fundamental. Es la habilidad de colaborar con otros para lograr un objetivo común. En un equipo, es importante <strong>respetar las ideas</strong> de los demás, escuchar con atención y aportar tus propias ideas de manera constructiva. El <strong>manejo de la frustración</strong> y la <strong>resiliencia</strong> son habilidades que te ayudan a superar los obstáculos. La frustración es lo que sientes cuando algo no sale como quieres. La resiliencia es la capacidad de levantarte y seguir intentando, incluso si te equivocas.
+                            </p>
+                            <p class="mt-4">
+                                La <strong>expresión oral y corporal</strong> segura te ayuda a comunicar tus ideas con confianza. Y los <strong>valores</strong> como la <strong>disciplina</strong> (hacer lo que tienes que hacer, incluso si no quieres), el <strong>compromiso</strong> (cumplir tus promesas) y la <strong>responsabilidad</strong> (hacerte cargo de tus acciones) te ayudarán a convertirte en una persona admirable.
+                            </p>
+                            <div class="mt-4">
+                                <p class="font-bold text-lg text-purple-800 mb-2">Video Explicativo:</p>
+                                <div class="relative" >
+                                    <a href="https://www.youtube.com/watch?v=QIv2czLgOpQ&list=PLDjtbBXUusIxLyNbBXxV3lHxT0kogmvU4" target="_blank">LISTA COMPLETA DE VIDEOS CLIC AQUI !!!!! 🔥🔥🔥</a>
+                                    </br>
+
+                                    <iframe width="800" height="600" src="https://www.youtube.com/embed/QIv2czLgOpQ?list=PLDjtbBXUusIxLyNbBXxV3lHxT0kogmvU4" title="GUÍA ADMISIÓN SECUNDARIA - Completar Oraciones - Super fácil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-container">
+                            <p class="font-bold text-lg text-green-800 mb-2">Ejemplos de problemas con solución:</p>
+                            <div class="problem-solution">
+                                <p><strong>Problema 1:</strong> Si tienes que estudiar para un examen en 3 horas, ¿cómo puedes organizar tu tiempo?</p>
+                                <p><strong>Solución:</strong> Puedes dividir el tiempo en bloques: 45 minutos de estudio y 15 de descanso. Repite 3 veces.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 2:</strong> Estás trabajando en un proyecto grupal y no estás de acuerdo con la idea de un compañero. ¿Qué deberías hacer?</p>
+                                <p><strong>Solución:</strong> Escuchar su idea con respeto, explicar por qué no estás de acuerdo y proponer una alternativa de forma calmada.</p>
+                            </div>
+                            <div class="problem-solution">
+                                <p><strong>Problema 3:</strong> Fallaste en un ejercicio de matemáticas. ¿Cómo puedes demostrar resiliencia?</p>
+                                <p><strong>Solución:</strong> Intentándolo de nuevo, pidiendo ayuda si la necesitas y aprendiendo del error en lugar de rendirte.</p>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <p class="font-bold text-lg text-yellow-800 mb-2">Pistas para buscar en YouTube:</p>
+                            <ul>
+                                <li>Videos: Técnicas de estudio para niños</li>
+                                <li>Videos: Manejo de la frustración para niños</li>
+                                <li>Videos: Importancia de la disciplina</li>
+                            </ul>
+                        </div>
+
+                        <div class="questions">
+                            <p class="font-bold text-lg text-pink-800 mb-2">Preguntas tipo ICFES:</p>
+                            <div class="question-card">
+                                <p>23. ¿Cuál de las siguientes acciones demuestra responsabilidad?</p>
+                                <button onclick="toggleAnswer('q23-answer')">A) Dejar tu mochila tirada en el piso</button>
+                                <button onclick="toggleAnswer('q23-answer')">B) Ayudar a tus padres con las tareas de la casa</button>
+                                <button onclick="toggleAnswer('q23-answer')">C) Culpar a los demás por tus errores</button>
+                                <button onclick="toggleAnswer('q23-answer')">D) Olvidar hacer tus tareas</button>
+                                <div id="q23-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: B) Ayudar a tus padres con las tareas de la casa</strong><br>
+                                    <strong>Explicación:</strong> La responsabilidad es cumplir con tus deberes y obligaciones. Ayudar en casa es un ejemplo de ello.
+                                </div>
+                            </div>
+                            <div class="question-card">
+                                <p>24. ¿Qué habilidad usas cuando te mantienes concentrado en una tarea sin distraerte?</p>
+                                <button onclick="toggleAnswer('q24-answer')">A) Disciplina</button>
+                                <button onclick="toggleAnswer('q24-answer')">B) Memoria</button>
+                                <button onclick="toggleAnswer('q24-answer')">C) Concentración</button>
+                                <button onclick="toggleAnswer('q24-answer')">D) Velocidad</button>
+                                <div id="q24-answer" class="correct-answer">
+                                    <strong>Respuesta Correcta: C) Concentración</strong><br>
+                                    <strong>Explicación:</strong> La concentración es la capacidad de enfocar la atención en una sola actividad por un tiempo prolongado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+
+        </div>
+    </div>
+
+    <script>
+        function toggleContent(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.toggle('active');
+            }
+        }
+
+        function toggleAnswer(id) {
+            const answerElement = document.getElementById(id);
+            if (answerElement) {
+                answerElement.style.display = answerElement.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+    </script>
+</body>
+</html>
