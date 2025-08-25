@@ -17,7 +17,7 @@
   <div class="container mx-auto p-6 lg:p-12 max-w-4xl bg-white rounded-3xl shadow-2xl my-8 md:my-12 text-center transform transition-all duration-500 hover:scale-105">
     
     <header class="mb-10">
-      <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">Bienvenido! 🏆</h1>
+      <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900">🏆 Bienvenido! 🏆</h1>
       <p class="text-xl lg:text-2xl font-semibold text-gray-600 mt-4">
         ¡Aquí están tus guías de estudio bigotico! 🏁
       </p>
@@ -25,17 +25,33 @@
         ¡No olvides que si tienes dudas puedes preguntar SIEMPRE! 🐒
       </p>
       <p class="text-md lg:text-lg font-normal text-gray-500 mt-2">
-        Selecciona un tema para empezar a aprender. 🦥
+        Si quieres ver la versión anterior has clic aquí!
+        <a href="MAPG.html" target="_blank" class="text-blue-500 hover:underline">Si quieres ver la versión anterior has clic aquí! 📚
+      </p>
+      <p class="text-md lg:text-lg font-normal text-gray-500 mt-2">
+        Selecciona un tema para empezar a aprender.
       </p>
     </header>
 
     <!-- Grid de botones de acceso rápido a las guías -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
+      <!-- Botón para Habilidades Socioemocionales -->
+      <a href="AMPLIACION/preparacion.html" id="skills-guide-btn" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-8 px-6 rounded-2xl shadow-lg transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center space-y-3">
+        <i class="fas fa-heart text-4xl"></i>
+        <span class="text-lg text-center">Habilidades Socioemocionales</span>
+      </a>      
+
       <!-- Botón para Razonamiento Abstracto y Lógico -->
       <a href="AMPLIACION/razonamiento.html" id="logical-reasoning-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-8 px-6 rounded-2xl shadow-lg transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center space-y-3">
         <i class="fas fa-brain text-4xl"></i>
         <span class="text-lg">Razonamiento Abstracto</span>
+      </a>
+
+      <!-- Botón para Matemáticas -->
+      <a href="AMPLIACION/matematicas.html" id="math-guide-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-8 px-6 rounded-2xl shadow-lg transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center space-y-3">
+        <i class="fas fa-calculator text-4xl"></i>
+        <span class="text-lg">Matemáticas</span>
       </a>
 
       <!-- Botón para Lenguaje y Comprensión Lectora -->
@@ -68,11 +84,12 @@
         <span class="text-lg">Tecnologías e Innovación</span>
       </a>
 
-      <!-- Botón para Habilidades Socioemocionales -->
-      <a href="AMPLIACION/preparacion.html" id="skills-guide-btn" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-8 px-6 rounded-2xl shadow-lg transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center space-y-3">
-        <i class="fas fa-heart text-4xl"></i>
-        <span class="text-lg text-center">Habilidades Socioemocionales</span>
-      </a>      
+      <!-- Botón para Mega Test -->
+      <a href="TEST/master.html" id="mega-test-btn" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-8 px-6 rounded-2xl shadow-lg transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center space-y-3">
+        <i class="fas fa-question-circle text-4xl"></i>
+        <span class="text-lg">Mega Test</span>
+      </a>
+
     </div>
   </div>
 </body>
