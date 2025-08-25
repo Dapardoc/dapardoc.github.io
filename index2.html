@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Página de Bienvenida — ¡Bienvenido!</title>
+  <meta name="description" content="Página de bienvenida vistosa con animaciones y efecto confeti.">
+  <style>
+    :root{
+      --bg1:#0f172a; /* azul oscuro */
+      --accent1:#7c3aed; /* morado */
+      --accent2:#06b6d4; /* cian */
+      --glass: rgba(255,255,255,0.06);
+      --card: rgba(255,255,255,0.04);
+      --text: #e6eef8;
+      --muted: rgba(230,238,248,0.7);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:var(--text);background:radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.14), transparent 8%), radial-gradient(900px 500px at 95% 85%, rgba(6,182,212,0.1), transparent 12%), linear-gradient(180deg,var(--bg1), #071026 70%);-webkit-font-smoothing:antialiased;}
+
+    /* floating shapes */
+    .shape{position:absolute;border-radius:20px;filter:blur(28px);opacity:0.6;mix-blend-mode:screen}
+    .shape.one{width:360px;height:160px;left:-60px;top:20px;background:linear-gradient(90deg,#7c3aed,#06b6d4);transform:rotate(-12deg)}
+    .shape.two{width:280px;height:120px;right:-80px;bottom:30px;background:linear-gradient(90deg,#06b6d4,#7c3aed);}
+
+    /* layout */
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px}
+    .card{width:100%;max-width:1100px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(8px);border-radius:20px;padding:36px;box-shadow:0 10px 40px rgba(2,6,23,0.6);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
+
+    .grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    .hero-title{font-weight:800;font-size:44px;line-height:1.02;margin:0 0 8px;background:linear-gradient(90deg,var(--accent2),var(--accent1));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 6px 36px rgba(124,58,237,0.12)}
+    .hero-sub{color:var(--muted);margin:0 0 20px;font-size:16px}
+
+    .cta-row{display:flex;gap:12px;align-items:center}
+    .btn{padding:12px 18px;border-radius:12px;border:0;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(7,10,34,0.6);transition:transform .12s ease, box-shadow .12s ease}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+    .btn:active{transform:translateY(1px)}
+
+    .features{display:flex;flex-direction:column;gap:12px;margin-top:22px}
+    .feature{background:var(--card);padding:10px 12px;border-radius:12px;font-size:14px;color:var(--muted)}
+
+    /* right column */
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:18px;height:100%;display:flex;flex-direction:column;gap:12px}
+    .avatar{height:120px;border-radius:12px;background:conic-gradient(from 180deg at 50% 50%, rgba(124,58,237,0.18), rgba(6,182,212,0.12));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--muted)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* footer */
+    .footer{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:18px}
+    .links{display:flex;gap:8px}
+    .chip{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-size:13px}
+
+    /* neon pulse */
+    .neon{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(124,58,237,0.08);box-shadow:0 4px 22px rgba(124,58,237,0.12);}
+
+    /* responsive */
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr;}
+      .panel{order:-1}
+      .hero-title{font-size:34px}
+    }
+
+    /* subtle entrance */
+    .card{transform:translateY(10px);opacity:0;animation:enter .7s cubic-bezier(.2,.9,.3,1) forwards;}
+    @keyframes enter{to{transform:none;opacity:1}}
+
+    /* canvas overlay for confetti */
+    canvas#confetti{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+  </style>
+</head>
+<body>
+  <div class="shape one" aria-hidden></div>
+  <div class="shape two" aria-hidden></div>
+
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="welcomeTitle">
+      <canvas id="confetti" aria-hidden="true"></canvas>
+      <div class="grid">
+        <section>
+          <h1 id="welcomeTitle" class="hero-title">¡Bienvenido!<span class="neon">❤️!!!</span></h1>
+          <p class="hero-sub">Primera versión</p>
+
+          <div class="cta-row">
+            <button class="btn btn-primary" id="celebrateBtn">Celebrar 🎉</button>
+            <button class="btn btn-ghost" id="toggleTheme">Alternar tema</button>           
+            <a href="MAPG.html" class="btn btn-primary">🔥🔥MAPG🔥🔥</a>
+            <a href="https://www.google.com" class="btn btn-primary">Ir a Google</a>
+          </div>
+
+          <div class="features" aria-hidden="false">
+            <div class="feature">1</div>
+            <div class="feature">2</div>
+            <div class="feature">3</div>
+          </div>
+
+          <div class="footer">
+            <div class="small">Hecho con cariño · <strong>Marca</strong></div>
+            <div class="links"><span class="chip">Empezar</span><span class="chip">Contacto</span></div>
+          </div>
+        </section>
+
+        <aside class="panel" aria-label="Panel lateral de bienvenida">
+          <div class="avatar">logo</div>
+          <div>
+            <div style="font-weight:700;font-size:16px">Explora las posibilidades</div>
+            <div class="small">Personalizaciones 🔬</div>
+          </div>
+
+          <div style="flex:1"></div>
+
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+            <div class="small">Versión 1.0</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-ghost" id="downloadBtn">Descargar</button>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple confetti implementation (lightweight)
+    (function(){
+      const canvas = document.getElementById('confetti');
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [], raf;
+
+      function resize(){
+        const rect = canvas.getBoundingClientRect();
+        W = canvas.width = Math.floor(rect.width);
+        H = canvas.height = Math.floor(rect.height);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      function rand(min,max){return Math.random()*(max-min)+min}
+
+      function spawn(n){
+        for(let i=0;i<n;i++){
+          particles.push({
+            x: rand(0,W),
+            y: rand(-20, H/2),
+            vx: rand(-1.5,1.5),
+            vy: rand(1,4),
+            r: rand(6,12),
+            rot: rand(0,Math.PI*2),
+            vr: rand(-0.15,0.15),
+            color: ['#7c3aed','#06b6d4','#f472b6','#f59e0b'][Math.floor(rand(0,4))]
+          });
+        }
+      }
+
+      function update(){
+        ctx.clearRect(0,0,W,H);
+        for(let i=particles.length-1;i>=0;i--){
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vy += 0.03; // gravity
+          ctx.save();
+          ctx.translate(p.x,p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);
+          ctx.restore();
+          if(p.y>H+40){ particles.splice(i,1); }
+        }
+        if(particles.length>0) raf = requestAnimationFrame(update);
+        else cancelAnimationFrame(raf);
+      }
+
+      // public trigger
+      function celebrate(){
+        spawn(90);
+        if(!raf) update();
+      }
+
+      // attach to button
+      document.getElementById('celebrateBtn').addEventListener('click', function(){
+        celebrate();
+      });
+
+      // theme toggle (simple)
+      const toggle = document.getElementById('toggleTheme');
+      let dark = true;
+      toggle.addEventListener('click', ()=>{
+        dark = !dark;
+        if(dark){
+          document.documentElement.style.setProperty('--bg1','#0f172a');
+        } else {
+          document.documentElement.style.setProperty('--bg1','#f8fafc');
+          document.documentElement.style.setProperty('--text','#082032');
+          document.documentElement.style.setProperty('--muted','rgba(8,32,50,0.7)');
+        }
+      });
+
+      // download current page as HTML
+      document.getElementById('downloadBtn').addEventListener('click', ()=>{
+        const html = '<!doctype html>\n' + document.documentElement.outerHTML;
+        const blob = new Blob([html],{type:'text/html'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'bienvenida.html'; document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+      });
+
+      // small animation cue on load
+      window.addEventListener('load', ()=>{
+        setTimeout(()=>{
+          document.querySelector('.btn-primary').classList.add('pulse');
+        },600);
+      });
+
+    })();
+  </script>
+</body>
+</html>
