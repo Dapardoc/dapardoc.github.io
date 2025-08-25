@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Tecnologías e Innovación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .long-text {
+            background-color: #f3f4f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Tecnologías e Innovación</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tu conocimiento sobre tecnología, programación y seguridad digital!</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    const allQuestions = [
+        // Pensamiento computacional: algoritmos sencillos
+        {
+            type: 'multiple-choice',
+            question: "¿Qué es un algoritmo?",
+            options: ["Un tipo de robot", "Una lista de pasos para hacer algo", "Un videojuego", "Un tipo de planta"],
+            answer: "Una lista de pasos para hacer algo",
+            explanation: "Un algoritmo es una secuencia de instrucciones o pasos finitos y bien definidos para resolver un problema o lograr una tarea."
+        },
+        {
+            type: 'multiple-choice',
+            question: "En pensamiento computacional, la descomposición es el proceso de:",
+            options: ["Unir varios problemas en uno", "Ignorar un problema", "Dividir un problema grande en partes más pequeñas", "Resolver un problema muy rápido"],
+            answer: "Dividir un problema grande en partes más pequeñas",
+            explanation: "La descomposición ayuda a abordar problemas complejos al dividirlos en sub-problemas más manejables."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El primer paso en el algoritmo para hornear un pastel sería:",
+            options: ["Comer el pastel", "Mezclar los ingredientes", "Calentar el horno", "Decorar el pastel"],
+            answer: "Calentar el horno",
+            explanation: "Preparar el horno es el paso inicial para asegurarse de que esté a la temperatura correcta antes de hornear."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Si quieres ir del punto A al punto B en un mapa, estás usando:",
+            options: ["Un algoritmo", "Un sensor", "Un patrón", "Un motor"],
+            answer: "Un algoritmo",
+            explanation: "Un algoritmo de búsqueda de ruta te da la secuencia de pasos para ir de un lugar a otro."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué es el pensamiento computacional?",
+            options: ["Solo programar computadoras", "Resolver problemas usando conceptos de la informática", "Jugar videojuegos", "Ser bueno en matemáticas"],
+            answer: "Resolver problemas usando conceptos de la informática",
+            explanation: "Es una habilidad que nos ayuda a resolver problemas de forma lógica, incluso sin una computadora."
+        },
+        // Reconocimiento de patrones en programación visual (Scratch o Blockly)
+        {
+            type: 'multiple-choice',
+            question: "En Scratch, ¿qué bloque usarías para hacer que un personaje se mueva diez pasos y luego se mueva diez pasos de nuevo?",
+            options: ["Un bloque 'repetir'", "Un bloque 'cambiar disfraz'", "Un bloque 'tocar sonido'", "Un bloque 'preguntar'"],
+            answer: "Un bloque 'repetir'",
+            explanation: "El bloque 'repetir' se usa para ejecutar una serie de instrucciones varias veces."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Si ves una secuencia de bloques de 'movimiento' que se repite una y otra vez, estás identificando un:",
+            options: ["Algoritmo", "Patrón", "Sensor", "Error"],
+            answer: "Patrón",
+            explanation: "Reconocer patrones es la habilidad de identificar similitudes o secuencias que se repiten en un problema o programa."
+        },
+        {
+            type: 'multiple-choice',
+            question: "En programación visual, ¿qué tipo de patrón se repite para dibujar un círculo?",
+            options: ["Avanzar y retroceder", "Avanzar y girar en un ángulo pequeño", "Saltar y girar", "No hay patrón"],
+            answer: "Avanzar y girar en un ángulo pequeño",
+            explanation: "Para dibujar un círculo, el programa avanza un poco y gira un poco, repitiendo este patrón muchas veces."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Identificar similitudes y patrones en los problemas nos ayuda a:",
+            options: ["Complicar el problema", "Crear soluciones más fáciles y eficientes", "Escribir más código", "No resolver el problema"],
+            answer: "Crear soluciones más fáciles y eficientes",
+            explanation: "El reconocimiento de patrones nos permite reutilizar soluciones y simplificar el proceso de programación."
+        },
+        {
+            type: 'multiple-choice',
+            question: "En un programa de Scratch, el bloque 'Por siempre' crea un bucle que:",
+            options: ["Se ejecuta una vez", "Se ejecuta un número limitado de veces", "Se ejecuta para siempre hasta que el programa se detiene", "Se ejecuta solo al principio"],
+            answer: "Se ejecuta para siempre hasta que el programa se detiene",
+            explanation: "El bucle 'Por siempre' es útil para acciones que deben continuar durante toda la ejecución del programa."
+        },
+        // Introducción a la robótica escolar
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el cerebro de un robot?",
+            options: ["El motor", "El sensor", "El microcontrolador", "El engranaje"],
+            answer: "El microcontrolador",
+            explanation: "El microcontrolador es el componente que recibe las instrucciones del programa y controla los demás componentes del robot."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La función de un sensor de luz en un robot es:",
+            options: ["Encender una bombilla", "Detectar la presencia o ausencia de luz", "Hacer ruido", "Darle energía al robot"],
+            answer: "Detectar la presencia o ausencia de luz",
+            explanation: "Los sensores le dan al robot la capacidad de interactuar con su entorno, detectando luz, sonido, tacto, etc."
+        },
+        {
+            type: 'multiple-choice',
+            question: "En robótica, ¿qué es un actuador?",
+            options: ["La parte que le da movimiento al robot (como un motor)", "El 'cerebro' del robot", "Una batería", "Un tipo de sensor"],
+            answer: "La parte que le da movimiento al robot (como un motor)",
+            explanation: "Los actuadores son los componentes del robot que realizan acciones físicas, como moverse o girar."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El propósito de la robótica escolar es:",
+            options: ["Construir robots de forma profesional", "Desarrollar habilidades de resolución de problemas y programación", "Solo para niños mayores", "No es útil para el futuro"],
+            answer: "Desarrollar habilidades de resolución de problemas y programación",
+            explanation: "La robótica escolar fomenta el pensamiento lógico, la creatividad y el trabajo en equipo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué tipo de lenguaje se usa para programar un robot?",
+            options: ["Un lenguaje de robot", "Un lenguaje de programación", "Solo bloques", "Solo números"],
+            answer: "Un lenguaje de programación",
+            explanation: "Se utilizan lenguajes de programación, que pueden ser visuales (como en Scratch) o basados en texto."
+        },
+        // Uso responsable de internet y seguridad digital
+        {
+            type: 'multiple-choice',
+            question: "¿Qué información NO debes compartir en internet con desconocidos?",
+            options: ["Tu nombre de usuario de un juego", "El nombre de tu personaje favorito", "Tu dirección de casa y número de teléfono", "El nombre de tu mascota"],
+            answer: "Tu dirección de casa y número de teléfono",
+            explanation: "Compartir información personal sensible puede poner en riesgo tu seguridad."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué es una 'huella digital'?",
+            options: ["Una marca de tu dedo en la pantalla", "Un tipo de contraseña", "El rastro de todas tus actividades en línea", "Una aplicación de dibujo"],
+            answer: "El rastro de todas tus actividades en línea",
+            explanation: "Tu huella digital incluye todo lo que haces en internet, desde las publicaciones que compartes hasta las páginas que visitas."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Para tener una contraseña segura, debes usar:",
+            options: ["La misma contraseña para todas tus cuentas", "Tu fecha de cumpleaños", "Una combinación de letras mayúsculas, minúsculas, números y símbolos", "Solo números"],
+            answer: "Una combinación de letras mayúsculas, minúsculas, números y símbolos",
+            explanation: "Las contraseñas seguras son difíciles de adivinar y protegen tu información."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Si un sitio web te pide mucha información personal para un simple juego, ¿qué debes hacer?",
+            options: ["Darle toda la información", "Crear información falsa", "No usar ese sitio web", "Compartir información con tus amigos"],
+            answer: "No usar ese sitio web",
+            explanation: "Debes ser cauteloso con la información que compartes en línea y sospechar de sitios que piden demasiado."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Si alguien te envía un mensaje con un enlace que dice que ganaste un premio, ¿cuál es la mejor acción?",
+            options: ["Hacer clic en el enlace inmediatamente", "Compartir el enlace con tus amigos", "Borrar el mensaje y no hacer clic", "Responder 'gracias'"],
+            answer: "Borrar el mensaje y no hacer clic",
+            explanation: "Los mensajes que prometen premios inesperados suelen ser intentos de estafa o phishing."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué es la ciberconvivencia?",
+            options: ["Acosar a otras personas en línea", "Ignorar los comentarios de los demás", "El respeto y la buena conducta en el uso de internet", "Compartir información personal sin permiso"],
+            answer: "El respeto y la buena conducta en el uso de internet",
+            explanation: "La ciberconvivencia es la forma responsable de interactuar en el mundo digital, respetando a los demás y las normas de la comunidad."
+        },
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+    const numQuestionsPerSession = 20;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, numQuestionsPerSession);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            const optionsContainer = document.createElement('div');
+            shuffleArray(q.options);
+            q.options.forEach(option => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.onclick = () => handleAnswer(index, option);
+                optionsContainer.appendChild(optionButton);
+            });
+            questionCard.appendChild(optionsContainer);
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const questionData = currentQuestions[questionIndex];
+        const buttons = questionCard.querySelectorAll('.option-button');
+        const isCorrect = (selectedOption === questionData.answer);
+
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === questionData.answer) {
+                button.classList.add('correct');
+            } else if (button.textContent === selectedOption) {
+                button.classList.add('incorrect');
+            }
+        });
+
+        questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if (isCorrect) {
+            score++;
+        }
+
+        questionsAnswered++;
+
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${isCorrect ? 'correct' : 'incorrect'}`;
+        explanationDiv.innerHTML = isCorrect ?
+            `¡Correcto! ${questionData.explanation}` :
+            `Incorrecto. La respuesta correcta era '${questionData.answer}'. ${questionData.explanation}`;
+
+        questionCard.appendChild(explanationDiv);
+
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000);
+        }
+    }
+
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / numQuestionsPerSession) * 100);
+
+        finalScore.textContent = `${score} / ${numQuestionsPerSession}`;
+
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Tecnologías e Innovación y obtuve una puntuación de ${score} de ${numQuestionsPerSession} (${scorePercentage}%). ¡A seguir practicando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

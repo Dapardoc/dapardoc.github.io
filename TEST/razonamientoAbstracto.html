@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Razonamiento Lógico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .figure-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Razonamiento Abstracto y Lógico</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tu habilidad para identificar patrones y resolver acertijos lógicos! Responde las siguientes 15 preguntas.</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    const allQuestions = [
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 3, 6, 12, 24, ...?",
+            options: ["30", "36", "48", "60"],
+            answer: "48",
+            explanation: "La secuencia se genera multiplicando el número anterior por 2. $24 \times 2 = 48$."
+        },
+        {
+            question: "¿Qué letra sigue en la secuencia: A, C, E, G, ...?",
+            options: ["H", "I", "J", "K"],
+            answer: "I",
+            explanation: "Es una secuencia de letras del abecedario alternas. La letra que sigue a G es H, pero como se salta una letra, la respuesta es I."
+        },
+        {
+            question: "Si 'día' es a 'noche' como 'blanco' es a...",
+            options: ["gris", "negro", "luz", "sombra"],
+            answer: "negro",
+            explanation: "La relación es de opuestos. El opuesto de 'día' es 'noche', y el opuesto de 'blanco' es 'negro'."
+        },
+        {
+            question: "¿Qué figura no pertenece al grupo? (Un cuadrado, un círculo, un triángulo, un rombo)",
+            options: ["Cuadrado", "Círculo", "Triángulo", "Rombo"],
+            answer: "Círculo",
+            explanation: "El cuadrado, el triángulo y el rombo tienen lados rectos y vértices. El círculo es una forma curva sin vértices."
+        },
+        {
+            question: "Una flecha apunta a la derecha (→). Si rota 90 grados en el sentido de las manecillas del reloj, ¿hacia dónde apunta?",
+            options: ["Hacia la izquierda", "Hacia arriba", "Hacia abajo", "Hacia la derecha"],
+            answer: "Hacia abajo",
+            explanation: "Al rotar una flecha que apunta a la derecha 90 grados en sentido horario, apuntará hacia abajo."
+        },
+        {
+            question: "¿Qué número completa la analogía? 2:4 :: 3:?",
+            options: ["6", "8", "9", "12"],
+            answer: "9",
+            explanation: "La relación es el número al cuadrado. 2 al cuadrado es 4, por lo tanto, 3 al cuadrado es 9."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 1, 1, 2, 3, 5, 8, ...?",
+            options: ["11", "12", "13", "14"],
+            answer: "13",
+            explanation: "Esta es la secuencia de Fibonacci. Cada número es la suma de los dos anteriores. $5 + 8 = 13$."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Manzana, Pera, Plátano, Zanahoria)",
+            options: ["Manzana", "Pera", "Plátano", "Zanahoria"],
+            answer: "Zanahoria",
+            explanation: "La manzana, la pera y el plátano son frutas. La zanahoria es una verdura."
+        },
+        {
+            question: "Una figura con un solo punto negro se traslada 3 espacios a la derecha. ¿Cuál será su nueva posición relativa?",
+            options: ["3 puntos a la derecha", "2 puntos a la derecha", "4 puntos a la izquierda", "En el mismo lugar"],
+            answer: "3 puntos a la derecha",
+            explanation: "La traslación simplemente mueve la figura sin cambiar su orientación, por lo que la nueva posición es 3 espacios a la derecha."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 100, 95, 90, 85, ...?",
+            options: ["80", "75", "70", "65"],
+            answer: "80",
+            explanation: "Es una secuencia descendente donde se resta 5 a cada número."
+        },
+        {
+            question: "En una matriz de 3x3, las figuras se alternan entre un círculo y un cuadrado en cada fila. La primera fila es (Círculo, Cuadrado, Círculo). La segunda es (Cuadrado, Círculo, Cuadrado). ¿Cómo será la tercera fila?",
+            options: ["(Círculo, Cuadrado, Círculo)", "(Cuadrado, Círculo, Cuadrado)", "(Círculo, Círculo, Círculo)", "(Cuadrado, Cuadrado, Cuadrado)"],
+            answer: "(Círculo, Cuadrado, Círculo)",
+            explanation: "El patrón es una alternancia de formas en cada fila, comenzando con una forma opuesta a la fila anterior. La tercera fila comienza con un Círculo, luego un Cuadrado y termina con un Círculo."
+        },
+        {
+            question: "¿Qué número completa la analogía? 5:25 :: 7:?",
+            options: ["35", "42", "49", "56"],
+            answer: "49",
+            explanation: "La relación es el número al cuadrado. 5 al cuadrado es 25, por lo tanto, 7 al cuadrado es 49."
+        },
+        {
+            question: "¿Qué palabra no pertenece al grupo: Lunes, Martes, Verano, Jueves?",
+            options: ["Lunes", "Martes", "Verano", "Jueves"],
+            answer: "Verano",
+            explanation: "Lunes, Martes y Jueves son días de la semana. Verano es una estación del año."
+        },
+        {
+            question: "¿Qué figura sigue en la secuencia: Cuadrado (vacío), Cuadrado (lleno), Cuadrado (vacío), ...?",
+            options: ["Cuadrado (vacío)", "Círculo (lleno)", "Cuadrado (lleno)", "Triángulo (vacío)"],
+            answer: "Cuadrado (lleno)",
+            explanation: "El patrón es la alternancia del relleno. La figura que sigue es un cuadrado lleno."
+        },
+        {
+            question: "¿Qué número sigue en la secuencia: 2, 4, 8, 16, ...?",
+            options: ["20", "24", "32", "40"],
+            answer: "32",
+            explanation: "El patrón es el de las potencias de 2. Cada número es el doble del anterior. $16 \times 2 = 32$."
+        },
+        {
+            question: "Si 'zapato' es a 'pie' como 'guante' es a...",
+            options: ["mano", "dedo", "brazo", "cabeza"],
+            answer: "mano",
+            explanation: "La relación es 'prenda de vestir' a 'parte del cuerpo'. Un zapato se usa en el pie, y un guante se usa en la mano."
+        },
+        {
+            question: "¿Qué número no encaja en la siguiente lista? (4, 9, 16, 20, 25)",
+            options: ["4", "9", "16", "20", "25"],
+            answer: "20",
+            explanation: "4, 9, 16 y 25 son cuadrados perfectos. 20 no lo es."
+        },
+        {
+            question: "Un triángulo apunta hacia arriba. Si se le aplica una simetría horizontal, ¿cómo se verá?",
+            options: ["Un triángulo que apunta hacia abajo", "Un triángulo que apunta hacia arriba", "Un triángulo que apunta a la derecha", "Un triángulo que se ve igual, solo que invertido"],
+            answer: "Un triángulo que se ve igual, solo que invertido",
+            explanation: "La simetría horizontal invierte la figura de izquierda a derecha. Un triángulo que apunta hacia arriba, si es simétrico, se verá igual."
+        },
+        {
+            question: "¿Qué figura completa la secuencia: Un círculo con una línea vertical, un círculo con una línea horizontal, un círculo con una línea vertical, ...?",
+            options: ["Un círculo con una línea vertical", "Un círculo con una línea horizontal", "Un círculo sin línea", "Un cuadrado con una línea vertical"],
+            answer: "Un círculo con una línea horizontal",
+            explanation: "El patrón es la alternancia de la orientación de la línea dentro del círculo (vertical, horizontal)."
+        },
+        {
+            question: "Si el código para 'SOL' es '432', y el código para 'LUNA' es '215', ¿cuál es el código para 'AÑO'?",
+            options: ["103", "123", "231", "345"],
+            answer: "103",
+            explanation: "El código se basa en el número de letras de la palabra. SOL tiene 3 letras, así que el código para 'O' podría ser '3'. LUNA tiene 4 letras, así que 'U' podría ser '4'. AÑO tiene 3 letras. 103 es una posibilidad. `A` es 1era, `N` es 0, y `O` es 3. La lógica es que cada letra se asigna a un número. "
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 1, 3, 5, 7, ...?",
+            options: ["8", "9", "10", "11"],
+            answer: "9",
+            explanation: "Es una secuencia de números impares ascendentes. El siguiente impar después de 7 es 9."
+        },
+        {
+            question: "¿Qué figura sigue en la secuencia: Círculo (pequeño), Círculo (mediano), Círculo (grande), ...?",
+            options: ["Círculo (pequeño)", "Óvalo (grande)", "Círculo (extragrande)", "Círculo (mediano)"],
+            answer: "Círculo (extragrande)",
+            explanation: "La secuencia muestra el mismo objeto (círculo) aumentando de tamaño progresivamente."
+        },
+        {
+            question: "Si 'frío' es a 'caliente' como 'alto' es a...",
+            options: ["bajo", "grande", "pequeño", "largo"],
+            answer: "bajo",
+            explanation: "La relación es de opuestos. El opuesto de 'frío' es 'caliente', y el opuesto de 'alto' es 'bajo'."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Plato, Tenedor, Cuchara, Cuchillo)",
+            options: ["Plato", "Tenedor", "Cuchara", "Cuchillo"],
+            answer: "Plato",
+            explanation: "El tenedor, la cuchara y el cuchillo son utensilios. El plato es un recipiente."
+        },
+        {
+            question: "Una figura con un triángulo en la esquina superior izquierda se refleja verticalmente. ¿Dónde estará el triángulo?",
+            options: ["Esquina superior derecha", "Esquina inferior izquierda", "Esquina inferior derecha", "No se moverá"],
+            answer: "Esquina superior derecha",
+            explanation: "La simetría vertical invierte de izquierda a derecha, manteniendo la altura. El triángulo se moverá a la esquina superior derecha."
+        },
+        {
+            question: "¿Qué número completa la analogía? 4:16 :: 5:?",
+            options: ["10", "15", "20", "25"],
+            answer: "25",
+            explanation: "La relación es el número al cuadrado. 4 al cuadrado es 16, por lo tanto, 5 al cuadrado es 25."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 2, 5, 8, 11, ...?",
+            options: ["12", "13", "14", "15"],
+            answer: "14",
+            explanation: "El patrón es sumar 3 a cada número anterior. $11 + 3 = 14$."
+        },
+        {
+            question: "¿Qué figura sigue en la secuencia: Un círculo, un óvalo, un círculo, un óvalo, ...?",
+            options: ["Un óvalo", "Un círculo", "Un cuadrado", "Un rombo"],
+            answer: "Un círculo",
+            explanation: "El patrón es una alternancia entre un círculo y un óvalo. El siguiente debe ser un círculo."
+        },
+        {
+            question: "¿Qué palabra no pertenece al grupo: Gato, Perro, Vaca, Pato?",
+            options: ["Gato", "Perro", "Vaca", "Pato"],
+            answer: "Pato",
+            explanation: "El gato, perro y vaca son mamíferos. El pato es un ave."
+        },
+        {
+            question: "Una figura con un punto negro se mueve 2 pasos a la derecha y 1 paso hacia arriba. Si parte de la esquina inferior izquierda, ¿a dónde llegará?",
+            options: ["Esquina inferior izquierda", "Esquina superior derecha", "2 pasos a la derecha, 1 arriba", "2 pasos a la izquierda, 1 abajo"],
+            answer: "2 pasos a la derecha, 1 arriba",
+            explanation: "La descripción del movimiento es una traslación. El punto se moverá 2 unidades horizontalmente y 1 verticalmente."
+        },
+        {
+            question: "¿Qué número completa la analogía? 10:5 :: 20:?",
+            options: ["10", "15", "25", "50"],
+            answer: "10",
+            explanation: "La relación es la mitad del número. La mitad de 10 es 5, y la mitad de 20 es 10."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 1, 2, 4, 7, 11, ...?",
+            options: ["13", "14", "15", "16"],
+            answer: "16",
+            explanation: "El patrón es sumar un número creciente a cada paso: +1, +2, +3, +4. El siguiente será $11 + 5 = 16$."
+        },
+        {
+            question: "Si 'calor' es a 'verano' como 'frío' es a...",
+            options: ["otoño", "primavera", "invierno", "nieve"],
+            answer: "invierno",
+            explanation: "La relación es una asociación estacional. El calor se asocia con el verano, y el frío con el invierno."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Guitarra, Batería, Piano, Violín)",
+            options: ["Guitarra", "Batería", "Piano", "Violín"],
+            answer: "Batería",
+            explanation: "La guitarra, el piano y el violín son instrumentos de cuerda, mientras que la batería es un instrumento de percusión."
+        },
+        {
+            question: "Una figura con un cuadrado se rota 180 grados. ¿Qué figura es visible?",
+            options: ["Triángulo", "Círculo", "Cuadrado", "Rombo"],
+            answer: "Cuadrado",
+            explanation: "Un cuadrado se ve igual sin importar cuánto lo rotes, por su simetría."
+        },
+        {
+            question: "¿Qué número completa la analogía? 10:100 :: 12:?",
+            options: ["112", "120", "144", "150"],
+            answer: "144",
+            explanation: "La relación es el número al cuadrado. 10 al cuadrado es 100, por lo tanto, 12 al cuadrado es 144."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 1, 2, 3, 5, 8, 13, ...?",
+            options: ["18", "21", "24", "26"],
+            answer: "21",
+            explanation: "Esta es la secuencia de Fibonacci. Cada número es la suma de los dos anteriores. $8 + 13 = 21$."
+        },
+        {
+            question: "¿Qué palabra no pertenece al grupo: Mesa, Silla, Cama, Televisión?",
+            options: ["Mesa", "Silla", "Cama", "Televisión"],
+            answer: "Televisión",
+            explanation: "La mesa, silla y cama son muebles. La televisión es un electrodoméstico."
+        },
+        {
+            question: "Si una figura con un círculo y un cuadrado se refleja horizontalmente, ¿qué ocurrirá?",
+            options: ["Se invertirán de arriba a abajo", "Se invertirán de izquierda a derecha", "Se mantendrán en su lugar", "El círculo se convertirá en un cuadrado"],
+            answer: "Se invertirán de arriba a abajo",
+            explanation: "La simetría horizontal invierte la figura de arriba a abajo."
+        },
+        {
+            question: "¿Qué número completa la analogía? 1:3 :: 3:?",
+            options: ["5", "6", "7", "9"],
+            answer: "7",
+            explanation: "El patrón es sumar 2 al número. $1+2=3, 3+4=7$. Ah, el patrón es sumar un número impar. $1+2=3, 3+4=7$. No, el patrón es multiplicar por dos y sumar uno."
+        },
+        {
+            question: "Si 'grande' es a 'pequeño' como 'amable' es a...",
+            options: ["feliz", "triste", "grosero", "enojado"],
+            answer: "grosero",
+            explanation: "La relación es de opuestos. El opuesto de 'grande' es 'pequeño', y el opuesto de 'amable' es 'grosero'."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Perro, Caballo, Vaca, Gallina)",
+            options: ["Perro", "Caballo", "Vaca", "Gallina"],
+            answer: "Gallina",
+            explanation: "El perro, caballo y vaca son mamíferos. La gallina es un ave."
+        },
+        {
+            question: "¿Qué número sigue en la secuencia: 10, 8, 11, 9, 12, ...?",
+            options: ["10", "11", "13", "14"],
+            answer: "10",
+            explanation: "La secuencia alterna entre restar 2 y sumar 3. $12 - 2 = 10$."
+        },
+        {
+            question: "En una matriz 3x3, el patrón es alternar entre un círculo negro y un círculo blanco. El primer cuadrado es un círculo negro, el segundo un círculo blanco, el tercero un círculo negro. ¿Cuál es la figura en el cuarto cuadrado?",
+            options: ["Círculo blanco", "Círculo negro", "Cuadrado blanco", "Cuadrado negro"],
+            answer: "Círculo blanco",
+            explanation: "El patrón de alternancia continúa. El cuarto cuadrado será un círculo blanco."
+        },
+        {
+            question: "¿Qué número completa la analogía? 3:9 :: 4:?",
+            options: ["12", "16", "20", "24"],
+            answer: "16",
+            explanation: "La relación es el número al cuadrado. 3 al cuadrado es 9, por lo tanto, 4 al cuadrado es 16."
+        },
+        {
+            question: "¿Qué palabra no pertenece al grupo: Rojo, Azul, Verde, Lápiz?",
+            options: ["Rojo", "Azul", "Verde", "Lápiz"],
+            answer: "Lápiz",
+            explanation: "Rojo, azul y verde son colores. El lápiz es un objeto."
+        },
+        {
+            question: "Una figura con un triángulo se traslada 2 espacios a la izquierda y 3 hacia abajo. ¿Cuál será su nueva posición relativa?",
+            options: ["2 a la izquierda, 3 abajo", "2 a la derecha, 3 arriba", "3 a la izquierda, 2 abajo", "No se moverá"],
+            answer: "2 a la izquierda, 3 abajo",
+            explanation: "La traslación sigue la dirección indicada sin cambios de forma."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 1, 4, 7, 10, ...?",
+            options: ["11", "12", "13", "14"],
+            answer: "13",
+            explanation: "El patrón es sumar 3 a cada número anterior. $10 + 3 = 13$."
+        },
+        {
+            question: "Si 'doctor' es a 'hospital' como 'maestro' es a...",
+            options: ["universidad", "casa", "escuela", "biblioteca"],
+            answer: "escuela",
+            explanation: "La relación es 'profesión' a 'lugar de trabajo'. Un doctor trabaja en un hospital, y un maestro en una escuela."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Plátano, Fresa, Pera, Papa)",
+            options: ["Plátano", "Fresa", "Pera", "Papa"],
+            answer: "Papa",
+            explanation: "El plátano, la fresa y la pera son frutas. La papa es un tubérculo."
+        },
+        {
+            question: "Si un círculo tiene un punto negro en el centro. Al rotarlo 90 grados, ¿dónde estará el punto?",
+            options: ["Se moverá a la derecha", "Se moverá hacia abajo", "Se quedará en el centro", "Se moverá a la izquierda"],
+            answer: "Se quedará en el centro",
+            explanation: "El centro de un círculo permanece en su lugar sin importar cuánto se rote."
+        },
+        {
+            question: "¿Qué número completa la analogía? 2:10 :: 3:?",
+            options: ["12", "15", "18", "21"],
+            answer: "15",
+            explanation: "La relación es el número multiplicado por 5. $2 \times 5 = 10, 3 \times 5 = 15$."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 5, 25, 125, ...?",
+            options: ["250", "500", "625", "1000"],
+            answer: "625",
+            explanation: "El patrón es multiplicar por 5. $125 \times 5 = 625$."
+        },
+        {
+            question: "¿Qué palabra no pertenece al grupo: Ojo, Nariz, Boca, Oreja, Mano?",
+            options: ["Ojo", "Nariz", "Boca", "Oreja", "Mano"],
+            answer: "Mano",
+            explanation: "El ojo, la nariz, la boca y la oreja son partes de la cara. La mano no lo es."
+        },
+        {
+            question: "Una figura con un punto negro en la esquina inferior izquierda se le aplica una simetría vertical. ¿Dónde estará el punto?",
+            options: ["Esquina inferior derecha", "Esquina superior izquierda", "Esquina superior derecha", "No se moverá"],
+            answer: "Esquina inferior derecha",
+            explanation: "La simetría vertical invierte de izquierda a derecha. El punto se moverá de la esquina inferior izquierda a la esquina inferior derecha."
+        },
+        {
+            question: "¿Qué número completa la analogía? 1:1 :: 2:?",
+            options: ["2", "3", "4", "5"],
+            answer: "4",
+            explanation: "La relación es el número al cuadrado. 1 al cuadrado es 1, 2 al cuadrado es 4."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 1, 5, 2, 6, 3, 7, ...?",
+            options: ["4", "8", "9", "10"],
+            answer: "4",
+            explanation: "Hay dos secuencias entrelazadas: una que sube por 1 (1, 2, 3...) y otra que sube por 1 (5, 6, 7...). El siguiente número es de la primera secuencia."
+        },
+        {
+            question: "Si 'sol' es a 'día' como 'luna' es a...",
+            options: ["mañana", "noche", "tarde", "mediodía"],
+            answer: "noche",
+            explanation: "La relación es de asociación temporal. El sol se asocia con el día, y la luna con la noche."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Camisa, Pantalón, Gorra, Zapatos)",
+            options: ["Camisa", "Pantalón", "Gorra", "Zapatos"],
+            answer: "Zapatos",
+            explanation: "La camisa, el pantalón y la gorra son prendas de vestir. Los zapatos son calzado."
+        },
+        {
+            question: "Una figura con una 'X' se rota 90 grados. ¿Cómo se verá?",
+            options: ["Igual que antes", "Una 'Y'", "Una 'Z'", "Una 'V'"],
+            answer: "Igual que antes",
+            explanation: "La figura 'X' es simétrica y se ve igual al rotarla 90 grados."
+        },
+        {
+            question: "¿Qué número completa la analogía? 8:4 :: 12:?",
+            options: ["3", "6", "8", "9"],
+            answer: "6",
+            explanation: "La relación es la mitad del número. La mitad de 8 es 4, y la mitad de 12 es 6."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 5, 15, 45, 135, ...?",
+            options: ["145", "270", "405", "540"],
+            answer: "405",
+            explanation: "El patrón es multiplicar el número anterior por 3. $135 \times 3 = 405$."
+        },
+        {
+            question: "Si 'coche' es a 'ruedas' como 'barco' es a...",
+            options: ["vela", "mar", "ancla", "motor"],
+            answer: "ancla",
+            explanation: "La relación es 'vehículo' a 'parte vital para su movimiento/funcionamiento'. Un coche necesita ruedas, y un barco necesita un ancla para detenerse."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Avión, Bicicleta, Tren, Carro)",
+            options: ["Avión", "Bicicleta", "Tren", "Carro"],
+            answer: "Avión",
+            explanation: "La bicicleta, el tren y el carro son medios de transporte terrestre. El avión es aéreo."
+        },
+        {
+            question: "Una figura con un círculo en la parte superior derecha se traslada 2 espacios a la izquierda y 1 hacia abajo. ¿Dónde estará el círculo?",
+            options: ["Parte superior izquierda", "Parte inferior izquierda", "Parte superior derecha", "Parte inferior derecha"],
+            answer: "Parte inferior izquierda",
+            explanation: "El círculo se moverá a la izquierda y abajo, terminando en la parte inferior izquierda."
+        },
+        {
+            question: "¿Qué número completa la analogía? 100:10 :: 81:?",
+            options: ["8", "9", "11", "12"],
+            answer: "9",
+            explanation: "La relación es la raíz cuadrada. La raíz cuadrada de 100 es 10, y la raíz cuadrada de 81 es 9."
+        },
+        {
+            question: "¿Cuál es el siguiente número en la secuencia: 10, 20, 15, 30, 25, ...?",
+            options: ["30", "35", "40", "50"],
+            answer: "50",
+            explanation: "La secuencia alterna entre multiplicar por 2 y restar 5. $25 \times 2 = 50$."
+        },
+        {
+            question: "Si 'libro' es a 'lector' como 'comida' es a...",
+            options: ["cocinero", "restaurante", "comensal", "plato"],
+            answer: "comensal",
+            explanation: "La relación es 'objeto' a 'persona que lo utiliza/consume'. Un libro es para un lector, y la comida es para un comensal."
+        },
+        {
+            question: "¿Qué elemento no encaja en la siguiente lista? (Pájaro, Pez, Gato, Serpiente)",
+            options: ["Pájaro", "Pez", "Gato", "Serpiente"],
+            answer: "Gato",
+            explanation: "El pájaro, el pez y la serpiente son animales ovíparos (ponen huevos). El gato es vivíparo (nace del vientre de la madre)."
+        },
+        {
+            question: "Una figura con dos puntos negros, uno arriba y uno abajo, se rota 180 grados. ¿Qué ocurrirá?",
+            options: ["Se invertirán de arriba a abajo", "Se invertirán de izquierda a derecha", "Se mantendrán en su lugar", "No cambiarán de posición"],
+            answer: "Se mantendrán en su lugar",
+            explanation: "Al rotar 180 grados, el punto de arriba pasa a la posición de abajo y viceversa, manteniendo la misma configuración visual."
+        }
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+
+    // Función para mezclar un array de forma aleatoria (algoritmo Fisher-Yates)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Función para inicializar el quiz
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        // Mezclar todas las preguntas y tomar las primeras 15
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, 15);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            const optionsContainer = document.createElement('div');
+            shuffleArray(q.options); // Mezclar las opciones
+            q.options.forEach(option => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.onclick = () => handleAnswer(index, option);
+                optionsContainer.appendChild(optionButton);
+            });
+            questionCard.appendChild(optionsContainer);
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    // Función para manejar la respuesta del usuario
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const buttons = questionCard.querySelectorAll('.option-button');
+        const questionData = currentQuestions[questionIndex];
+
+        let isCorrect = (selectedOption === questionData.answer);
+
+        // Deshabilitar todos los botones para esta pregunta
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === questionData.answer) {
+                button.classList.add('correct');
+            } else if (button.textContent === selectedOption) {
+                button.classList.add('incorrect');
+            }
+        });
+
+        // Añadir el estilo a la tarjeta de la pregunta
+        questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+        // Mostrar la explicación
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${isCorrect ? 'correct' : 'incorrect'}`;
+        explanationDiv.innerHTML = isCorrect ?
+            `¡Correcto! ${questionData.explanation}` :
+            `Incorrecto. ${questionData.explanation}`;
+        questionCard.appendChild(explanationDiv);
+
+        if (isCorrect) {
+            score++;
+        }
+        questionsAnswered++;
+
+        // Mostrar resumen si se han respondido todas las preguntas
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000); // Pequeña espera para que la última respuesta se vea
+        }
+    }
+
+    // Función para mostrar el resumen del quiz
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / currentQuestions.length) * 100);
+
+        finalScore.textContent = `${score} / ${currentQuestions.length}`;
+
+        // Crear el mensaje de WhatsApp
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Razonamiento Abstracto y Lógico y obtuve una puntuación de ${score} de ${currentQuestions.length} (${scorePercentage}%). ¡A seguir practicando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    // Event listener para el botón de reiniciar
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    // Inicializar el quiz cuando la página carga
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

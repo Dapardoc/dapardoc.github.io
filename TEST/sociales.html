@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Ciencias Sociales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .long-text {
+            background-color: #f3f4f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Ciencias Sociales</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tu conocimiento sobre historia, geografía y cultura de Colombia!</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    const allQuestions = [
+        // Historia y símbolos de Colombia
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el ave nacional de Colombia?",
+            options: ["Cóndor de los Andes", "Águila calva", "Colibrí", "Guacamaya"],
+            answer: "Cóndor de los Andes",
+            explanation: "El Cóndor de los Andes es el ave nacional de Colombia, que simboliza la libertad y la soberanía."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué colores tiene la bandera de Colombia?",
+            options: ["Rojo, blanco, azul", "Amarillo, azul, rojo", "Verde, blanco, rojo", "Blanco, rojo, azul"],
+            answer: "Amarillo, azul, rojo",
+            explanation: "La bandera de Colombia está compuesta por tres franjas horizontales de colores amarillo, azul y rojo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué representa el color amarillo en la bandera de Colombia?",
+            options: ["El mar", "La sangre de los héroes", "La riqueza y la soberanía", "La libertad"],
+            answer: "La riqueza y la soberanía",
+            explanation: "El amarillo en la bandera simboliza la riqueza del suelo colombiano, el sol y la soberanía."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es la flor nacional de Colombia?",
+            options: ["La rosa", "La orquídea", "El clavel", "El jazmín"],
+            answer: "La orquídea",
+            explanation: "La orquídea, en particular la Cattleya trianae, es la flor nacional de Colombia."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Quién fue el principal líder de la independencia de Colombia?",
+            options: ["Antonio Nariño", "Francisco de Paula Santander", "Simón Bolívar", "Camilo Torres"],
+            answer: "Simón Bolívar",
+            explanation: "Simón Bolívar, conocido como 'El Libertador', fue clave en la independencia de varios países de América del Sur, incluida Colombia."
+        },
+        // Principios básicos de ciudadanía: respeto, normas y convivencia
+        {
+            type: 'multiple-choice',
+            question: "¿Qué es la convivencia?",
+            options: ["Vivir solo en casa", "Vivir en un lugar sin reglas", "Vivir con respeto y armonía con otros", "Ignorar a los demás"],
+            answer: "Vivir con respeto y armonía con otros",
+            explanation: "La convivencia se refiere a la capacidad de vivir y compartir un espacio con otras personas de manera pacífica y respetuosa."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El respeto a las normas en la escuela es importante para:",
+            options: ["Ser castigado", "Evitar el aprendizaje", "Garantizar la seguridad y el orden", "Hacer lo que quieras"],
+            answer: "Garantizar la seguridad y el orden",
+            explanation: "Las normas ayudan a mantener un ambiente seguro y ordenado para que todos puedan aprender y convivir."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Un buen ciudadano demuestra:",
+            options: ["Irrespeto por los demás", "Participación y responsabilidad", "Indiferencia a los problemas", "Egoísmo"],
+            answer: "Participación y responsabilidad",
+            explanation: "Un buen ciudadano es participativo, cumple con sus deberes y es responsable de sus acciones."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué principio fundamental de ciudadanía implica tratar a los demás como te gustaría que te traten a ti?",
+            options: ["La obediencia", "El respeto", "La autoridad", "La sumisión"],
+            answer: "El respeto",
+            explanation: "El respeto es la base para una sana convivencia y se relaciona con la empatía y la consideración hacia los demás."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es un ejemplo de cuidado de bienes comunes?",
+            options: ["Lanzar basura en el parque", "Dañar el mobiliario público", "Cuidar las zonas verdes y los parques", "Pintar graffitis en las paredes"],
+            answer: "Cuidar las zonas verdes y los parques",
+            explanation: "Los bienes comunes son de todos, y es responsabilidad de cada ciudadano cuidarlos y preservarlos."
+        },
+        // Geografía: regiones, relieve y climas de Colombia
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es la principal cordillera que atraviesa el territorio colombiano?",
+            options: ["Los Alpes", "Los Andes", "Los Urales", "Los Pirineos"],
+            answer: "Los Andes",
+            explanation: "La Cordillera de los Andes se divide en tres ramales en Colombia: la Cordillera Occidental, la Central y la Oriental."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál de estas regiones de Colombia es conocida por su clima cálido y sus playas?",
+            options: ["Región Andina", "Región Caribe", "Región Pacífica", "Región Orinoquía"],
+            answer: "Región Caribe",
+            explanation: "La Región Caribe se caracteriza por sus llanuras costeras, clima cálido y las playas del mar Caribe."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La región de la Amazonía en Colombia se caracteriza por tener:",
+            options: ["Un clima seco", "Altas montañas", "Una gran biodiversidad y clima húmedo", "Nieve"],
+            answer: "Una gran biodiversidad y clima húmedo",
+            explanation: "La región amazónica es una de las áreas con mayor biodiversidad del planeta, con un clima tropical húmedo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué tipo de relieve predomina en la región Andina?",
+            options: ["Llanuras", "Sistemas montañosos", "Desiertos", "Islas"],
+            answer: "Sistemas montañosos",
+            explanation: "La Región Andina es conocida por sus imponentes montañas, valles interandinos y volcanes."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Dónde se encuentra el desierto de La Tatacoa?",
+            options: ["Región Amazónica", "Región Pacífica", "Región Andina", "Región Caribe"],
+            answer: "Región Andina",
+            explanation: "El Desierto de La Tatacoa, a pesar de su nombre, es un bosque seco tropical que se encuentra en la región Andina, específicamente en el departamento de Huila."
+        },
+        // Cultura y diversidad de Colombia
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál de estos es un plato típico de la región andina?",
+            options: ["Bandeja paisa", "Ajiaco", "Sancocho de pescado", "Arroz con coco"],
+            answer: "Bandeja paisa",
+            explanation: "La bandeja paisa es un plato emblemático de la región andina, con ingredientes como frijoles, arroz, carne, huevo y aguacate."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué festividad es conocida por sus carrozas y desfiles en el sur del país?",
+            options: ["Carnaval de Barranquilla", "Carnaval de Negros y Blancos", "Feria de las Flores", "Festival de la Leyenda Vallenata"],
+            answer: "Carnaval de Negros y Blancos",
+            explanation: "El Carnaval de Negros y Blancos, celebrado en Pasto, es una de las festividades más importantes de Colombia, donde se celebran la diversidad cultural."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La diversidad cultural de Colombia se debe a la mezcla de culturas:",
+            options: ["Europea y asiática", "Indígena, africana y europea", "Americana y australiana", "Africana y asiática"],
+            answer: "Indígena, africana y europea",
+            explanation: "La cultura colombiana es el resultado de una rica mezcla entre las culturas indígenas nativas, la europea (especialmente española) y la africana."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿En qué región de Colombia se encuentra el vallenato, declarado Patrimonio Cultural Inmaterial de la Humanidad?",
+            options: ["Región Andina", "Región Orinoquía", "Región Caribe", "Región Pacífica"],
+            answer: "Región Caribe",
+            explanation: "El vallenato es un género musical tradicional de la región Caribe de Colombia, especialmente de la zona de Valledupar."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el principal producto agrícola de exportación de Colombia?",
+            options: ["Café", "Flores", "Banano", "Petróleo"],
+            answer: "Café",
+            explanation: "El café colombiano es mundialmente reconocido por su calidad y es uno de los principales productos de exportación del país."
+        },
+        // Nociones de economía familiar y cuidado de bienes comunes
+        {
+            type: 'multiple-choice',
+            question: "¿Qué es la economía familiar?",
+            options: ["Comprar sin control", "Manejar el dinero de manera irresponsable", "Administrar los ingresos y gastos en casa", "Dejar que el dinero se gaste solo"],
+            answer: "Administrar los ingresos y gastos en casa",
+            explanation: "La economía familiar implica la planificación y el control de cómo se gana y se gasta el dinero en el hogar."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El ahorro es una práctica de la economía familiar que consiste en:",
+            options: ["Gastar todo el dinero", "Guardar una parte del dinero para el futuro", "Pedir prestado", "No trabajar"],
+            answer: "Guardar una parte del dinero para el futuro",
+            explanation: "Ahorrar es una práctica financiera importante para alcanzar metas a futuro y enfrentar imprevistos."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Un ejemplo de bien común es:",
+            options: ["Mi juguete favorito", "Una bicicleta", "Una biblioteca pública", "Mi celular"],
+            answer: "Una biblioteca pública",
+            explanation: "Los bienes comunes son aquellos que pertenecen a la comunidad y son para el uso y disfrute de todos, como los parques, calles y bibliotecas."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Por qué es importante cuidar los bienes comunes?",
+            options: ["Para que nadie los use", "Porque nos pertenecen a todos y su daño nos afecta", "Porque son de una sola persona", "Para destruirlos después"],
+            answer: "Porque nos pertenecen a todos y su daño nos afecta",
+            explanation: "Cuidar los bienes comunes es un acto de responsabilidad ciudadana, ya que su deterioro perjudica a toda la comunidad."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La solidaridad es un principio de ciudadanía que se demuestra al:",
+            options: ["Ignorar los problemas de los demás", "Ayudar a una persona que lo necesita", "Pensar solo en uno mismo", "Competir con todos"],
+            answer: "Ayudar a una persona que lo necesita",
+            explanation: "La solidaridad implica ayudar a otros, especialmente en momentos de dificultad, y contribuye a una mejor convivencia."
+        }
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+    const numQuestionsPerSession = 20;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, numQuestionsPerSession);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            const optionsContainer = document.createElement('div');
+            shuffleArray(q.options);
+            q.options.forEach(option => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.onclick = () => handleAnswer(index, option);
+                optionsContainer.appendChild(optionButton);
+            });
+            questionCard.appendChild(optionsContainer);
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const questionData = currentQuestions[questionIndex];
+        const buttons = questionCard.querySelectorAll('.option-button');
+        const isCorrect = (selectedOption === questionData.answer);
+
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === questionData.answer) {
+                button.classList.add('correct');
+            } else if (button.textContent === selectedOption) {
+                button.classList.add('incorrect');
+            }
+        });
+
+        questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if (isCorrect) {
+            score++;
+        }
+
+        questionsAnswered++;
+
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${isCorrect ? 'correct' : 'incorrect'}`;
+        explanationDiv.innerHTML = isCorrect ?
+            `¡Correcto! ${questionData.explanation}` :
+            `Incorrecto. La respuesta correcta era '${questionData.answer}'. ${questionData.explanation}`;
+
+        questionCard.appendChild(explanationDiv);
+
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000);
+        }
+    }
+
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / numQuestionsPerSession) * 100);
+
+        finalScore.textContent = `${score} / ${numQuestionsPerSession}`;
+
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Ciencias Sociales y obtuve una puntuación de ${score} de ${numQuestionsPerSession} (${scorePercentage}%). ¡A seguir practicando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

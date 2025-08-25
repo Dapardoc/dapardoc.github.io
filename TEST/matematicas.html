@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Matemáticas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Matemáticas Fundamentales</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tus conocimientos! Responde las siguientes 15 preguntas.</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    const allQuestions = [
+        {
+            question: "¿Cuál es el valor posicional del dígito 8 en el número 4,852?",
+            options: ["Ocho centenas", "Ocho unidades de mil", "Ocho decenas", "Ocho unidades"],
+            answer: "Ocho centenas",
+            explanation: "El valor posicional del 8 es en el lugar de las centenas, ya que el número es 4,852."
+        },
+        {
+            question: "¿Cuál de estos números es un número par?",
+            options: ["17", "23", "36", "45"],
+            answer: "36",
+            explanation: "Un número par es aquel que puede ser dividido por 2 sin dejar residuo. El 36 es un número par (36 / 2 = 18)."
+        },
+        {
+            question: "Si sumas 157 y 28, ¿cuál es el resultado?",
+            options: ["185", "175", "195", "165"],
+            answer: "185",
+            explanation: "La suma de 157 + 28 es 185."
+        },
+        {
+            question: "¿Qué número obtienes al multiplicar 9 por 7?",
+            options: ["56", "63", "72", "81"],
+            answer: "63",
+            explanation: "La multiplicación de 9 x 7 es 63."
+        },
+        {
+            question: "¿Cuántas veces cabe 4 en 20?",
+            options: ["4", "5", "6", "7"],
+            answer: "5",
+            explanation: "20 dividido por 4 es igual a 5."
+        },
+        {
+            question: "¿Cuál es la fracción que representa la mitad de una pizza?",
+            options: ["1/4", "1/2", "2/3", "3/4"],
+            answer: "1/2",
+            explanation: "La fracción 1/2 representa la mitad de un todo, como una pizza."
+        },
+        {
+            question: "Si tienes 3/4 de una barra de chocolate y te comes 1/4, ¿qué fracción de la barra te queda?",
+            options: ["1/2", "1/4", "2/4", "3/4"],
+            answer: "2/4",
+            explanation: "3/4 - 1/4 = 2/4. Esta fracción también es equivalente a 1/2."
+        },
+        {
+            question: "¿Qué número decimal es equivalente a 1/2?",
+            options: ["0.25", "0.5", "1.5", "2.0"],
+            answer: "0.5",
+            explanation: "La fracción 1/2 es igual a 0.5 en forma decimal."
+        },
+        {
+            question: "Si 3 manzanas cuestan $600, ¿cuánto cuestan 6 manzanas?",
+            options: ["$900", "$1,200", "$1,500", "$1,800"],
+            answer: "$1,200",
+            explanation: "Esto es proporcionalidad directa. Si el número de manzanas se duplica, el costo también se duplica. $600 x 2 = $1,200."
+        },
+        {
+            question: "Un auto recorre 120 km en 2 horas. Si mantiene la misma velocidad, ¿cuántos km recorrerá en 4 horas?",
+            options: ["120 km", "240 km", "360 km", "480 km"],
+            answer: "240 km",
+            explanation: "En este problema de proporcionalidad directa, si el tiempo se duplica, la distancia recorrida también se duplica. 120 km x 2 = 240 km."
+        },
+        {
+            question: "¿Cuál de las siguientes figuras no es una figura plana?",
+            options: ["Círculo", "Cuadrado", "Esfera", "Triángulo"],
+            answer: "Esfera",
+            explanation: "Un círculo, cuadrado y triángulo son figuras planas (2D), mientras que una esfera es un sólido (3D)."
+        },
+        {
+            question: "El perímetro de un cuadrado con un lado de 5 cm es:",
+            options: ["5 cm", "10 cm", "20 cm", "25 cm"],
+            answer: "20 cm",
+            explanation: "El perímetro de un cuadrado se calcula sumando la longitud de sus cuatro lados: 5 cm + 5 cm + 5 cm + 5 cm = 20 cm."
+        },
+        {
+            question: "¿Cuál es el área de un rectángulo con una base de 8 cm y una altura de 4 cm?",
+            options: ["12 cm²", "16 cm²", "32 cm²", "40 cm²"],
+            answer: "32 cm²",
+            explanation: "El área de un rectángulo es base x altura. 8 cm x 4 cm = 32 cm²."
+        },
+        {
+            question: "Si Juan tiene 30 dulces y los reparte equitativamente entre sus 5 amigos, ¿cuántos dulces recibe cada amigo?",
+            options: ["5", "6", "7", "8"],
+            answer: "6",
+            explanation: "La división es la operación correcta: 30 dulces / 5 amigos = 6 dulces por amigo."
+        },
+        {
+            question: "Un ciclista viaja a una velocidad constante de 20 km/h. ¿Cuántos km recorrerá en 3 horas?",
+            options: ["40 km", "50 km", "60 km", "70 km"],
+            answer: "60 km",
+            explanation: "Multiplica la velocidad por el tiempo: 20 km/h x 3 h = 60 km."
+        },
+        {
+            question: "¿Qué número es el doble de 45?",
+            options: ["80", "85", "90", "95"],
+            answer: "90",
+            explanation: "El doble de un número se obtiene multiplicándolo por 2. 45 x 2 = 90."
+        },
+        {
+            question: "Si restas 35 de 100, ¿cuál es el resultado?",
+            options: ["65", "70", "75", "80"],
+            answer: "65",
+            explanation: "100 - 35 = 65."
+        },
+        {
+            question: "¿Cuántas decenas hay en 540?",
+            options: ["4", "40", "54", "540"],
+            answer: "54",
+            explanation: "Para saber cuántas decenas hay en un número, lo divides por 10. 540 / 10 = 54."
+        },
+        {
+            question: "¿Qué fracción es equivalente a 2/8?",
+            options: ["1/2", "1/3", "1/4", "1/8"],
+            answer: "1/4",
+            explanation: "Simplificando 2/8, dividimos el numerador y el denominador por 2. 2÷2=1 y 8÷2=4, lo que da 1/4."
+        },
+        {
+            question: "Si el perímetro de un triángulo equilátero es 18 cm, ¿cuánto mide cada lado?",
+            options: ["3 cm", "6 cm", "9 cm", "18 cm"],
+            answer: "6 cm",
+            explanation: "Un triángulo equilátero tiene sus tres lados iguales. 18 cm / 3 lados = 6 cm por lado."
+        },
+        {
+            question: "¿Cuál es el área de un cuadrado con un lado de 6 cm?",
+            options: ["12 cm²", "24 cm²", "36 cm²", "48 cm²"],
+            answer: "36 cm²",
+            explanation: "El área de un cuadrado es lado x lado. 6 cm x 6 cm = 36 cm²."
+        },
+        {
+            question: "Si en una pastelería 5 pasteles cuestan $25,000, ¿cuánto costarán 2 pasteles?",
+            options: ["$5,000", "$10,000", "$15,000", "$20,000"],
+            answer: "$10,000",
+            explanation: "Costo por pastel: $25,000 / 5 = $5,000. Costo de 2 pasteles: $5,000 x 2 = $10,000."
+        },
+        {
+            question: "¿Qué número representa tres décimas en forma decimal?",
+            options: ["0.3", "3.0", "0.03", "0.33"],
+            answer: "0.3",
+            explanation: "Tres décimas se escribe como 0.3."
+        },
+        {
+            question: "Un libro cuesta $12,500 y un cuaderno cuesta la mitad. ¿Cuánto cuesta el cuaderno?",
+            options: ["$6,000", "$6,250", "$6,500", "$7,000"],
+            answer: "$6,250",
+            explanation: "La mitad de 12,500 es 12,500 / 2 = 6,250."
+        },
+        {
+            question: "¿Cuántas horas hay en 2 días?",
+            options: ["12", "24", "48", "72"],
+            answer: "48",
+            explanation: "Un día tiene 24 horas, así que 2 días tienen 24 x 2 = 48 horas."
+        },
+        {
+            question: "Si tienes 5 cajas con 12 lápices cada una, ¿cuántos lápices tienes en total?",
+            options: ["50", "60", "72", "80"],
+            answer: "60",
+            explanation: "Multiplicas el número de cajas por la cantidad de lápices en cada una: 5 x 12 = 60 lápices."
+        },
+        {
+            question: "¿Cuál es el número anterior a 999?",
+            options: ["998", "1,000", "990", "989"],
+            answer: "998",
+            explanation: "El número que está justo antes de 999 es 998."
+        },
+        {
+            question: "Un grupo de 4 albañiles tarda 6 días en construir una pared. ¿Cuánto tardarían 8 albañiles en construir la misma pared?",
+            options: ["3 días", "4 días", "6 días", "12 días"],
+            answer: "3 días",
+            explanation: "Este es un problema de proporcionalidad inversa. Al duplicar el número de albañiles (de 4 a 8), el tiempo se reduce a la mitad (6 / 2 = 3 días)."
+        },
+        {
+            question: "Si el área de un círculo es 16π cm², ¿cuál es su radio?",
+            options: ["2 cm", "4 cm", "8 cm", "16 cm"],
+            answer: "4 cm",
+            explanation: "La fórmula del área de un círculo es $A = \pi r^2$. Si $16\pi = \pi r^2$, entonces $16 = r^2$, lo que significa que r = 4 cm."
+        },
+        {
+            question: "Si un pantalón cuesta $45,000 y está en oferta con un 10% de descuento, ¿cuánto pagarías por el pantalón?",
+            options: ["$40,500", "$4,500", "$41,500", "$45,000"],
+            answer: "$40,500",
+            explanation: "El 10% de $45,000 es $4,500. El precio final es $45,000 - $4,500 = $40,500."
+        },
+        {
+            question: "¿Cuál es el resultado de la siguiente operación: 5 x (3 + 2)?",
+            options: ["17", "20", "25", "30"],
+            answer: "25",
+            explanation: "Según el orden de las operaciones, primero se resuelve lo que está entre paréntesis: 3 + 2 = 5. Luego se multiplica: 5 x 5 = 25."
+        },
+        {
+            question: "Si una torta se corta en 8 partes iguales, y te comes 3, ¿qué fracción de la torta te queda?",
+            options: ["3/8", "5/8", "1/8", "2/8"],
+            answer: "5/8",
+            explanation: "Te quedan 8 - 3 = 5 partes de las 8 originales, por lo que la fracción es 5/8."
+        },
+        {
+            question: "¿Qué número decimal es equivalente a 3/4?",
+            options: ["0.25", "0.5", "0.75", "1.0"],
+            answer: "0.75",
+            explanation: "La fracción 3/4 es igual a 0.75 en forma decimal."
+        },
+        {
+            question: "Si 5 fotocopiadoras tardan 10 minutos en hacer un trabajo, ¿cuánto tiempo tardarán 2 fotocopiadoras?",
+            options: ["4 minutos", "10 minutos", "15 minutos", "25 minutos"],
+            answer: "25 minutos",
+            explanation: "Esto es proporcionalidad inversa. Si hay menos fotocopiadoras, el tiempo será mayor. $(5 \text{ fotocopiadoras} \times 10 \text{ min}) / 2 \text{ fotocopiadoras} = 25 \text{ minutos}$."
+        },
+        {
+            question: "¿Cuál es el perímetro de un triángulo con lados de 6 cm, 8 cm y 10 cm?",
+            options: ["18 cm", "24 cm", "30 cm", "48 cm"],
+            answer: "24 cm",
+            explanation: "El perímetro es la suma de las longitudes de los lados: 6 cm + 8 cm + 10 cm = 24 cm."
+        },
+        {
+            question: "¿Cuál es el valor posicional del dígito 5 en el número 12,345?",
+            options: ["Cinco centenas", "Cinco decenas", "Cinco unidades", "Cinco unidades de mil"],
+            answer: "Cinco unidades",
+            explanation: "El valor posicional del 5 es en el lugar de las unidades."
+        },
+        {
+            question: "¿Cuál es el número impar más pequeño de un solo dígito?",
+            options: ["1", "3", "5", "7"],
+            answer: "1",
+            explanation: "Los números impares de un solo dígito son 1, 3, 5, 7, 9. El más pequeño es 1."
+        },
+        {
+            question: "Si tienes 35 caramelos para repartir entre 7 niños, ¿cuántos caramelos le tocan a cada uno?",
+            options: ["3", "4", "5", "6"],
+            answer: "5",
+            explanation: "Se usa la división para resolver el problema: 35 / 7 = 5."
+        },
+        {
+            question: "¿Cuál de las siguientes figuras tiene 4 lados y 4 ángulos rectos, pero todos sus lados no son necesariamente iguales?",
+            options: ["Cuadrado", "Rombo", "Rectángulo", "Trapecio"],
+            answer: "Rectángulo",
+            explanation: "Un rectángulo tiene 4 lados, 4 ángulos rectos, y sus lados opuestos son iguales. Un cuadrado tiene todos sus lados iguales."
+        },
+        {
+            question: "Si un ángulo mide 90°, ¿cómo se llama?",
+            options: ["Ángulo agudo", "Ángulo recto", "Ángulo obtuso", "Ángulo llano"],
+            answer: "Ángulo recto",
+            explanation: "Un ángulo que mide exactamente 90° se llama ángulo recto."
+        },
+        {
+            question: "Si un carro viaja a una velocidad de 60 km/h, ¿cuánto tiempo tardará en recorrer 180 km?",
+            options: ["2 horas", "3 horas", "4 horas", "5 horas"],
+            answer: "3 horas",
+            explanation: "Para encontrar el tiempo, divides la distancia por la velocidad: 180 km / 60 km/h = 3 horas."
+        },
+        {
+            question: "Un libro cuesta $20,000 y un lápiz cuesta $5,000. Si compras 2 libros y 3 lápices, ¿cuánto pagarías?",
+            options: ["$50,000", "$55,000", "$60,000", "$65,000"],
+            answer: "$55,000",
+            explanation: "Costo de los libros: 2 x $20,000 = $40,000. Costo de los lápices: 3 x $5,000 = $15,000. Total: $40,000 + $15,000 = $55,000."
+        },
+        {
+            question: "¿Cuántos minutos hay en 2 horas y media?",
+            options: ["120", "150", "180", "240"],
+            answer: "150",
+            explanation: "Una hora tiene 60 minutos, por lo que 2 horas tienen 120 minutos. Media hora tiene 30 minutos. 120 + 30 = 150."
+        },
+        {
+            question: "¿Cuál es el valor de 'x' en la ecuación $x + 15 = 25$?",
+            options: ["10", "15", "20", "40"],
+            answer: "10",
+            explanation: "Para despejar 'x', restas 15 de ambos lados de la ecuación: $x = 25 - 15$, por lo tanto, $x = 10$."
+        },
+        {
+            question: "¿Qué número representa una centena y media?",
+            options: ["50", "100", "150", "200"],
+            answer: "150",
+            explanation: "Una centena es 100, y media centena es 50. La suma de ambos es 100 + 50 = 150."
+        },
+        {
+            question: "Si tienes 1/3 de un pastel y un amigo te da otro 1/3, ¿qué fracción de pastel tienes en total?",
+            options: ["1/6", "2/3", "2/6", "1/3"],
+            answer: "2/3",
+            explanation: "La suma de fracciones con el mismo denominador es: 1/3 + 1/3 = 2/3."
+        },
+        {
+            question: "¿Cuál es el resultado de la siguiente operación: $(8 - 2) \times 4$?",
+            options: ["6", "12", "24", "32"],
+            answer: "24",
+            explanation: "Primero se resuelve el paréntesis: 8 - 2 = 6. Luego se multiplica: 6 x 4 = 24."
+        },
+        {
+            question: "Si un vestido cuesta $80,000 y tiene un descuento del 25%, ¿cuál es el precio final?",
+            options: ["$20,000", "$60,000", "$75,000", "$80,000"],
+            answer: "$60,000",
+            explanation: "El 25% de $80,000 es $20,000. El precio final es $80,000 - $20,000 = $60,000."
+        },
+        {
+            question: "¿Cuál es el área de un triángulo con base de 10 cm y altura de 6 cm?",
+            options: ["16 cm²", "30 cm²", "60 cm²", "120 cm²"],
+            answer: "30 cm²",
+            explanation: "La fórmula del área de un triángulo es (base x altura) / 2. (10 x 6) / 2 = 60 / 2 = 30 cm²."
+        },
+        {
+            question: "Si un equipo de 10 pintores tarda 20 horas en pintar un edificio, ¿cuánto tiempo tardarán 5 pintores?",
+            options: ["10 horas", "20 horas", "30 horas", "40 horas"],
+            answer: "40 horas",
+            explanation: "Esto es proporcionalidad inversa. Al reducir el número de pintores a la mitad, el tiempo se duplica. 20 horas x 2 = 40 horas."
+        },
+        {
+            question: "Si el perímetro de un círculo es 10π cm, ¿cuál es su radio?",
+            options: ["5 cm", "10 cm", "20 cm", "25 cm"],
+            answer: "5 cm",
+            explanation: "La fórmula del perímetro de un círculo es $P = 2\pi r$. Si $10\pi = 2\pi r$, entonces $r = 10\pi / 2\pi$, lo que significa que r = 5 cm."
+        },
+        {
+            question: "¿Cuál de estos números es un número primo?",
+            options: ["4", "9", "12", "13"],
+            answer: "13",
+            explanation: "Un número primo es aquel que solo tiene dos divisores: 1 y él mismo. 13 solo es divisible por 1 y 13."
+        },
+        {
+            question: "Si tienes 2.5 litros de jugo y sirves vasos de 0.5 litros, ¿cuántos vasos puedes llenar?",
+            options: ["3", "4", "5", "6"],
+            answer: "5",
+            explanation: "Para saber cuántos vasos se pueden llenar, divides 2.5 / 0.5 = 5 vasos."
+        },
+        {
+            question: "Un cuadrado tiene un área de 64 cm². ¿Cuál es la longitud de uno de sus lados?",
+            options: ["4 cm", "8 cm", "16 cm", "32 cm"],
+            answer: "8 cm",
+            explanation: "El área de un cuadrado es lado x lado. Para encontrar el lado, se calcula la raíz cuadrada del área: √64 = 8 cm."
+        },
+        {
+            question: "¿Qué número representa el 50% de 200?",
+            options: ["50", "100", "150", "200"],
+            answer: "100",
+            explanation: "El 50% es la mitad de un número. La mitad de 200 es 100."
+        },
+        {
+            question: "Si una bolsa de manzanas cuesta $4,000 y compras 3 bolsas, ¿cuánto es el cambio si pagas con un billete de $20,000?",
+            options: ["$4,000", "$8,000", "$12,000", "$16,000"],
+            answer: "$8,000",
+            explanation: "Costo total de las 3 bolsas: 3 x $4,000 = $12,000. Cambio: $20,000 - $12,000 = $8,000."
+        },
+        {
+            question: "¿Cuál de estos números es un número compuesto?",
+            options: ["7", "11", "17", "18"],
+            answer: "18",
+            explanation: "Un número compuesto es un número natural que tiene más de dos divisores. 18 es divisible por 1, 2, 3, 6, 9 y 18."
+        },
+        {
+            question: "Un carpintero tarda 3 días en hacer una mesa. Si tiene 12 mesas para hacer, ¿cuántos días tardará?",
+            options: ["4 días", "15 días", "36 días", "12 días"],
+            answer: "36 días",
+            explanation: "Multiplica el número de mesas por el tiempo que tarda en hacer cada una: 12 x 3 = 36 días."
+        },
+        {
+            question: "Si un círculo tiene un diámetro de 12 cm, ¿cuál es su radio?",
+            options: ["6 cm", "12 cm", "24 cm", "36 cm"],
+            answer: "6 cm",
+            explanation: "El radio es la mitad del diámetro: 12 cm / 2 = 6 cm."
+        },
+        {
+            question: "Un reloj marca las 3:00. ¿Qué tipo de ángulo forman las manecillas del reloj?",
+            options: ["Ángulo agudo", "Ángulo recto", "Ángulo obtuso", "Ángulo llano"],
+            answer: "Ángulo recto",
+            explanation: "Las manecillas forman un ángulo de 90°."
+        },
+        {
+            question: "En una receta, se necesitan 2/3 de taza de harina. Si quieres hacer el doble de la receta, ¿cuánta harina necesitas?",
+            options: ["1/3 de taza", "2/3 de taza", "4/3 de taza", "1 taza"],
+            answer: "4/3 de taza",
+            explanation: "El doble de 2/3 es 2 x 2/3 = 4/3."
+        },
+        {
+            question: "Si un pantalón cuesta $50,000 y un buzo cuesta $70,000, y compras ambos con un descuento total de $10,000, ¿cuánto pagas?",
+            options: ["$110,000", "$120,000", "$100,000", "$90,000"],
+            answer: "$110,000",
+            explanation: "Costo total antes del descuento: $50,000 + $70,000 = $120,000. Precio final: $120,000 - $10,000 = $110,000."
+        },
+        {
+            question: "¿Cuál es el valor posicional del 7 en el número 7,234,561?",
+            options: ["Siete millones", "Setenta mil", "Setecientos mil", "Setenta millones"],
+            answer: "Siete millones",
+            explanation: "El 7 se encuentra en la posición de las unidades de millón."
+        },
+        {
+            question: "¿Qué número obtienes al restar 450 de 1000?",
+            options: ["500", "550", "600", "650"],
+            answer: "550",
+            explanation: "1000 - 450 = 550."
+        },
+        {
+            question: "Un grupo de 10 estudiantes se reparte 50 lápices. ¿Cuántos lápices le tocan a cada uno?",
+            options: ["5", "10", "15", "20"],
+            answer: "5",
+            explanation: "50 lápices / 10 estudiantes = 5 lápices por estudiante."
+        },
+        {
+            question: "¿Qué figura tiene 5 lados y 5 vértices?",
+            options: ["Triángulo", "Cuadrado", "Pentágono", "Hexágono"],
+            answer: "Pentágono",
+            explanation: "Un pentágono es una figura con 5 lados y 5 vértices."
+        },
+        {
+            question: "El área de un triángulo es 20 cm² y su base es 8 cm. ¿Cuál es su altura?",
+            options: ["2.5 cm", "5 cm", "8 cm", "10 cm"],
+            answer: "5 cm",
+            explanation: "La fórmula del área es $A = (b \times h) / 2$. Si $20 = (8 \times h) / 2$, entonces $40 = 8 \times h$, lo que significa que $h = 5$ cm."
+        },
+        {
+            question: "Si 5 obreros construyen una casa en 40 días, ¿cuánto tiempo tardarán 10 obreros?",
+            options: ["20 días", "30 días", "40 días", "80 días"],
+            answer: "20 días",
+            explanation: "Es proporcionalidad inversa. El doble de obreros reduce el tiempo a la mitad. 40 / 2 = 20 días."
+        },
+        {
+            question: "Si 1/4 de un grupo de estudiantes son niñas, ¿qué fracción son niños?",
+            options: ["1/4", "2/4", "3/4", "4/4"],
+            answer: "3/4",
+            explanation: "La fracción total del grupo es 4/4. Si 1/4 son niñas, el resto son niños: 4/4 - 1/4 = 3/4."
+        },
+        {
+            question: "Un carro viaja a una velocidad constante de 80 km/h. ¿Cuánto tiempo tardará en recorrer 40 km?",
+            options: ["30 minutos", "40 minutos", "50 minutos", "60 minutos"],
+            answer: "30 minutos",
+            explanation: "40 km es la mitad de 80 km, por lo que tardará la mitad del tiempo de una hora. 60 minutos / 2 = 30 minutos."
+        },
+        {
+            question: "¿Cuál es el valor de 'y' en la ecuación $2y - 5 = 15$?",
+            options: ["5", "10", "15", "20"],
+            answer: "10",
+            explanation: "Primero, suma 5 a ambos lados: $2y = 15 + 5$, lo que da $2y = 20$. Luego, divide por 2: $y = 20 / 2$, por lo tanto, $y = 10$."
+        }
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+
+    // Función para mezclar un array de forma aleatoria (algoritmo Fisher-Yates)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Función para inicializar el quiz
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        // Mezclar todas las preguntas y tomar las primeras 15
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, 15);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            const optionsContainer = document.createElement('div');
+            shuffleArray(q.options); // Mezclar las opciones
+            q.options.forEach(option => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.onclick = () => handleAnswer(index, option);
+                optionsContainer.appendChild(optionButton);
+            });
+            questionCard.appendChild(optionsContainer);
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    // Función para manejar la respuesta del usuario
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const buttons = questionCard.querySelectorAll('.option-button');
+        const questionData = currentQuestions[questionIndex];
+
+        let isCorrect = (selectedOption === questionData.answer);
+
+        // Deshabilitar todos los botones para esta pregunta
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === questionData.answer) {
+                button.classList.add('correct');
+            } else if (button.textContent === selectedOption) {
+                button.classList.add('incorrect');
+            }
+        });
+
+        // Añadir el estilo a la tarjeta de la pregunta
+        questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+        // Mostrar la explicación
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${isCorrect ? 'correct' : 'incorrect'}`;
+        explanationDiv.innerHTML = isCorrect ?
+            `¡Correcto! ${questionData.explanation}` :
+            `Incorrecto. ${questionData.explanation}`;
+        questionCard.appendChild(explanationDiv);
+
+        if (isCorrect) {
+            score++;
+        }
+        questionsAnswered++;
+
+        // Mostrar resumen si se han respondido todas las preguntas
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000); // Pequeña espera para que la última respuesta se vea
+        }
+    }
+
+    // Función para mostrar el resumen del quiz
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / currentQuestions.length) * 100);
+
+        finalScore.textContent = `${score} / ${currentQuestions.length}`;
+
+        // Crear el mensaje de WhatsApp
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Matemáticas y obtuve una puntuación de ${score} de ${currentQuestions.length} (${scorePercentage}%). ¡A seguir estudiando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    // Event listener para el botón de reiniciar
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    // Inicializar el quiz cuando la página carga
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

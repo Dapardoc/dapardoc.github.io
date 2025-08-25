@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Lenguaje y Comprensión Lectora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .long-text {
+            background-color: #f3f4f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .text-area-input {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            margin-top: 10px;
+            resize: vertical;
+        }
+        .submit-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .submit-button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Lenguaje y Comprensión Lectora</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tu habilidad para comprender textos, usar el vocabulario y aplicar reglas de ortografía!</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    const longTexts = {
+        'text-1': `
+            El viejo marinero, con su barba blanca y sus ojos tan azules como el mar que había surcado toda su vida, se sentó en la popa de su pequeño bote, observando las nubes acumularse en el horizonte. Se llamaba Elías, y a sus setenta años, no había un solo puerto desde el Ártico hasta el Caribe que no conociera. Pero su historia más fascinante no era sobre tormentas feroces ni tesoros escondidos, sino sobre la búsqueda de un faro mítico que, según las leyendas, se movía.
+
+            Durante su juventud, en una noche de bruma densa, Elías y su tripulación se perdieron. La brújula fallaba y las estrellas estaban ocultas. Justo cuando la desesperación comenzaba a apoderarse de ellos, un haz de luz verde apareció a lo lejos, cortando la neblina. Era un faro, pero su luz no era blanca ni amarilla, sino de un verde intenso, casi esmeralda. Elías siguió esa luz, y poco a poco, los guió hacia un canal seguro que nadie había visto antes. Cuando llegaron a puerto, la tripulación le preguntó a los lugareños sobre el faro verde, pero todos se miraron perplejos. No existía tal faro.
+
+            Este suceso se convirtió en la obsesión de Elías. Se dedicó a investigar antiguas bitácoras, a interrogar a otros marineros y a buscar mapas olvidados. Descubrió que la leyenda hablaba de "El Guardián Esmeralda", un faro que solo se manifestaba en momentos de gran necesidad, moviéndose para salvar a aquellos que estaban a punto de naufragar. No era una estructura fija, sino una fuerza protectora del océano. A lo largo de los años, Elías vio su luz una y otra vez, siempre en los momentos más críticos, pero nunca lograba acercarse lo suficiente para desentrañar su misterio.
+
+            Elías creía que El Guardián Esmeralda no era solo un faro, sino la manifestación de la esencia misma del mar, un espíritu antiguo que cuidaba de los navegantes. Algunos se burlaban de su creencia, llamándolo viejo loco, pero Elías no se inmutaba. Sabía lo que había visto. En sus últimos viajes, dejó de buscar el faro y, en cambio, se dedicó a ser un guía para los barcos más jóvenes. Les enseñaba a leer el cielo, a entender las corrientes y, sobre todo, a respetar al mar. Les contaba la historia de El Guardián Esmeralda, no como una fábula, sino como una lección sobre la bondad y la protección que se puede encontrar en los lugares más inesperados.
+
+            Elías murió tranquilamente, a bordo de su bote, una noche serena bajo un cielo estrellado. Los marineros de la región, que lo respetaban profundamente, le dieron un entierro tradicional en el mar. Cuenta la leyenda que, en ese momento, una luz verde, fugaz y tenue, parpadeó en el horizonte antes de desaparecer por completo, como si el viejo marinero y su faro místico finalmente se hubieran reunido para descansar en el vasto y eterno abrazo del océano.
+        `,
+        'text-2': `
+            El concepto de inteligencia artificial (IA), una rama de la informática que busca crear máquinas capaces de pensar, aprender y razonar como los humanos, ha evolucionado de manera exponencial en las últimas décadas. Su historia no es lineal, sino que ha estado marcada por ciclos de euforia, inversión masiva y posterior desilusión, conocidos como los "inviernos de la IA". Sin embargo, el presente se siente diferente. El rápido avance en el poder de procesamiento, la disponibilidad de enormes conjuntos de datos y la innovación en algoritmos de aprendizaje profundo han impulsado a la IA a una nueva era de relevancia y aplicación práctica.
+
+            Una de las áreas más transformadoras es el **procesamiento del lenguaje natural (PLN)**. Modelos como GPT (Generative Pre-trained Transformer) han demostrado una capacidad asombrosa para generar texto coherente, traducir idiomas, resumir documentos y responder preguntas de manera conversacional. Estas herramientas no solo han mejorado la eficiencia en industrias como la atención al cliente y la creación de contenido, sino que también están cambiando la forma en que interactuamos con la tecnología. La voz se ha convertido en una interfaz principal para muchos dispositivos, y los asistentes virtuales son cada vez más sofisticados.
+
+            En el ámbito de la visión por computadora, la IA ha alcanzado una precisión sin precedentes en la detección y reconocimiento de objetos. Los vehículos autónomos dependen de estos sistemas para interpretar su entorno en tiempo real, desde identificar peatones hasta reconocer señales de tráfico. En medicina, la IA está ayudando a diagnosticar enfermedades a partir de imágenes médicas como radiografías o resonancias magnéticas, a menudo con mayor precisión que un ojo humano, acelerando el proceso y permitiendo una intervención temprana.
+
+            El aprendizaje por refuerzo, otro pilar fundamental de la IA, ha logrado hitos notables. Sistemas como AlphaGo de Google DeepMind han derrotado a campeones mundiales en juegos complejos, no por programación de reglas específicas, sino por aprender a través de la experimentación y la retroalimentación. Este tipo de aprendizaje tiene un gran potencial para optimizar sistemas complejos, como la gestión de redes eléctricas o el control de la robótica.
+
+            A pesar de todos estos avances, la IA todavía enfrenta desafíos significativos. La **ética y los sesgos** son una preocupación constante. Los modelos de IA son tan buenos como los datos con los que se entrenan; si los datos reflejan sesgos sociales o históricos, la IA los replicará. La explicabilidad es otro problema: a menudo es difícil entender cómo un modelo de aprendizaje profundo llega a una conclusión, lo que es crucial en campos como la medicina o la justicia. Además, el debate sobre el impacto de la IA en el mercado laboral y su potencial para reemplazar trabajos sigue siendo un tema de discusión acalorada. La IA no es una solución mágica, sino una herramienta poderosa que, como cualquier tecnología, requiere una cuidadosa consideración de sus implicaciones sociales y éticas.
+        `
+    };
+
+    const allQuestions = [
+        // Preguntas basadas en el texto 1 (El Guardián Esmeralda)
+        {
+            type: 'multiple-choice',
+            textId: 'text-1',
+            question: "¿Quién era Elías y qué lo hacía un marinero notable?",
+            options: [
+                "Un joven pescador del Ártico, conocido por ser el más rápido.",
+                "Un hombre de setenta años con gran experiencia, que había navegado por casi todos los mares.",
+                "Un marinero que solo navegaba en el Caribe, famoso por encontrar tesoros.",
+                "Un pirata que robaba barcos en la bruma."
+            ],
+            answer: "Un hombre de setenta años con gran experiencia, que había navegado por casi todos los mares.",
+            explanation: "Según el texto, 'a sus setenta años, no había un solo puerto desde el Ártico hasta el Caribe que no conociera'."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-1',
+            question: "¿Qué característica especial tenía el faro que Elías vio en su juventud?",
+            options: [
+                "Era un faro de madera que flotaba en el agua.",
+                "Tenía una luz azul que cambiaba de color con el clima.",
+                "Su luz era de un color verde esmeralda y parecía moverse.",
+                "Emitía un sonido que alertaba a los barcos de la bruma."
+            ],
+            answer: "Su luz era de un color verde esmeralda y parecía moverse.",
+            explanation: "El texto lo describe como 'un haz de luz verde... casi esmeralda' y menciona que la leyenda hablaba de un faro que se movía."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-1',
+            question: "¿Cuál era la creencia de Elías sobre 'El Guardián Esmeralda'?",
+            options: [
+                "Que era un faro real construido por una civilización antigua.",
+                "Que era una ilusión óptica causada por la bruma densa.",
+                "Que era un espíritu protector del océano que ayudaba a los marineros.",
+                "Que era la invención de otros marineros para asustar a los nuevos."
+            ],
+            answer: "Que era un espíritu protector del océano que ayudaba a los marineros.",
+            explanation: "El texto afirma que Elías creía que el faro era 'la manifestación de la esencia misma del mar, un espíritu antiguo que cuidaba de los navegantes'."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-1',
+            question: "Al final de su vida, ¿cómo usó Elías la leyenda de El Guardián Esmeralda?",
+            options: [
+                "La usó para ganar dinero cobrando por contar historias.",
+                "La usó para asustar a los marineros que no respetaban el mar.",
+                "La usó como una lección sobre la bondad del océano para los marineros jóvenes.",
+                "Dejó de creer en la leyenda y se dedicó a la pesca."
+            ],
+            answer: "La usó como una lección sobre la bondad del océano para los marineros jóvenes.",
+            explanation: "El texto dice que 'les contaba la historia de El Guardián Esmeralda, no como una fábula, sino como una lección sobre la bondad y la protección'."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-1',
+            question: "¿Qué sucedió en el momento de la muerte de Elías?",
+            options: [
+                "Una gran tormenta se desató en el mar.",
+                "Una luz verde, fugaz y tenue, parpadeó en el horizonte.",
+                "Elías desapareció sin dejar rastro.",
+                "Su barco se hundió misteriosamente."
+            ],
+            answer: "Una luz verde, fugaz y tenue, parpadeó en el horizonte.",
+            explanation: "La leyenda al final del texto narra que 'una luz verde, fugaz y tenue, parpadeó en el horizonte' al momento de su muerte."
+        },
+        // Preguntas basadas en el texto 2 (Inteligencia Artificial)
+        {
+            type: 'multiple-choice',
+            textId: 'text-2',
+            question: "Según el texto, ¿qué han impulsado a la IA a una nueva era de relevancia?",
+            options: [
+                "La creación de robots humanoides.",
+                "Los 'inviernos de la IA' y la desilusión de los programadores.",
+                "El avance en el procesamiento, la disponibilidad de datos y la innovación en algoritmos.",
+                "El desarrollo de videojuegos más complejos."
+            ],
+            answer: "El avance en el procesamiento, la disponibilidad de datos y la innovación en algoritmos.",
+            explanation: "El texto menciona que 'El rápido avance en el poder de procesamiento, la disponibilidad de enormes conjuntos de datos y la innovación en algoritmos de aprendizaje profundo han impulsado a la IA a una nueva era'."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-2',
+            question: "¿Qué área de la IA es responsable de la generación de texto coherente y la traducción de idiomas?",
+            options: [
+                "La visión por computadora.",
+                "El aprendizaje por refuerzo.",
+                "El procesamiento del lenguaje natural (PLN).",
+                "La robótica."
+            ],
+            answer: "El procesamiento del lenguaje natural (PLN).",
+            explanation: "El texto establece que 'Una de las áreas más transformadoras es el **procesamiento del lenguaje natural (PLN)**. Modelos como GPT... han demostrado una capacidad asombrosa para generar texto coherente, traducir idiomas...'"
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-2',
+            question: "¿Qué ejemplo se da en el texto para ilustrar la visión por computadora en medicina?",
+            options: [
+                "El uso de robots para realizar cirugías complejas.",
+                "La ayuda para diagnosticar enfermedades a partir de imágenes médicas.",
+                "La creación de prótesis inteligentes.",
+                "El análisis de datos de pacientes para predecir enfermedades."
+            ],
+            answer: "La ayuda para diagnosticar enfermedades a partir de imágenes médicas.",
+            explanation: "El texto dice que 'la IA está ayudando a diagnosticar enfermedades a partir de imágenes médicas como radiografías o resonancias magnéticas'."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-2',
+            question: "¿Cuál es uno de los desafíos éticos principales de la IA mencionados en el texto?",
+            options: [
+                "La falta de poder de procesamiento en las computadoras.",
+                "La dificultad para que los humanos se adapten a la tecnología.",
+                "Los sesgos que pueden ser replicados a partir de los datos de entrenamiento.",
+                "El alto costo de los sistemas de IA."
+            ],
+            answer: "Los sesgos que pueden ser replicados a partir de los datos de entrenamiento.",
+            explanation: "El texto señala que 'La **ética y los sesgos** son una preocupación constante... si los datos reflejan sesgos sociales o históricos, la IA los replicará'."
+        },
+        {
+            type: 'multiple-choice',
+            textId: 'text-2',
+            question: "¿Qué se entiende por 'inviernos de la IA' según el texto?",
+            options: [
+                "Periodos de gran avance tecnológico.",
+                "Ciclos de desilusión y falta de inversión en la IA.",
+                "Temporadas del año en las que la IA es menos utilizada.",
+                "Programas de entrenamiento de IA en ambientes fríos."
+            ],
+            answer: "Ciclos de desilusión y falta de inversión en la IA.",
+            explanation: "El texto define los 'inviernos de la IA' como 'ciclos de euforia, inversión masiva y posterior desilusión'."
+        },
+        // Preguntas de Vocabulario
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el sinónimo de la palabra 'efímero'?",
+            options: ["Eterno", "Duradero", "Pasajero", "Estable"],
+            answer: "Pasajero",
+            explanation: "Efímero se refiere a algo que dura por un tiempo muy corto. Pasajero tiene un significado similar."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el antónimo de la palabra 'efusivo'?",
+            options: ["Entusiasta", "Alegre", "Reservado", "Expansivo"],
+            answer: "Reservado",
+            explanation: "Efusivo se refiere a una persona que muestra sus sentimientos de manera abierta y entusiasta. Reservado es lo opuesto."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra pertenece a la misma familia que 'mar'?",
+            options: ["Marea", "Mano", "Comer", "Marrón"],
+            answer: "Marea",
+            explanation: "La palabra 'marea' se deriva de 'mar' y comparte su raíz y significado, relacionada con el océano."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el sinónimo de la palabra 'insólito'?",
+            options: ["Común", "Ordinario", "Rutinario", "Inusual"],
+            answer: "Inusual",
+            explanation: "Insólito se refiere a algo fuera de lo común o extraordinario. Inusual es el sinónimo más cercano."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el antónimo de la palabra 'audaz'?",
+            options: ["Valiente", "Arrojado", "Cobarde", "Temerario"],
+            answer: "Cobarde",
+            explanation: "Audaz se refiere a una persona valiente y atrevida. Cobarde es lo opuesto."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra pertenece a la misma familia que 'pan'?",
+            options: ["Masa", "Panadero", "Sopa", "Sal"],
+            answer: "Panadero",
+            explanation: "Un panadero es una persona que hace pan. Ambas palabras comparten la raíz 'pan-'."
+        },
+        // Preguntas de Ortografía
+        {
+            type: 'multiple-choice',
+            question: "¿En qué palabra se usa correctamente la tilde?",
+            options: ["árbol", "arbol", "Arbol", "ARBOL"],
+            answer: "árbol",
+            explanation: "La palabra 'árbol' es una palabra grave o llana que termina en 'l', por lo que lleva tilde en la primera 'a'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra está escrita correctamente?",
+            options: ["exepción", "excepción", "ecsepsión", "excepsion"],
+            answer: "excepción",
+            explanation: "La palabra se escribe con 'x' y 'c', y lleva tilde en la 'o' por ser aguda y terminar en 'n'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el uso correcto de la mayúscula?",
+            options: ["el domingo voy a madrid", "El domingo voy a Madrid", "El Domingo voy a madrid", "el domingo voy a Madrid"],
+            answer: "El domingo voy a Madrid",
+            explanation: "Se usa mayúscula al inicio de una oración y en los nombres propios, como 'Madrid'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Selecciona la palabra que está escrita correctamente.",
+            options: ["haber", "aver", "aber", "haver"],
+            answer: "haber",
+            explanation: "La forma verbal 'haber' se escribe con 'h' y 'b'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra está escrita correctamente?",
+            options: ["vaca", "baca"],
+            answer: "vaca",
+            explanation: "'Vaca' es un animal y se escribe con 'v'. 'Baca' se refiere al portaequipajes de un coche y es una palabra menos común."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿En qué oración se usa correctamente la tilde?",
+            options: ["Él es mi amigo.", "El es mi amigo.", "el es mi amigo.", "Él es mi amigo"],
+            answer: "Él es mi amigo.",
+            explanation: "El pronombre personal 'él' lleva tilde para distinguirlo del artículo 'el'."
+        },
+        // Preguntas de comprensión de narraciones
+        {
+            type: 'multiple-choice',
+            question: `Lee la siguiente historia:
+            "Ana se despertó con el canto de los pájaros en su granja. Se puso sus botas de goma y salió a alimentar a las gallinas antes de que el sol estuviera alto en el cielo. Su perro, Lucas, la siguió de cerca, moviendo la cola. Ella sabía que sería un día largo, lleno de tareas, pero el aire fresco de la mañana la llenaba de energía."
+            ¿Quién es el personaje principal de esta historia?`,
+            options: ["Ana", "Lucas", "Las gallinas", "Los pájaros"],
+            answer: "Ana",
+            explanation: "La historia se centra en las acciones y pensamientos de Ana, haciéndola el personaje principal."
+        },
+        {
+            type: 'multiple-choice',
+            question: `Lee la siguiente historia:
+            "Javier, un valiente caballero, cabalgó a través del bosque encantado. Las sombras de los árboles eran altas y las ramas parecían manos huesudas. Su misión era recuperar el amuleto del Rey, robado por el malvado brujo, antes de la medianoche."
+            ¿Dónde se desarrolla esta historia?`,
+            options: ["En un castillo", "En un bosque encantado", "En una cueva", "En un desierto"],
+            answer: "En un bosque encantado",
+            explanation: "El texto especifica que Javier cabalgó 'a través del bosque encantado'."
+        },
+        {
+            type: 'multiple-choice',
+            question: `Lee la siguiente historia:
+            "La nave espacial 'Estrella Errante' partió de la estación espacial Apolo a las 05:00 horas, con destino al planeta Júpiter. La misión, programada para durar dos años, buscaría signos de vida en la luna de Júpiter, Europa. El Capitán Liam, al mando, observaba las estrellas con melancolía, sabiendo que no regresaría a la Tierra por mucho tiempo."
+            ¿En qué momento se desarrolla la historia?`,
+            options: ["A las 05:00 horas", "Durante la noche", "Al mediodía", "A las 12:00 horas"],
+            answer: "A las 05:00 horas",
+            explanation: "El texto menciona que la nave 'partió... a las 05:00 horas'."
+        },
+        // Preguntas de Comprensión de instrucciones y lógica
+        {
+            type: 'multiple-choice',
+            question: `Lee atentamente las instrucciones:
+            1. Si la palabra tiene 5 letras, selecciona la tercera opción.
+            2. Si la palabra tiene más de 6 letras, selecciona la primera opción.
+            3. Si la palabra tiene 6 letras, selecciona la segunda opción.
+            4. Si la palabra tiene menos de 5 letras, selecciona la cuarta opción.
+            ¿Qué opción debes seleccionar para la palabra 'manzana'?`,
+            options: ["Primera opción", "Segunda opción", "Tercera opción", "Cuarta opción"],
+            answer: "Primera opción",
+            explanation: "La palabra 'manzana' tiene 7 letras, lo cual es más de 6. De acuerdo con la segunda instrucción, debes seleccionar la primera opción."
+        },
+        {
+            type: 'multiple-choice',
+            question: `Sigue estas instrucciones:
+            1. En la siguiente lista, si el segundo número es par, selecciona la palabra 'sol'.
+            2. Si el segundo número es impar, selecciona la palabra 'luna'.
+            Lista: (5, 8, 3, 7)
+            ¿Cuál palabra debes seleccionar?`,
+            options: ["sol", "luna", "estrellas", "nube"],
+            answer: "sol",
+            explanation: "El segundo número en la lista es 8, que es un número par. Según la primera instrucción, debes seleccionar la palabra 'sol'."
+        },
+        {
+            type: 'multiple-choice',
+            question: `Instrucciones:
+            1. Encuentra la palabra que es un sinónimo de 'rápido'.
+            2. De las opciones, elige la que no es un sinónimo.
+            Opciones: (Veloz, Ágil, Lento, Raudo)
+            ¿Qué opción debes seleccionar?`,
+            options: ["Veloz", "Ágil", "Lento", "Raudo"],
+            answer: "Lento",
+            explanation: "Las opciones 'Veloz', 'Ágil' y 'Raudo' son sinónimos de 'rápido'. La opción 'Lento' es el antónimo."
+        },
+        // Preguntas de Redacción (text-area)
+        {
+            type: 'text-area',
+            question: "Describe en una sola oración coherente la sensación de alegría.",
+            answer: "La alegría es una emoción luminosa que ilumina el corazón y hace que los problemas parezcan pequeños.",
+            explanation: "Una oración coherente y bien construida debe tener un sujeto ('La alegría'), un verbo ('es'), y un predicado que complemente la idea. La oración de ejemplo utiliza metáforas ('emoción luminosa', 'ilumina el corazón') para describir la sensación de manera clara y creativa."
+        },
+        {
+            type: 'text-area',
+            question: "Escribe un párrafo de 3 oraciones describiendo un lugar que te transmita paz.",
+            answer: "El jardín de mi abuela es mi refugio. El suave murmullo de la fuente y el aroma de las flores crean una atmósfera de tranquilidad. Sentarme en el banco de madera, bajo la sombra de un árbol, me hace sentir en perfecta calma.",
+            explanation: "Un párrafo coherente debe tener una idea principal y oraciones que la apoyen. El párrafo de ejemplo describe un lugar específico (el jardín) y luego utiliza detalles sensoriales (murmullo de la fuente, aroma de las flores) para ilustrar la sensación de paz."
+        },
+        // Más preguntas de vocabulario, ortografía, etc.
+        {
+            type: 'multiple-choice',
+            question: "El sinónimo de 'valioso' es:",
+            options: ["Insignificante", "Precioso", "Ordinario", "Común"],
+            answer: "Precioso",
+            explanation: "Precioso significa de gran valor, igual que valioso."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'subir' es:",
+            options: ["Ascender", "Descender", "Trepar", "Elevar"],
+            answer: "Descender",
+            explanation: "Subir es ir hacia arriba, y descender es ir hacia abajo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra pertenece a la misma familia que 'flor'?",
+            options: ["Vaso", "Tierra", "Florero", "Agua"],
+            answer: "Florero",
+            explanation: "Un florero es un recipiente para flores. Ambas palabras comparten la raíz 'flor-'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'elegante' se acentúa en:",
+            options: ["La primera 'e'", "La 'g'", "La 'e' final", "No lleva acento"],
+            answer: "No lleva acento",
+            explanation: "La palabra 'elegante' es grave o llana y termina en vocal, por lo que no lleva tilde."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'corregir' se escribe con:",
+            options: ["g", "j", "c", "s"],
+            answer: "g",
+            explanation: "La palabra 'corregir' se escribe con 'g'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el sinónimo de 'confundido'?",
+            options: ["Claro", "Explicado", "Desorientado", "Preciso"],
+            answer: "Desorientado",
+            explanation: "Una persona confundida se siente desorientada. Ambos términos son sinónimos."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'feliz' es:",
+            options: ["Contento", "Alegre", "Triste", "Emocionado"],
+            answer: "Triste",
+            explanation: "Feliz y triste son emociones opuestas."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra pertenece a la misma familia que 'libro'?",
+            options: ["Hoja", "Librería", "Papel", "Escribir"],
+            answer: "Librería",
+            explanation: "Una librería es un lugar donde se venden libros. Comparten la raíz 'libr-'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra está escrita correctamente?",
+            options: ["hiban", "iban", "Iban", "hiban"],
+            answer: "iban",
+            explanation: "El verbo 'ir' en pasado se escribe 'iban' sin 'h'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el sinónimo de 'tranquilo'?",
+            options: ["Nervioso", "Agitado", "Sereno", "Preocupado"],
+            answer: "Sereno",
+            explanation: "Sereno significa calmado, que es un sinónimo de tranquilo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'limpio' es:",
+            options: ["Ordenado", "Pulcro", "Sucio", "Aseado"],
+            answer: "Sucio",
+            explanation: "Limpio es lo opuesto a sucio."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra pertenece a la misma familia que 'sal'?",
+            options: ["Sopa", "Salero", "Azúcar", "Pimienta"],
+            answer: "Salero",
+            explanation: "Un salero es un recipiente para sal."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'cartel' se acentúa en:",
+            options: ["la 'a'", "la 'e'", "No lleva acento", "en la 'l'"],
+            answer: "No lleva acento",
+            explanation: "La palabra 'cartel' es aguda y termina en 'l', por lo que no lleva tilde."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'bicicleta' se escribe con:",
+            options: ["b y c", "v y c", "b y s", "v y s"],
+            answer: "b y c",
+            explanation: "La palabra 'bicicleta' se escribe con 'b' y 'c'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El sinónimo de 'enorme' es:",
+            options: ["Pequeño", "Diminuto", "Colosal", "Bajo"],
+            answer: "Colosal",
+            explanation: "Colosal significa muy grande, igual que enorme."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'comprar' es:",
+            options: ["Vender", "Adquirir", "Obtener", "Pagar"],
+            answer: "Vender",
+            explanation: "Comprar es adquirir algo, vender es transferir la propiedad de algo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra pertenece a la misma familia que 'sol'?",
+            options: ["Luna", "Estrella", "Solar", "Calor"],
+            answer: "Solar",
+            explanation: "Solar se refiere a algo relacionado con el sol."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El uso correcto de la mayúscula es:",
+            options: ["mi primo es de méxico", "Mi primo es de México", "mi Primo es de México", "Mi primo es de méxico"],
+            answer: "Mi primo es de México",
+            explanation: "Se usa mayúscula al inicio de la oración y en los nombres propios de países."
+        }
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+    const numQuestionsPerSession = 15;
+
+    // Función para mezclar un array de forma aleatoria (algoritmo Fisher-Yates)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Función para inicializar el quiz
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        // Mezclar todas las preguntas y tomar una muestra
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, numQuestionsPerSession);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            // Contenido del texto largo si aplica
+            if (q.textId) {
+                const longTextDiv = document.createElement('div');
+                longTextDiv.className = 'long-text';
+                longTextDiv.innerHTML = longTexts[q.textId];
+                questionCard.appendChild(longTextDiv);
+            }
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            if (q.type === 'multiple-choice') {
+                const optionsContainer = document.createElement('div');
+                shuffleArray(q.options);
+                q.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.className = 'option-button';
+                    optionButton.textContent = option;
+                    optionButton.onclick = () => handleAnswer(index, option);
+                    optionsContainer.appendChild(optionButton);
+                });
+                questionCard.appendChild(optionsContainer);
+            } else if (q.type === 'text-area') {
+                const textarea = document.createElement('textarea');
+                textarea.className = 'text-area-input';
+                textarea.placeholder = "Escribe tu respuesta aquí...";
+                textarea.id = `textarea-${index}`;
+                questionCard.appendChild(textarea);
+                const submitButton = document.createElement('button');
+                submitButton.className = 'submit-button';
+                submitButton.textContent = 'Ver Respuesta y Explicación';
+                submitButton.onclick = () => handleAnswer(index, textarea.value);
+                questionCard.appendChild(submitButton);
+            }
+
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    // Función para manejar la respuesta del usuario
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const questionData = currentQuestions[questionIndex];
+
+        if (questionData.type === 'multiple-choice') {
+            const buttons = questionCard.querySelectorAll('.option-button');
+            const isCorrect = (selectedOption === questionData.answer);
+
+            buttons.forEach(button => {
+                button.disabled = true;
+                if (button.textContent === questionData.answer) {
+                    button.classList.add('correct');
+                } else if (button.textContent === selectedOption) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+            if (isCorrect) {
+                score++;
+            }
+        } else if (questionData.type === 'text-area') {
+            const textarea = document.getElementById(`textarea-${questionIndex}`);
+            const submitButton = questionCard.querySelector('.submit-button');
+            textarea.disabled = true;
+            submitButton.disabled = true;
+            submitButton.style.backgroundColor = '#6b7280';
+
+            // Para preguntas de texto, no hay "correcto" o "incorrecto"
+            questionCard.classList.add('correct'); // Usamos 'correct' para mostrar la explicación
+        }
+
+        questionsAnswered++;
+
+        // Mostrar la explicación
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${questionData.type === 'multiple-choice' ? (selectedOption === questionData.answer ? 'correct' : 'incorrect') : 'correct'}`;
+        explanationDiv.innerHTML = questionData.explanation;
+        if (questionData.type === 'multiple-choice') {
+            explanationDiv.innerHTML = (selectedOption === questionData.answer) ?
+                `¡Correcto! ${questionData.explanation}` :
+                `Incorrecto. La respuesta correcta era '${questionData.answer}'. ${questionData.explanation}`;
+        }
+
+        questionCard.appendChild(explanationDiv);
+
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000);
+        }
+    }
+
+    // Función para mostrar el resumen del quiz
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / currentQuestions.filter(q => q.type === 'multiple-choice').length) * 100);
+
+        finalScore.textContent = `${score} / ${currentQuestions.filter(q => q.type === 'multiple-choice').length}`;
+
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Lenguaje y Comprensión Lectora y obtuve una puntuación de ${score} de ${currentQuestions.filter(q => q.type === 'multiple-choice').length} (${scorePercentage}%). ¡A seguir practicando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    // Event listener para el botón de reiniciar
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    // Inicializar el quiz cuando la página carga
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

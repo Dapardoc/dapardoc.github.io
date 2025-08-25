@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Lengua Inglesa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .long-text {
+            background-color: #f3f4f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .text-area-input {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            margin-top: 10px;
+            resize: vertical;
+        }
+        .submit-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .submit-button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Lengua Inglesa</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tu conocimiento del vocabulario y la gramática básica en inglés!</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    // This is the full question bank with over 60 questions
+    const allQuestions = [
+        // Foundations: Alphabet, Greetings, Colors, Numbers, Days, Months
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'Hola, ¿cómo estás?' en inglés?",
+            options: ["Hello, how are you?", "Goodbye, see you later?", "What is your name?", "I am fine, thank you."],
+            answer: "Hello, how are you?",
+            explanation: "La frase correcta para 'Hola, ¿cómo estás?' es 'Hello, how are you?'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'azul' en inglés?",
+            options: ["Red", "Yellow", "Green", "Blue"],
+            answer: "Blue",
+            explanation: "El color 'azul' en inglés es 'blue'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué número es 'twelve'?",
+            options: ["10", "20", "12", "2"],
+            answer: "12",
+            explanation: "El número 'twelve' significa 12."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué día de la semana es 'Wednesday'?",
+            options: ["Martes", "Miércoles", "Jueves", "Viernes"],
+            answer: "Miércoles",
+            explanation: "'Wednesday' es el tercer día de la semana, que en español es 'Miércoles'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'octubre' en inglés?",
+            options: ["September", "October", "November", "August"],
+            answer: "October",
+            explanation: "'October' es el mes de octubre en inglés."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la secuencia: 'Monday, Tuesday, _____, Thursday'.",
+            options: ["Sunday", "Friday", "Wednesday", "Saturday"],
+            answer: "Wednesday",
+            explanation: "La secuencia de los días de la semana es 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué número es 'forty-five'?",
+            options: ["40", "50", "45", "15"],
+            answer: "45",
+            explanation: "'Forty-five' se compone de 'forty' (40) y 'five' (5), lo que da como resultado 45."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'amarillo' en inglés?",
+            options: ["White", "Green", "Orange", "Yellow"],
+            answer: "Yellow",
+            explanation: "El color 'amarillo' en inglés es 'yellow'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'Gracias' en inglés?",
+            options: ["Please", "You're welcome", "Thank you", "Excuse me"],
+            answer: "Thank you",
+            explanation: "La forma más común de decir 'Gracias' en inglés es 'Thank you'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué letra sigue a la 'J' en el alfabeto en inglés?",
+            options: ["K", "L", "M", "I"],
+            answer: "K",
+            explanation: "En el alfabeto, la 'K' sigue a la 'J'."
+        },
+        // Essential Vocabulary: Family, School, House, Animals, Food, Professions
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'padre' en inglés?",
+            options: ["Mother", "Sister", "Brother", "Father"],
+            answer: "Father",
+            explanation: "'Father' es la palabra en inglés para 'padre'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'classroom' se refiere a un lugar en la:",
+            options: ["Casa", "Escuela", "Hospital", "Tienda"],
+            answer: "Escuela",
+            explanation: "'Classroom' significa 'salón de clases', que se encuentra en una escuela."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué palabra en inglés significa 'gato'?",
+            options: ["Dog", "Cat", "Bird", "Fish"],
+            answer: "Cat",
+            explanation: "'Cat' es la palabra para 'gato'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es la palabra para 'pan'?",
+            options: ["Milk", "Cheese", "Bread", "Water"],
+            answer: "Bread",
+            explanation: "'Bread' es la palabra en inglés para 'pan'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Una persona que enseña es un/a:",
+            options: ["Doctor", "Teacher", "Pilot", "Chef"],
+            answer: "Teacher",
+            explanation: "Un 'teacher' es un 'profesor/a'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'hermana' en inglés?",
+            options: ["Brother", "Sister", "Aunt", "Uncle"],
+            answer: "Sister",
+            explanation: "'Sister' es la palabra para 'hermana'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'kitchen' se refiere a una parte de la:",
+            options: ["Escuela", "Casa", "Tienda", "Parque"],
+            answer: "Casa",
+            explanation: "'Kitchen' significa 'cocina', que es una parte de la casa."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué animal es un 'dog'?",
+            options: ["Gato", "Perro", "Pájaro", "Conejo"],
+            answer: "Perro",
+            explanation: "'Dog' es la palabra en inglés para 'perro'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál de estos es un 'vegetable'?",
+            options: ["Apple", "Bread", "Carrot", "Juice"],
+            answer: "Carrot",
+            explanation: "'Carrot' (zanahoria) es un 'vegetable' (verdura)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Una persona que vuela aviones es un/a:",
+            options: ["Driver", "Pilot", "Gardener", "Chef"],
+            answer: "Pilot",
+            explanation: "Un 'pilot' (piloto) es quien vuela aviones."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'prima' en inglés?",
+            options: ["Cousin", "Niece", "Nephew", "Aunt"],
+            answer: "Cousin",
+            explanation: "'Cousin' se utiliza para 'primo' y 'prima'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'bedroom' significa:",
+            options: ["Baño", "Cocina", "Dormitorio", "Jardín"],
+            answer: "Dormitorio",
+            explanation: "'Bedroom' se compone de 'bed' (cama) y 'room' (habitación), por lo tanto significa 'dormitorio'."
+        },
+        // Basic Grammar: Personal Pronouns, Verb 'to be'
+        {
+            type: 'multiple-choice',
+            question: "El pronombre para 'ella' es:",
+            options: ["He", "She", "It", "They"],
+            answer: "She",
+            explanation: "'She' se utiliza para referirse a una mujer o niña."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'I ____ a student.'",
+            options: ["is", "am", "are", "be"],
+            answer: "am",
+            explanation: "Con el pronombre 'I', se usa la forma 'am' del verbo 'to be'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'They ____ my friends.'",
+            options: ["is", "am", "are", "be"],
+            answer: "are",
+            explanation: "Con el pronombre 'They', se usa la forma 'are' del verbo 'to be'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El pronombre para 'nosotros' es:",
+            options: ["You", "We", "I", "They"],
+            answer: "We",
+            explanation: "'We' es el pronombre para 'nosotros' o 'nosotras'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'He ____ from Italy.'",
+            options: ["is", "am", "are", "be"],
+            answer: "is",
+            explanation: "Con el pronombre 'He' (él), se usa la forma 'is' del verbo 'to be'."
+        },
+        // Grammar: Verb 'have got'
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'She ____ got a new book.'",
+            options: ["have", "has", "am", "is"],
+            answer: "has",
+            explanation: "Con 'He', 'She' e 'It', se utiliza 'has got'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'They ____ got a big house.'",
+            options: ["have", "has", "are", "is"],
+            answer: "have",
+            explanation: "Con 'I', 'You', 'We' y 'They', se utiliza 'have got'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Selecciona la oración correcta:",
+            options: ["I has got a brother.", "She have got a cat.", "He has got a car.", "We has got a dog."],
+            answer: "He has got a car.",
+            explanation: "El verbo 'have got' se conjuga como 'has got' para la tercera persona del singular (He, She, It)."
+        },
+        // Grammar: Plural of Nouns
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'child'?",
+            options: ["childs", "children", "childes", "childen"],
+            answer: "children",
+            explanation: "'Child' es un sustantivo irregular, su plural es 'children'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'house'?",
+            options: ["house", "houses", "housees", "hause"],
+            answer: "houses",
+            explanation: "Para formar el plural de la mayoría de los sustantivos en inglés, se añade una 's' al final."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'mouse'?",
+            options: ["mouses", "mice", "mousees", "mouces"],
+            answer: "mice",
+            explanation: "'Mouse' es un sustantivo irregular, su plural es 'mice'."
+        },
+        // Grammar: Adjectives and Comparisons
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'A lion is ____ than a cat.'",
+            options: ["strong", "stronger", "strongest", "more strong"],
+            answer: "stronger",
+            explanation: "Para comparar dos cosas, se utiliza la forma comparativa del adjetivo. 'Strong' se convierte en 'stronger'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'This is the ____ movie I have ever seen.'",
+            options: ["good", "better", "best", "most good"],
+            answer: "best",
+            explanation: "Cuando se compara algo con un grupo (superlativo), se utiliza 'the best' para 'bueno'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Selecciona la oración correcta:",
+            options: ["My house is bigger than his.", "My house is more bigger than his.", "My house is big than his.", "My house is most big than his."],
+            answer: "My house is bigger than his.",
+            explanation: "Para adjetivos cortos como 'big', el comparativo se forma añadiendo '-er' (bigger)."
+        },
+        // Grammar: 'there is' / 'there are'
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: '____ a book on the table.'",
+            options: ["There are", "There is", "Is there", "Are there"],
+            answer: "There is",
+            explanation: "'There is' se utiliza para sustantivos singulares."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: '____ two cats in the garden.'",
+            options: ["There is", "There are", "Is there", "Are there"],
+            answer: "There are",
+            explanation: "'There are' se utiliza para sustantivos plurales."
+        },
+        // Grammar: Simple Present and Frequency Adverbs
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'She ____ to the park on weekends.'",
+            options: ["go", "goes", "going", "gone"],
+            answer: "goes",
+            explanation: "En el presente simple, para la tercera persona del singular (he, she, it), se añade '-es' a verbos que terminan en 'o'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'I ____ my teeth twice a day.'",
+            options: ["brush", "brushes", "brushing", "brushed"],
+            answer: "brush",
+            explanation: "Con 'I', 'you', 'we' y 'they', se usa la forma base del verbo en el presente simple."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'always' significa:",
+            options: ["A veces", "Nunca", "Siempre", "Normalmente"],
+            answer: "Siempre",
+            explanation: "'Always' es un adverbio de frecuencia que significa 'siempre'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'They ____ watch TV in the morning.'",
+            options: ["always", "sometimes", "never", "every"],
+            answer: "never",
+            explanation: "'Never' es un adverbio de frecuencia que indica que la acción no sucede."
+        },
+        // More questions
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'foot' (pie) es:",
+            options: ["foots", "feet", "footies", "foot"],
+            answer: "feet",
+            explanation: "El plural de 'foot' es irregular y se convierte en 'feet'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa: 'You ____ a doctor.'",
+            options: ["is", "am", "are", "be"],
+            answer: "are",
+            explanation: "El verbo 'to be' para el pronombre 'you' es 'are'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El sinónimo de 'cold' es:",
+            options: ["hot", "warm", "chilly", "big"],
+            answer: "chilly",
+            explanation: "'Chilly' significa frío, similar a 'cold'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'happy' es:",
+            options: ["sad", "glad", "joyful", "excited"],
+            answer: "sad",
+            explanation: "'Sad' (triste) es lo opuesto a 'happy' (feliz)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué profesión es 'mechanic'?",
+            options: ["Médico", "Mecánico", "Músico", "Maestro"],
+            answer: "Mecánico",
+            explanation: "'Mechanic' es la palabra para 'mecánico'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál de estos es una 'fruit'?",
+            options: ["Potato", "Banana", "Onion", "Carrot"],
+            answer: "Banana",
+            explanation: "'Banana' es una fruta."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'My sister ____ plays video games.'",
+            options: ["usually", "ever", "rarely", "always"],
+            answer: "always",
+            explanation: "'Usually', 'rarely' y 'always' son adverbios de frecuencia. 'Always' es una opción válida."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'woman'?",
+            options: ["womans", "womane", "women", "womes"],
+            answer: "women",
+            explanation: "El plural de 'woman' es irregular: 'women'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El pronombre para 'él' es:",
+            options: ["He", "She", "It", "They"],
+            answer: "He",
+            explanation: "'He' se utiliza para referirse a un hombre o niño."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'We ____ friends.'",
+            options: ["is", "am", "are", "be"],
+            answer: "are",
+            explanation: "Con el pronombre 'We', se usa la forma 'are' del verbo 'to be'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'tooth' (diente)?",
+            options: ["tooths", "teethes", "teeth", "tooth"],
+            answer: "teeth",
+            explanation: "El plural de 'tooth' es irregular y se convierte en 'teeth'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'The dog ____ fast.'",
+            options: ["run", "runs", "running", "ran"],
+            answer: "runs",
+            explanation: "En el presente simple, con un sujeto singular (the dog), se añade una 's' al verbo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'big' es:",
+            options: ["huge", "small", "large", "enormous"],
+            answer: "small",
+            explanation: "'Small' (pequeño) es lo opuesto a 'big' (grande)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'lunes' en inglés?",
+            options: ["Sunday", "Tuesday", "Monday", "Friday"],
+            answer: "Monday",
+            explanation: "Lunes en inglés es 'Monday'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El pronombre para 'eso' (un objeto) es:",
+            options: ["He", "She", "It", "They"],
+            answer: "It",
+            explanation: "'It' se utiliza para referirse a cosas o animales en singular."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'My brother ____ a car.'",
+            options: ["have got", "has got", "are got", "is got"],
+            answer: "has got",
+            explanation: "'My brother' es equivalente a 'He', por lo tanto se usa 'has got'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'person' es:",
+            options: ["persons", "people", "persones", "personals"],
+            answer: "people",
+            explanation: "El plural de 'person' es 'people' (gente)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'A rabbit is ____ than a turtle.'",
+            options: ["faster", "fast", "most fast", "more fast"],
+            answer: "faster",
+            explanation: "Para adjetivos de una sílaba como 'fast', el comparativo se forma añadiendo '-er'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué color es 'green'?",
+            options: ["Azul", "Rojo", "Verde", "Blanco"],
+            answer: "Verde",
+            explanation: "'Green' es el color 'verde'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: '____ a television in the living room.'",
+            options: ["There is", "There are", "Are there", "Is there"],
+            answer: "There is",
+            explanation: "Como 'television' es singular, se usa 'There is'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'We ____ to the movies on weekends.'",
+            options: ["go", "goes", "is going", "went"],
+            answer: "go",
+            explanation: "En el presente simple, con el pronombre 'We', se usa la forma base del verbo 'go'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El pronombre para 'ustedes' o 'vosotros' es:",
+            options: ["He", "You", "It", "We"],
+            answer: "You",
+            explanation: "'You' se utiliza tanto para el singular ('tú') como para el plural ('ustedes')."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'bus' es:",
+            options: ["buses", "bus", "buss", "busses"],
+            answer: "buses",
+            explanation: "A los sustantivos que terminan en 's', 'sh', 'ch', 'x' y 'z' se les añade '-es'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'doctor' se refiere a una:",
+            options: ["Profesión", "Animal", "Comida", "Lugar"],
+            answer: "Profesión",
+            explanation: "'Doctor' es una profesión."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'Cats are ____ than dogs.'",
+            options: ["smaller", "small", "smallest", "more small"],
+            answer: "smaller",
+            explanation: "Para comparar dos cosas, se usa la forma comparativa 'smaller' del adjetivo 'small'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué número es 'seventy'?",
+            options: ["7", "17", "70", "170"],
+            answer: "70",
+            explanation: "'Seventy' es el número 70."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'tall' es:",
+            options: ["short", "high", "long", "big"],
+            answer: "short",
+            explanation: "'Short' (bajo/corto) es lo opuesto a 'tall' (alto)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'jueves' en inglés?",
+            options: ["Tuesday", "Wednesday", "Thursday", "Friday"],
+            answer: "Thursday",
+            explanation: "'Thursday' es la palabra para 'jueves'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'The sun ____ in the East.'",
+            options: ["rise", "rises", "rising", "rose"],
+            answer: "rises",
+            explanation: "En el presente simple, 'The sun' es singular (it), por lo que se añade 's' al verbo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'agosto' en inglés?",
+            options: ["July", "August", "September", "June"],
+            answer: "August",
+            explanation: "'August' es el mes de agosto."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'story' (historia) es:",
+            options: ["storys", "stories", "storyes", "stori"],
+            answer: "stories",
+            explanation: "A los sustantivos que terminan en 'y' precedida de consonante, se les cambia la 'y' por 'ies'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'abuela' en inglés?",
+            options: ["Mother", "Grandmother", "Aunt", "Sister"],
+            answer: "Grandmother",
+            explanation: "'Grandmother' es la palabra para 'abuela'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El sinónimo de 'beautiful' es:",
+            options: ["ugly", "pretty", "old", "fast"],
+            answer: "pretty",
+            explanation: "'Pretty' significa lindo, similar a 'beautiful' (hermoso)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa: 'They ____ at the store every day.'",
+            options: ["is working", "works", "work", "worked"],
+            answer: "work",
+            explanation: "Con el pronombre 'They', el verbo 'work' se mantiene en su forma base en el presente simple."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'wolf' (lobo)?",
+            options: ["wolfs", "wolves", "wolfies", "wolf"],
+            answer: "wolves",
+            explanation: "A los sustantivos que terminan en 'f', se les cambia la 'f' por 'ves'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'I ____ speak English.'",
+            options: ["doesn't", "don't", "aren't", "isn't"],
+            answer: "don't",
+            explanation: "Para la negación en el presente simple con 'I', se utiliza 'do not' o su contracción 'don't'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'The weather is ____ today.'",
+            options: ["better", "goodest", "more good", "good"],
+            answer: "good",
+            explanation: "Para describir un estado, se usa el adjetivo en su forma simple, 'good'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El pronombre para 'tú' es:",
+            options: ["I", "You", "We", "They"],
+            answer: "You",
+            explanation: "'You' es el pronombre para 'tú' en inglés."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'man' (hombre) es:",
+            options: ["mans", "men", "manes", "mens"],
+            answer: "men",
+            explanation: "El plural de 'man' es irregular y se convierte en 'men'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'He ____ a dog.'",
+            options: ["have", "has", "am", "is"],
+            answer: "has",
+            explanation: "Para la tercera persona del singular (He, She, It), el verbo 'to have' se conjuga como 'has'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué adverbio de frecuencia significa 'a veces'?",
+            options: ["always", "never", "usually", "sometimes"],
+            answer: "sometimes",
+            explanation: "'Sometimes' es el adverbio que significa 'a veces'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'fish' es:",
+            options: ["fishs", "fishes", "fish", "fishie"],
+            answer: "fish",
+            explanation: "El sustantivo 'fish' es irregular y su forma plural es la misma que la singular."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'You ____ a car.'",
+            options: ["has", "have", "are", "is"],
+            answer: "have",
+            explanation: "Para el pronombre 'You', el verbo 'to have' se conjuga como 'have'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'new' es:",
+            options: ["old", "modern", "recent", "fresh"],
+            answer: "old",
+            explanation: "'Old' (viejo) es lo opuesto a 'new' (nuevo)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'rojo' en inglés?",
+            options: ["Blue", "Yellow", "Red", "Green"],
+            answer: "Red",
+            explanation: "El color 'rojo' en inglés es 'red'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'She ____ a teacher.'",
+            options: ["is", "am", "are", "be"],
+            answer: "is",
+            explanation: "El verbo 'to be' para el pronombre 'she' es 'is'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La palabra 'chair' se refiere a un objeto en la:",
+            options: ["Escuela", "Casa", "Tienda", "Parque"],
+            answer: "Casa",
+            explanation: "'Chair' (silla) es un objeto común en la casa."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El plural de 'leaf' (hoja) es:",
+            options: ["leafs", "leaves", "leafies", "leaf"],
+            answer: "leaves",
+            explanation: "A los sustantivos que terminan en 'f', se les cambia la 'f' por 'ves'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'This jacket is ____ than that one.'",
+            options: ["more expensive", "expensiver", "most expensive", "expensivest"],
+            answer: "more expensive",
+            explanation: "Para adjetivos largos, el comparativo se forma con 'more...than'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El antónimo de 'up' es:",
+            options: ["down", "on", "in", "out"],
+            answer: "down",
+            explanation: "'Down' (abajo) es lo opuesto a 'up' (arriba)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué número es 'ninety-nine'?",
+            options: ["9", "19", "90", "99"],
+            answer: "99",
+            explanation: "'Ninety-nine' se refiere al número 99."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El sinónimo de 'sad' es:",
+            options: ["happy", "unhappy", "glad", "joyful"],
+            answer: "unhappy",
+            explanation: "'Unhappy' (infeliz) es un sinónimo de 'sad' (triste)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se dice 'cocina' en inglés?",
+            options: ["Living room", "Bedroom", "Bathroom", "Kitchen"],
+            answer: "Kitchen",
+            explanation: "La palabra para 'cocina' en inglés es 'kitchen'."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el plural de 'sheep' (oveja)?",
+            options: ["sheeps", "sheepes", "sheep", "sheepses"],
+            answer: "sheep",
+            explanation: "El sustantivo 'sheep' es irregular y su forma plural es la misma que la singular."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Completa la oración: 'I ____ my homework every evening.'",
+            options: ["do", "does", "doing", "did"],
+            answer: "do",
+            explanation: "Con el pronombre 'I', el verbo 'do' se mantiene en su forma base."
+        },
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+    const numQuestionsPerSession = 20;
+
+    // Función para mezclar un array de forma aleatoria (algoritmo Fisher-Yates)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Función para inicializar el quiz
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        // Mezclar todas las preguntas y tomar una muestra
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, numQuestionsPerSession);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            // Contenido del texto largo si aplica
+            if (q.textId) {
+                const longTextDiv = document.createElement('div');
+                longTextDiv.className = 'long-text';
+                longTextDiv.innerHTML = longTexts[q.textId];
+                questionCard.appendChild(longTextDiv);
+            }
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            if (q.type === 'multiple-choice') {
+                const optionsContainer = document.createElement('div');
+                shuffleArray(q.options);
+                q.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.className = 'option-button';
+                    optionButton.textContent = option;
+                    optionButton.onclick = () => handleAnswer(index, option);
+                    optionsContainer.appendChild(optionButton);
+                });
+                questionCard.appendChild(optionsContainer);
+            } else if (q.type === 'text-area') {
+                const textarea = document.createElement('textarea');
+                textarea.className = 'text-area-input';
+                textarea.placeholder = "Escribe tu respuesta aquí...";
+                textarea.id = `textarea-${index}`;
+                questionCard.appendChild(textarea);
+                const submitButton = document.createElement('button');
+                submitButton.className = 'submit-button';
+                submitButton.textContent = 'Ver Respuesta y Explicación';
+                submitButton.onclick = () => handleAnswer(index, textarea.value);
+                questionCard.appendChild(submitButton);
+            }
+
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    // Función para manejar la respuesta del usuario
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const questionData = currentQuestions[questionIndex];
+
+        if (questionData.type === 'multiple-choice') {
+            const buttons = questionCard.querySelectorAll('.option-button');
+            const isCorrect = (selectedOption === questionData.answer);
+
+            buttons.forEach(button => {
+                button.disabled = true;
+                if (button.textContent === questionData.answer) {
+                    button.classList.add('correct');
+                } else if (button.textContent === selectedOption) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+            if (isCorrect) {
+                score++;
+            }
+        } else if (questionData.type === 'text-area') {
+            const textarea = document.getElementById(`textarea-${questionIndex}`);
+            const submitButton = questionCard.querySelector('.submit-button');
+            textarea.disabled = true;
+            submitButton.disabled = true;
+            submitButton.style.backgroundColor = '#6b7280';
+
+            // Para preguntas de texto, no hay "correcto" o "incorrecto"
+            questionCard.classList.add('correct'); // Usamos 'correct' para mostrar la explicación
+        }
+
+        questionsAnswered++;
+
+        // Mostrar la explicación
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${questionData.type === 'multiple-choice' ? (selectedOption === questionData.answer ? 'correct' : 'incorrect') : 'correct'}`;
+        explanationDiv.innerHTML = questionData.explanation;
+        if (questionData.type === 'multiple-choice') {
+            explanationDiv.innerHTML = (selectedOption === questionData.answer) ?
+                `¡Correcto! ${questionData.explanation}` :
+                `Incorrecto. La respuesta correcta era '${questionData.answer}'. ${questionData.explanation}`;
+        }
+
+        questionCard.appendChild(explanationDiv);
+
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000);
+        }
+    }
+
+    // Función para mostrar el resumen del quiz
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / currentQuestions.filter(q => q.type === 'multiple-choice').length) * 100);
+
+        finalScore.textContent = `${score} / ${currentQuestions.filter(q => q.type === 'multiple-choice').length}`;
+
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Lengua Inglesa y obtuve una puntuación de ${score} de ${currentQuestions.filter(q => q.type === 'multiple-choice').length} (${scorePercentage}%). ¡A seguir practicando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    // Event listener para el botón de reiniciar
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    // Inicializar el quiz cuando la página carga
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

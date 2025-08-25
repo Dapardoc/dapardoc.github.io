@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio Unificada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .subject-tag {
+            background-color: #4f46e5;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .subject-results {
+            margin-top: 24px;
+            text-align: left;
+        }
+        .subject-results h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .subject-results p {
+            font-size: 1rem;
+            color: #4b5563;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .long-text-container {
+            background-color: #f3f4f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio Integral</h1>
+    <p class="text-center text-gray-600 mb-8">¡Repasa todas las materias en una sola prueba!</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+
+        <div id="subject-results" class="subject-results text-center">
+            <h3>Desempeño por Materia:</h3>
+            <!-- Los resultados por materia se mostrarán aquí -->
+        </div>
+
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+</div>
+
+<script>
+    const allQuestions = {
+        'Matemáticas': [
+            // Operaciones básicas
+            { question: "¿Cuánto es 85 + 47?", options: ["122", "132", "142", "152"], answer: "132", explanation: "85 + 47 = 132." },
+            { question: "¿Cuánto es 98 - 36?", options: ["52", "62", "72", "82"], answer: "62", explanation: "98 - 36 = 62." },
+            { question: "¿Cuál es el resultado de 15 * 6?", options: ["80", "90", "100", "110"], answer: "90", explanation: "15 multiplicado por 6 es igual a 90." },
+            { question: "¿Cuánto es 72 / 8?", options: ["7", "8", "9", "10"], answer: "9", explanation: "72 dividido por 8 es 9, ya que 9 * 8 = 72." },
+            { question: "¿Cuál es el doble de 35?", options: ["60", "70", "75", "80"], answer: "70", explanation: "El doble de 35 es 35 + 35 o 35 * 2, que es 70." },
+            { question: "¿Qué número falta en la secuencia: 10, 15, __, 25, 30?", options: ["18", "20", "22", "24"], answer: "20", explanation: "La secuencia suma 5 a cada número, por lo tanto 15 + 5 = 20." },
+            // Fracciones y decimales
+            { question: "¿Qué fracción representa la mitad de una pizza?", options: ["1/3", "1/4", "1/2", "2/4"], answer: "1/2", explanation: "La fracción 1/2 representa una de dos partes iguales, es decir, la mitad." },
+            { question: "¿Qué decimal es equivalente a 1/4?", options: ["0.15", "0.25", "0.4", "0.5"], answer: "0.25", explanation: "1 dividido por 4 es igual a 0.25." },
+            { question: "¿Cuál es el resultado de 0.5 + 0.3?", options: ["0.6", "0.7", "0.8", "0.9"], answer: "0.8", explanation: "0.5 + 0.3 = 0.8." },
+            { question: "¿Cuál de estas fracciones es la más grande?", options: ["1/2", "1/4", "1/3", "1/5"], answer: "1/2", explanation: "De las opciones, 1/2 es la fracción más grande." },
+            { question: "¿Cómo se lee la fracción 3/4?", options: ["Tres cuartos", "Tres medios", "Cuatro tercios", "Tres quintos"], answer: "Tres cuartos", explanation: "3/4 se lee como tres cuartos." },
+            { question: "¿Cuánto es 1/2 de 10?", options: ["2", "4", "5", "10"], answer: "5", explanation: "La mitad de 10 es 5." },
+            // Geometría y medición
+            { question: "Si un cuadrado tiene un lado de 5 cm, ¿cuál es su perímetro?", options: ["10 cm", "15 cm", "20 cm", "25 cm"], answer: "20 cm", explanation: "El perímetro de un cuadrado se calcula sumando la longitud de sus cuatro lados: 5 + 5 + 5 + 5 = 20 cm." },
+            { question: "Si un rectángulo tiene una base de 8 cm y una altura de 4 cm, ¿cuál es su área?", options: ["12 cm²", "16 cm²", "24 cm²", "32 cm²"], answer: "32 cm²", explanation: "El área de un rectángulo se calcula multiplicando la base por la altura: 8 cm * 4 cm = 32 cm²." },
+            { question: "¿Cuántos gramos hay en 2 kilogramos?", options: ["200 g", "1000 g", "2000 g", "500 g"], answer: "2000 g", explanation: "1 kilogramo equivale a 1000 gramos, por lo tanto, 2 kg son 2000 gramos." },
+            { question: "¿Qué forma tiene un triángulo?", options: ["Cuatro lados", "Tres lados", "Cinco lados", "Ninguna de las anteriores"], answer: "Tres lados", explanation: "Un triángulo es una figura geométrica de tres lados." },
+            { question: "¿Qué unidad de medida usarías para medir la distancia entre dos ciudades?", options: ["Milímetros", "Centímetros", "Metros", "Kilómetros"], answer: "Kilómetros", explanation: "Los kilómetros son la unidad de medida más apropiada para grandes distancias." },
+            { question: "¿Cuál es el área de un cuadrado de 6 cm de lado?", options: ["12 cm²", "24 cm²", "30 cm²", "36 cm²"], answer: "36 cm²", explanation: "El área de un cuadrado se calcula multiplicando el lado por el lado: 6 cm * 6 cm = 36 cm²." },
+            // Problemas de lógica y razonamiento
+            { question: "Juan tiene 12 manzanas y le da 4 a su amigo. ¿Cuántas manzanas le quedan a Juan?", options: ["6", "8", "10", "12"], answer: "8", explanation: "12 - 4 = 8 manzanas." },
+            { question: "En un estacionamiento hay 5 carros y cada uno tiene 4 ruedas. ¿Cuántas ruedas hay en total?", options: ["9", "16", "20", "25"], answer: "20", explanation: "5 carros * 4 ruedas/carro = 20 ruedas en total." },
+            { question: "Si un lápiz cuesta $500 pesos y una goma $300, ¿cuánto cuestan ambos juntos?", options: ["$600", "$700", "$800", "$900"], answer: "$800", explanation: "$500 + $300 = $800." },
+            { question: "Sofía tiene 15 galletas y las quiere repartir entre 3 amigos. ¿Cuántas galletas le tocan a cada amigo?", options: ["3", "4", "5", "6"], answer: "5", explanation: "15 galletas / 3 amigos = 5 galletas para cada amigo." },
+            { question: "¿Cuál es el número par más pequeño de dos dígitos?", options: ["10", "12", "2", "20"], answer: "10", explanation: "El número par más pequeño de dos dígitos es 10." },
+            { question: "Un bus tiene 20 pasajeros. En la siguiente parada suben 5 y bajan 3. ¿Cuántos pasajeros hay ahora?", options: ["22", "25", "23", "28"], answer: "22", explanation: "20 + 5 - 3 = 22 pasajeros." },
+            // Más problemas
+            { question: "Si un reloj marca las 3:00 p.m., ¿qué hora marcará en 3 horas?", options: ["5:00 p.m.", "6:00 p.m.", "7:00 p.m.", "8:00 p.m."], answer: "6:00 p.m.", explanation: "3 p.m. + 3 horas = 6 p.m." },
+            { question: "Un paquete de galletas tiene 12 galletas. Si compras 3 paquetes, ¿cuántas galletas tienes?", options: ["15", "24", "36", "48"], answer: "36", explanation: "3 paquetes * 12 galletas/paquete = 36 galletas." },
+            { question: "El triple de un número es 27. ¿Cuál es ese número?", options: ["6", "7", "8", "9"], answer: "9", explanation: "27 / 3 = 9." },
+            { question: "Si 1/2 de 10 es 5, ¿cuánto es 1/4 de 20?", options: ["4", "5", "8", "10"], answer: "5", explanation: "1/4 de 20 es 5, porque 20 dividido por 4 es 5." },
+            { question: "¿Cuánto es 100 menos la mitad de 50?", options: ["50", "75", "25", "100"], answer: "75", explanation: "La mitad de 50 es 25, y 100 - 25 = 75." },
+            { question: "Si un libro cuesta $12.000 y lo pagas con un billete de $20.000, ¿cuánto es el cambio?", options: ["$6.000", "$7.000", "$8.000", "$10.000"], answer: "$8.000", explanation: "20.000 - 12.000 = $8.000." },
+        ],
+        'Lenguaje': [
+            // Lectura 1
+            {
+                type: 'reading',
+                text: "El antiguo pueblo de Arandor era famoso por su legendario Bosque Susurrante. Se decía que los árboles tenían la habilidad de hablar, no con palabras, sino con un suave susurro que solo los corazones puros podían entender. El bosque era el hogar de criaturas mágicas y un manantial de agua curativa, que los aldeanos llamaban 'El Lamento de la Fuente'. Cada año, en la luna de jade, el más sabio del pueblo, el anciano Elara, se adentraba en el bosque para escuchar sus secretos y guiar a la comunidad. Un día, una sombra se cernió sobre Arandor. Un hechicero ambicioso, conocido como Malakar, llegó con la intención de capturar la magia del Bosque Susurrante. Malakar era conocido por su corazón de hielo y su insaciable sed de poder. Con un hechizo oscuro, congeló las aguas de la fuente y silenció los susurros de los árboles. La aldea cayó en la desesperación. Las flores se marchitaron, los animales se escondieron, y el silencio se volvió una carga insoportable. Los aldeanos buscaron a Elara, pero él había desaparecido. En su lugar, encontraron a una joven, llamada Lyra, la nieta de Elara, de pie en la entrada del bosque, con los ojos llenos de determinación. Lyra no era sabia como su abuelo, pero su corazón era el más puro de Arandor. Ella había crecido escuchando las historias del bosque y creía firmemente en su poder. Con la bendición de los aldeanos, Lyra se adentró en el silencio, no para luchar, sino para escuchar. Se sentó bajo el árbol más antiguo, cerró los ojos y se concentró. Escuchó el silencio, y dentro de él, la memoria del susurro. No palabras, sino el sentimiento de la tierra, el fluir del río, la risa del viento. Lyra no luchó contra el hechizo de Malakar, sino que lo abrazó. Con su corazón puro, ella se convirtió en un eco del susurro del bosque. La magia no se podía robar, solo se podía compartir. Lentamente, los árboles comenzaron a vibrar con una nueva energía. No susurraban, cantaban. Su canto era tan fuerte y puro que rompió el hechizo de Malakar. La fuente de agua se descongeló y las aguas fluyeron con más fuerza que nunca. Malakar, derrotado, se retiró, confundido por el poder de la simpleza de Lyra. El Bosque Susurrante recuperó su voz, y los aldeanos celebraron la valentía de la joven. Desde ese día, Lyra se convirtió en la protectora del bosque, no por su sabiduría, sino por su corazón puro que demostró que la verdadera magia no reside en el poder, sino en la conexión y el respeto por el mundo que nos rodea.",
+                question: "¿Cuál era la principal amenaza que enfrentaba el pueblo de Arandor?",
+                options: ["Una sequía", "La llegada de un dragón", "El hechicero Malakar que quería robar la magia del bosque", "Una plaga que afectaba a los cultivos"],
+                answer: "El hechicero Malakar que quería robar la magia del bosque",
+                explanation: "El hechicero Malakar llegó a Arandor con la intención de capturar la magia del bosque, congelando la fuente y silenciando los árboles."
+            },
+            {
+                type: 'reading',
+                text: "El antiguo pueblo de Arandor era famoso por su legendario Bosque Susurrante. Se decía que los árboles tenían la habilidad de hablar, no con palabras, sino con un suave susurro que solo los corazones puros podían entender. El bosque era el hogar de criaturas mágicas y un manantial de agua curativa, que los aldeanos llamaban 'El Lamento de la Fuente'. Cada año, en la luna de jade, el más sabio del pueblo, el anciano Elara, se adentraba en el bosque para escuchar sus secretos y guiar a la comunidad. Un día, una sombra se cernió sobre Arandor. Un hechicero ambicioso, conocido como Malakar, llegó con la intención de capturar la magia del Bosque Susurrante. Malakar era conocido por su corazón de hielo y su insaciable sed de poder. Con un hechizo oscuro, congeló las aguas de la fuente y silenció los susurros de los árboles. La aldea cayó en la desesperación. Las flores se marchitaron, los animales se escondieron, y el silencio se volvió una carga insoportable. Los aldeanos buscaron a Elara, pero él había desaparecido. En su lugar, encontraron a una joven, llamada Lyra, la nieta de Elara, de pie en la entrada del bosque, con los ojos llenos de determinación. Lyra no era sabia como su abuelo, pero su corazón era el más puro de Arandor. Ella había crecido escuchando las historias del bosque y creía firmemente en su poder. Con la bendición de los aldeanos, Lyra se adentró en el silencio, no para luchar, sino para escuchar. Se sentó bajo el árbol más antiguo, cerró los ojos y se concentró. Escuchó el silencio, y dentro de él, la memoria del susurro. No palabras, sino el sentimiento de la tierra, el fluir del río, la risa del viento. Lyra no luchó contra el hechizo de Malakar, sino que lo abrazó. Con su corazón puro, ella se convirtió en un eco del susurro del bosque. La magia no se podía robar, solo se podía compartir. Lentamente, los árboles comenzaron a vibrar con una nueva energía. No susurraban, cantaban. Su canto era tan fuerte y puro que rompió el hechizo de Malakar. La fuente de agua se descongeló y las aguas fluyeron con más fuerza que nunca. Malakar, derrotado, se retiró, confundido por el poder de la simpleza de Lyra. El Bosque Susurrante recuperó su voz, y los aldeanos celebraron la valentía de la joven. Desde ese día, Lyra se convirtió en la protectora del bosque, no por su sabiduría, sino por su corazón puro que demostró que la verdadera magia no reside en el poder, sino en la conexión y el respeto por el mundo que nos rodea.",
+                question: "¿Cómo logró Lyra romper el hechizo del hechicero?",
+                options: ["Usando un hechizo más poderoso", "Con la ayuda de su abuelo", "Abrazando el silencio y escuchando la memoria del susurro del bosque", "Con la ayuda de los animales del bosque"],
+                answer: "Abrazando el silencio y escuchando la memoria del susurro del bosque",
+                explanation: "Lyra no luchó contra el hechizo, sino que lo abrazó y se conectó con el bosque, lo que hizo que la magia fluyera de nuevo."
+            },
+            // Lectura 2
+            {
+                type: 'reading',
+                text: "El Sol, nuestra estrella, es una esfera gigantesca de gas caliente, principalmente hidrógeno y helio. Es el centro de nuestro sistema solar y su gravedad mantiene a los planetas, asteroides y cometas en órbita a su alrededor. Sin el Sol, no habría vida en la Tierra. Su luz y calor son esenciales para la fotosíntesis, el proceso mediante el cual las plantas producen su alimento, y para mantener la temperatura de nuestro planeta en un rango habitable. La energía del Sol se genera en su núcleo a través de un proceso llamado fusión nuclear, donde los átomos de hidrógeno se fusionan para formar átomos de helio, liberando una inmensa cantidad de energía. Esta energía viaja desde el núcleo hasta la superficie del Sol y luego al espacio en forma de radiación. Aunque a menudo vemos al Sol como una estrella tranquila, tiene un ciclo de actividad de 11 años, que se manifiesta en la aparición de manchas solares y erupciones solares. Las erupciones solares son explosiones masivas que liberan una gran cantidad de energía y partículas al espacio. Cuando estas partículas llegan a la Tierra, pueden causar hermosas auroras en los polos, pero también pueden interferir con las comunicaciones por satélite y las redes eléctricas. El Sol se formó hace aproximadamente 4.600 millones de años y los científicos predicen que continuará brillando durante otros 5.000 millones de años. Con el tiempo, se quedará sin combustible y se expandirá para convertirse en una gigante roja, tragándose planetas como Mercurio y Venus. Eventualmente, se encogerá para convertirse en una enana blanca, una pequeña y densa estrella que se enfriará lentamente. Estudiar el Sol es crucial para entender el universo. Los científicos utilizan telescopios espaciales y terrestres para observar sus características y predecir su comportamiento. Estas investigaciones no solo nos ayudan a entender nuestra propia estrella, sino que también nos dan pistas sobre cómo otras estrellas se forman y evolucionan. El Sol es una fuente constante de fascinación y un recordatorio de la inmensidad del cosmos y nuestra pequeña pero significativa existencia en él.",
+                question: "¿Cuál es el proceso principal por el cual el Sol genera energía?",
+                options: ["Fotosíntesis", "Combustión", "Fusión nuclear", "Erupción solar"],
+                answer: "Fusión nuclear",
+                explanation: "La energía del Sol se genera en su núcleo a través de la fusión nuclear, donde los átomos de hidrógeno se fusionan."
+            },
+            {
+                type: 'reading',
+                text: "El Sol, nuestra estrella, es una esfera gigantesca de gas caliente, principalmente hidrógeno y helio. Es el centro de nuestro sistema solar y su gravedad mantiene a los planetas, asteroides y cometas en órbita a su alrededor. Sin el Sol, no habría vida en la Tierra. Su luz y calor son esenciales para la fotosíntesis, el proceso mediante el cual las plantas producen su alimento, y para mantener la temperatura de nuestro planeta en un rango habitable. La energía del Sol se genera en su núcleo a través de un proceso llamado fusión nuclear, donde los átomos de hidrógeno se fusionan para formar átomos de helio, liberando una inmensa cantidad de energía. Esta energía viaja desde el núcleo hasta la superficie del Sol y luego al espacio en forma de radiación. Aunque a menudo vemos al Sol como una estrella tranquila, tiene un ciclo de actividad de 11 años, que se manifiesta en la aparición de manchas solares y erupciones solares. Las erupciones solares son explosiones masivas que liberan una gran cantidad de energía y partículas al espacio. Cuando estas partículas llegan a la Tierra, pueden causar hermosas auroras en los polos, pero también pueden interferir con las comunicaciones por satélite y las redes eléctricas. El Sol se formó hace aproximadamente 4.600 millones de años y los científicos predicen que continuará brillando durante otros 5.000 millones de años. Con el tiempo, se quedará sin combustible y se expandirá para convertirse en una gigante roja, tragándose planetas como Mercurio y Venus. Eventualmente, se encogerá para convertirse en una enana blanca, una pequeña y densa estrella que se enfriará lentamente. Estudiar el Sol es crucial para entender el universo. Los científicos utilizan telescopios espaciales y terrestres para observar sus características y predecir su comportamiento. Estas investigaciones no solo nos ayudan a entender nuestra propia estrella, sino que también nos dan pistas sobre cómo otras estrellas se forman y evolucionan. El Sol es una fuente constante de fascinación y un recordatorio de la inmensidad del cosmos y nuestra pequeña pero significativa existencia en él.",
+                question: "¿Qué pueden causar en la Tierra las partículas de las erupciones solares?",
+                options: ["Huracanes y tormentas", "Hermosas auroras e interferencia con las comunicaciones", "Sequías", "Un aumento de la gravedad"],
+                answer: "Hermosas auroras e interferencia con las comunicaciones",
+                explanation: "Las erupciones solares pueden causar auroras en los polos, pero también interferir con las comunicaciones y las redes eléctricas."
+            },
+            // Lectura 3
+            {
+                type: 'reading',
+                text: "El café es una de las bebidas más consumidas en el mundo, y su historia es tan rica como su sabor. Se cree que su origen se encuentra en las tierras altas de Etiopía, donde, según la leyenda, un pastor de cabras llamado Kaldi descubrió el efecto energizante de los granos de café. Kaldi notó que sus cabras se volvían inusualmente animadas después de comer las bayas de un árbol en particular. Intrigado, probó las bayas él mismo y experimentó una sensación de euforia y vitalidad. Este descubrimiento lo llevó a compartir sus hallazgos con un monje local, quien inicialmente rechazó las bayas, arrojándolas al fuego. Sin embargo, el aroma que emanaba de los granos tostados era tan irresistible que el monje los rescató, los molió, los puso en agua caliente y así preparó la primera taza de café. Desde Etiopía, la planta de café se extendió a la península arábiga, donde su cultivo se popularizó. El puerto de Moca en Yemen se convirtió en un importante centro de comercio para el café, y su popularidad se disparó en el mundo islámico, donde se consumía en lugares llamados 'qahveh khaneh' o 'casas de café'. Estos establecimientos se convirtieron en centros de actividad social, donde la gente se reunía para charlar, escuchar música y jugar ajedrez. A medida que el café se abría camino hacia Europa en el siglo XVII, se enfrentó a cierta resistencia. Algunos lo llamaron 'la bebida amarga del diablo'. Sin embargo, su atractivo era demasiado grande para ser ignorado. El Papa Clemente VIII, antes de prohibirlo, decidió probarlo y, al encontrarlo delicioso, lo bendijo. Con la bendición papal, los cafés se extendieron por toda Europa, convirtiéndose en lugares de encuentro para intelectuales y artistas. En las Américas, el café fue introducido por los colonos europeos. Hoy en día, países como Colombia, Brasil y Vietnam son los principales productores de café a nivel mundial. El café no es solo una bebida; ha moldeado la historia, la cultura y la economía de muchas naciones. Es una fuente de sustento para millones de agricultores y una parte esencial de la vida diaria para innumerables personas en todo el mundo. La próxima vez que tomes una taza de café, tómate un momento para apreciar el largo y fascinante viaje que ese pequeño grano ha hecho para llegar a ti.",
+                question: "¿Dónde se cree que tuvo su origen el café, según la leyenda?",
+                options: ["Yemen", "Turquía", "Etiopía", "Italia"],
+                answer: "Etiopía",
+                explanation: "Según la leyenda, el café se originó en las tierras altas de Etiopía, descubierto por un pastor de cabras."
+            },
+            {
+                type: 'reading',
+                text: "El café es una de las bebidas más consumidas en el mundo, y su historia es tan rica como su sabor. Se cree que su origen se encuentra en las tierras altas de Etiopía, donde, según la leyenda, un pastor de cabras llamado Kaldi descubrió el efecto energizante de los granos de café. Kaldi notó que sus cabras se volvían inusualmente animadas después de comer las bayas de un árbol en particular. Intrigado, probó las bayas él mismo y experimentó una sensación de euforia y vitalidad. Este descubrimiento lo llevó a compartir sus hallazgos con un monje local, quien inicialmente rechazó las bayas, arrojándolas al fuego. Sin embargo, el aroma que emanaba de los granos tostados era tan irresistible que el monje los rescató, los molió, los puso en agua caliente y así preparó la primera taza de café. Desde Etiopía, la planta de café se extendió a la península arábiga, donde su cultivo se popularizó. El puerto de Moca en Yemen se convirtió en un importante centro de comercio para el café, y su popularidad se disparó en el mundo islámico, donde se consumía en lugares llamados 'qahveh khaneh' o 'casas de café'. Estos establecimientos se convirtieron en centros de actividad social, donde la gente se reunía para charlar, escuchar música y jugar ajedrez. A medida que el café se abría camino hacia Europa en el siglo XVII, se enfrentó a cierta resistencia. Algunos lo llamaron 'la bebida amarga del diablo'. Sin embargo, su atractivo era demasiado grande para ser ignorado. El Papa Clemente VIII, antes de prohibirlo, decidió probarlo y, al encontrarlo delicioso, lo bendijo. Con la bendición papal, los cafés se extendieron por toda Europa, convirtiéndose en lugares de encuentro para intelectuales y artistas. En las Américas, el café fue introducido por los colonos europeos. Hoy en día, países como Colombia, Brasil y Vietnam son los principales productores de café a nivel mundial. El café no es solo una bebida; ha moldeado la historia, la cultura y la economía de muchas naciones. Es una fuente de sustento para millones de agricultores y una parte esencial de la vida diaria para innumerables personas en todo el mundo. La próxima vez que tomes una taza de café, tómate un momento para apreciar el largo y fascinante viaje que ese pequeño grano ha hecho para llegar a ti.",
+                question: "¿Qué papel jugó el Papa Clemente VIII en la popularización del café en Europa?",
+                options: ["Lo prohibió", "Lo bendijo y lo popularizó", "Lo usó para rituales religiosos", "Lo molió y lo vendió"],
+                answer: "Lo bendijo y lo popularizó",
+                explanation: "El Papa Clemente VIII probó el café y, al encontrarlo delicioso, lo bendijo, lo que ayudó a que se extendiera por Europa."
+            },
+            // Lectura 4
+            {
+                type: 'reading',
+                text: "El océano es un vasto y misterioso mundo que cubre más del 70% de la superficie de la Tierra. Contiene el 97% del agua de nuestro planeta y juega un papel crucial en la regulación del clima y la producción de oxígeno. A pesar de su inmensidad, gran parte del océano permanece sin explorar. Los científicos estiman que solo se ha explorado alrededor del 5% del fondo oceánico. Las profundidades oceánicas son un entorno extremo, con temperaturas heladas, oscuridad total y presiones inimaginables. Sin embargo, es en estas condiciones donde prosperan algunas de las criaturas más extrañas y fascinantes del planeta. Animales como el pez dragón, el rape abisal y el calamar vampiro han evolucionado para sobrevivir en este entorno hostil, con adaptaciones como la bioluminiscencia y la capacidad de soportar una presión extrema. Los océanos están divididos en diferentes zonas, cada una con sus propias características de luz, temperatura y vida. La zona fótica, o zona de luz solar, es la capa superior, donde la luz del sol penetra y permite la fotosíntesis. La mayoría de las criaturas marinas que conocemos, como los delfines, las ballenas y los arrecifes de coral, viven en esta zona. Por debajo de esta, se encuentran las zonas de oscuridad, donde la vida se basa en la quimiosíntesis, un proceso que utiliza productos químicos para crear energía. La salud de los océanos es fundamental para el bienestar de la humanidad. Millones de personas dependen de ellos para obtener alimento y empleo. Además, los océanos actúan como un gran sumidero de carbono, absorbiendo una gran cantidad de dióxido de carbono de la atmósfera. Sin embargo, los océanos están bajo una presión sin precedentes debido a la contaminación, la sobrepesca y el cambio climático. El calentamiento global está causando el blanqueamiento de los corales y el aumento del nivel del mar. La contaminación plástica es una amenaza mortal para la vida marina, ya que los animales la confunden con alimento. Proteger los océanos es una responsabilidad global. Al reducir nuestra huella de carbono, reciclar y evitar el uso de plásticos de un solo uso, podemos contribuir a la salud de este ecosistema vital. La investigación y la educación sobre los océanos son herramientas poderosas para inspirar la acción y asegurar que este vasto y hermoso mundo continúe prosperando para las futuras generaciones.",
+                question: "¿Qué porcentaje de la superficie de la Tierra está cubierta por el océano?",
+                options: ["Menos del 50%", "Alrededor del 70%", "Más del 90%", "Casi 100%"],
+                answer: "Alrededor del 70%",
+                explanation: "El texto afirma que el océano cubre más del 70% de la superficie de la Tierra."
+            },
+            {
+                type: 'reading',
+                text: "El océano es un vasto y misterioso mundo que cubre más del 70% de la superficie de la Tierra. Contiene el 97% del agua de nuestro planeta y juega un papel crucial en la regulación del clima y la producción de oxígeno. A pesar de su inmensidad, gran parte del océano permanece sin explorar. Los científicos estiman que solo se ha explorado alrededor del 5% del fondo oceánico. Las profundidades oceánicas son un entorno extremo, con temperaturas heladas, oscuridad total y presiones inimaginables. Sin embargo, es en estas condiciones donde prosperan algunas de las criaturas más extrañas y fascinantes del planeta. Animales como el pez dragón, el rape abisal y el calamar vampiro han evolucionado para sobrevivir en este entorno hostil, con adaptaciones como la bioluminiscencia y la capacidad de soportar una presión extrema. Los océanos están divididos en diferentes zonas, cada una con sus propias características de luz, temperatura y vida. La zona fótica, o zona de luz solar, es la capa superior, donde la luz del sol penetra y permite la fotosíntesis. La mayoría de las criaturas marinas que conocemos, como los delfines, las ballenas y los arrecifes de coral, viven en esta zona. Por debajo de esta, se encuentran las zonas de oscuridad, donde la vida se basa en la quimiosíntesis, un proceso que utiliza productos químicos para crear energía. La salud de los océanos es fundamental para el bienestar de la humanidad. Millones de personas dependen de ellos para obtener alimento y empleo. Además, los océanos actúan como un gran sumidero de carbono, absorbiendo una gran cantidad de dióxido de carbono de la atmósfera. Sin embargo, los océanos están bajo una presión sin precedentes debido a la contaminación, la sobrepesca y el cambio climático. El calentamiento global está causando el blanqueamiento de los corales y el aumento del nivel del mar. La contaminación plástica es una amenaza mortal para la vida marina, ya que los animales la confunden con alimento. Proteger los océanos es una responsabilidad global. Al reducir nuestra huella de carbono, reciclar y evitar el uso de plásticos de un solo uso, podemos contribuir a la salud de este ecosistema vital. La investigación y la educación sobre los océanos son herramientas poderosas para inspirar la acción y asegurar que este vasto y hermoso mundo continúe prosperando para las futuras generaciones.",
+                question: "¿Cuál de las siguientes amenazas no se menciona en el texto como un problema para los océanos?",
+                options: ["Contaminación plástica", "Sobrepesca", "Blanqueamiento de corales", "Erupciones volcánicas"],
+                answer: "Erupciones volcánicas",
+                explanation: "El texto menciona la contaminación plástica, la sobrepesca, y el blanqueamiento de los corales, pero no las erupciones volcánicas."
+            },
+            // Gramática y vocabulario
+            { question: "La palabra 'casa' es un sustantivo:", options: ["Propio", "Común", "Adjetivo", "Verbo"], answer: "Común", explanation: "Un sustantivo común nombra a una persona, lugar o cosa en general, como 'casa'." },
+            { question: "¿Cuál de las siguientes palabras es un sinónimo de 'contento'?", options: ["Triste", "Feliz", "Enojado", "Aburrido"], answer: "Feliz", explanation: "Feliz significa lo mismo que contento." },
+            { question: "¿Cuál es el antónimo de 'grande'?", options: ["Enorme", "Pequeño", "Largo", "Ancho"], answer: "Pequeño", explanation: "Pequeño es la palabra opuesta a grande." },
+            { question: "¿En qué tiempo verbal está la oración 'María comió una manzana'?", options: ["Presente", "Futuro", "Pasado", "Condicional"], answer: "Pasado", explanation: "La palabra 'comió' indica una acción que ya ocurrió, por lo tanto, es pasado." },
+            { question: "La palabra 'árbol' lleva tilde en la:", options: ["A", "R", "B", "O"], answer: "A", explanation: "La palabra árbol lleva tilde en la primera A, que es la vocal de la sílaba tónica 'ár'." },
+            { question: "¿Cuál es el sujeto de la oración 'El perro ladra'?", options: ["El perro", "ladra", "El", "perro"], answer: "El perro", explanation: "El sujeto es 'El perro', ya que es quien realiza la acción de ladrar." },
+            // Puntuación
+            { question: "¿Qué signo de puntuación se usa para hacer una pausa corta en una oración?", options: ["Punto", "Coma", "Punto y coma", "Signo de exclamación"], answer: "Coma", explanation: "La coma se usa para separar elementos o hacer una pausa breve en una oración." },
+            { question: "¿Qué se usa al final de una pregunta?", options: ["Punto", "Coma", "Punto y coma", "Signo de interrogación"], answer: "Signo de interrogación", explanation: "El signo de interrogación de cierre (?) se usa al final de una pregunta." },
+            { question: "¿Qué se usa al final de una oración para terminarla?", options: ["Coma", "Punto", "Signo de exclamación", "Dos puntos"], answer: "Punto", explanation: "El punto se usa para indicar el final de una oración completa." },
+            { question: "¿Qué signo se usa para indicar sorpresa o asombro?", options: ["Signo de interrogación", "Punto", "Signo de exclamación", "Coma"], answer: "Signo de exclamación", explanation: "Los signos de exclamación (!) se usan para expresar sorpresa, asombro o emoción." },
+            { question: "¿Qué es una sílaba tónica?", options: ["La sílaba más larga", "La sílaba que se pronuncia con más fuerza", "La primera sílaba de la palabra", "La última sílaba de la palabra"], answer: "La sílaba que se pronuncia con más fuerza", explanation: "La sílaba tónica es la que lleva el acento de la palabra." },
+            { question: "¿Qué tipo de palabra es 'rápido'?", options: ["Sustantivo", "Verbo", "Adjetivo", "Adverbio"], answer: "Adjetivo", explanation: "'Rápido' es un adjetivo porque describe una cualidad de un sustantivo." },
+            // Más vocabulario y gramática
+            { question: "¿Cuál de estas palabras es un verbo?", options: ["Mesa", "Correr", "Azul", "Perro"], answer: "Correr", explanation: "Correr es un verbo porque describe una acción." },
+            { question: "¿Cuál es el plural de 'lápiz'?", options: ["Lápizes", "Lápizs", "Lápices", "Lápiceses"], answer: "Lápices", explanation: "El plural de las palabras que terminan en 'z' se forma cambiando la 'z' por 'ces'." },
+            { question: "¿Qué es un sustantivo propio?", options: ["Un nombre genérico", "El nombre de una persona o lugar específico", "Una cualidad", "Una acción"], answer: "El nombre de una persona o lugar específico", explanation: "Los sustantivos propios se usan para nombrar personas, lugares o cosas específicas y siempre se escriben con mayúscula." },
+            { question: "La palabra 'computadora' es un sustantivo:", options: ["Propio", "Común", "Adjetivo", "Verbo"], answer: "Común", explanation: "Es un sustantivo común porque se usa para nombrar cualquier computadora." },
+        ],
+        'Ciencias Sociales': [
+            // Historia y símbolos de Colombia
+            { question: "¿Cuál es el ave nacional de Colombia?", options: ["Cóndor de los Andes", "Águila calva", "Colibrí", "Guacamaya"], answer: "Cóndor de los Andes", explanation: "El Cóndor de los Andes es el ave nacional de Colombia, que simboliza la libertad y la soberanía." },
+            { question: "¿Qué colores tiene la bandera de Colombia?", options: ["Rojo, blanco, azul", "Amarillo, azul, rojo", "Verde, blanco, rojo", "Blanco, rojo, azul"], answer: "Amarillo, azul, rojo", explanation: "La bandera de Colombia está compuesta por tres franjas horizontales de colores amarillo, azul y rojo." },
+            { question: "¿Qué representa el color amarillo en la bandera de Colombia?", options: ["El mar", "La sangre de los héroes", "La riqueza y la soberanía", "La libertad"], answer: "La riqueza y la soberanía", explanation: "El amarillo en la bandera simboliza la riqueza del suelo colombiano, el sol y la soberanía." },
+            { question: "¿Cuál es la flor nacional de Colombia?", options: ["La rosa", "La orquídea", "El clavel", "El jazmín"], answer: "La orquídea", explanation: "La orquídea, en particular la Cattleya trianae, es la flor nacional de Colombia." },
+            { question: "¿Quién fue el principal líder de la independencia de Colombia?", options: ["Antonio Nariño", "Francisco de Paula Santander", "Simón Bolívar", "Camilo Torres"], answer: "Simón Bolívar", explanation: "Simón Bolívar, conocido como 'El Libertador', fue clave en la independencia de varios países de América del Sur, incluida Colombia." },
+            { question: "¿Qué evento marca el inicio de la lucha por la independencia en Colombia?", options: ["La Batalla de Boyacá", "El grito de independencia del 20 de julio de 1810", "La Batalla de Ayacucho", "La Campaña del Sur"], answer: "El grito de independencia del 20 de julio de 1810", explanation: "Este evento en Bogotá se considera el punto de partida para la independencia de Colombia." },
+            // Principios de ciudadanía
+            { question: "¿Qué es la convivencia?", options: ["Vivir solo en casa", "Vivir en un lugar sin reglas", "Vivir con respeto y armonía con otros", "Ignorar a los demás"], answer: "Vivir con respeto y armonía con otros", explanation: "La convivencia se refiere a la capacidad de vivir y compartir un espacio con otras personas de manera pacífica y respetuosa." },
+            { question: "El respeto a las normas en la escuela es importante para:", options: ["Ser castigado", "Evitar el aprendizaje", "Garantizar la seguridad y el orden", "Hacer lo que quieras"], answer: "Garantizar la seguridad y el orden", explanation: "Las normas ayudan a mantener un ambiente seguro y ordenado para que todos puedan aprender y convivir." },
+            { question: "Un buen ciudadano demuestra:", options: ["Irrespeto por los demás", "Participación y responsabilidad", "Indiferencia a los problemas", "Egoísmo"], answer: "Participación y responsabilidad", explanation: "Un buen ciudadano es participativo, cumple con sus deberes y es responsable de sus acciones." },
+            { question: "¿Qué principio fundamental de ciudadanía implica tratar a los demás como te gustaría que te traten a ti?", options: ["La obediencia", "El respeto", "La autoridad", "La sumisión"], answer: "El respeto", explanation: "El respeto es la base para una sana convivencia y se relaciona con la empatía y la consideración hacia los demás." },
+            { question: "¿Cuál es un ejemplo de cuidado de bienes comunes?", options: ["Lanzar basura en el parque", "Dañar el mobiliario público", "Cuidar las zonas verdes y los parques", "Pintar graffitis en las paredes"], answer: "Cuidar las zonas verdes y los parques", explanation: "Los bienes comunes son de todos, y es responsabilidad de cada ciudadano cuidarlos y preservarlos." },
+            { question: "¿Qué es la democracia?", options: ["Gobierno de un rey", "Gobierno de una sola persona", "Gobierno del pueblo", "Gobierno de los ricos"], answer: "Gobierno del pueblo", explanation: "La democracia es una forma de gobierno en la que el poder político es ejercido por los ciudadanos." },
+            // Geografía
+            { question: "¿Cuál es la principal cordillera que atraviesa el territorio colombiano?", options: ["Los Alpes", "Los Andes", "Los Urales", "Los Pirineos"], answer: "Los Andes", explanation: "La Cordillera de los Andes se divide en tres ramales en Colombia: la Cordillera Occidental, la Central y la Oriental." },
+            { question: "¿Cuál de estas regiones de Colombia es conocida por su clima cálido y sus playas?", options: ["Región Andina", "Región Caribe", "Región Pacífica", "Región Orinoquía"], answer: "Región Caribe", explanation: "La Región Caribe se caracteriza por sus llanuras costeras, clima cálido y las playas del mar Caribe." },
+            { question: "La región de la Amazonía en Colombia se caracteriza por tener:", options: ["Un clima seco", "Altas montañas", "Una gran biodiversidad y clima húmedo", "Nieve"], answer: "Una gran biodiversidad y clima húmedo", explanation: "La región amazónica es una de las áreas con mayor biodiversidad del planeta, con un clima tropical húmedo." },
+            { question: "¿Qué tipo de relieve predomina en la región Andina?", options: ["Llanuras", "Sistemas montañosos", "Desiertos", "Islas"], answer: "Sistemas montañosos", explanation: "La Región Andina es conocida por sus imponentes montañas, valles interandinos y volcanes." },
+            { question: "¿Dónde se encuentra el desierto de La Tatacoa?", options: ["Región Amazónica", "Región Pacífica", "Región Andina", "Región Caribe"], answer: "Región Andina", explanation: "El Desierto de La Tatacoa, a pesar de su nombre, es un bosque seco tropical que se encuentra en la región Andina, específicamente en el departamento de Huila." },
+            { question: "¿Cuál es la capital de Colombia?", options: ["Medellín", "Cali", "Barranquilla", "Bogotá"], answer: "Bogotá", explanation: "Bogotá es la capital de Colombia y la ciudad más grande del país." },
+            // Cultura y economía
+            { question: "¿Cuál de estos es un plato típico de la región andina?", options: ["Bandeja paisa", "Ajiaco", "Sancocho de pescado", "Arroz con coco"], answer: "Bandeja paisa", explanation: "La bandeja paisa es un plato emblemático de la región andina, con ingredientes como frijoles, arroz, carne, huevo y aguacate." },
+            { question: "¿Qué festividad es conocida por sus carrozas y desfiles en el sur del país?", options: ["Carnaval de Barranquilla", "Carnaval de Negros y Blancos", "Feria de las Flores", "Festival de la Leyenda Vallenata"], answer: "Carnaval de Negros y Blancos", explanation: "El Carnaval de Negros y Blancos, celebrado en Pasto, es una de las festividades más importantes de Colombia, donde se celebra la diversidad cultural." },
+            { question: "La diversidad cultural de Colombia se debe a la mezcla de culturas:", options: ["Europea y asiática", "Indígena, africana y europea", "Americana y australiana", "Africana y asiática"], answer: "Indígena, africana y europea", explanation: "La cultura colombiana es el resultado de una rica mezcla entre las culturas indígenas nativas, la europea (especialmente española) y la africana." },
+            { question: "¿En qué región de Colombia se encuentra el vallenato, declarado Patrimonio Cultural Inmaterial de la Humanidad?", options: ["Región Andina", "Región Orinoquía", "Región Caribe", "Región Pacífica"], answer: "Región Caribe", explanation: "El vallenato es un género musical tradicional de la región Caribe de Colombia, especialmente de la zona de Valledupar." },
+            { question: "¿Cuál es el principal producto agrícola de exportación de Colombia?", options: ["Café", "Flores", "Banano", "Petróleo"], answer: "Café", explanation: "El café colombiano es mundialmente reconocido por su calidad y es uno de los principales productos de exportación del país." },
+            { question: "¿Qué es la economía familiar?", options: ["Comprar sin control", "Manejar el dinero de manera irresponsable", "Administrar los ingresos y gastos en casa", "Dejar que el dinero se gaste solo"], answer: "Administrar los ingresos y gastos en casa", explanation: "La economía familiar implica la planificación y el control de cómo se gana y se gasta el dinero en el hogar." }
+        ],
+        'Tecnologías e Innovación': [
+            // Pensamiento computacional
+            { question: "¿Qué es un algoritmo?", options: ["Un tipo de robot", "Una lista de pasos para hacer algo", "Un videojuego", "Un tipo de planta"], answer: "Una lista de pasos para hacer algo", explanation: "Un algoritmo es una secuencia de instrucciones o pasos finitos y bien definidos para resolver un problema o lograr una tarea." },
+            { question: "En pensamiento computacional, la descomposición es el proceso de:", options: ["Unir varios problemas en uno", "Ignorar un problema", "Dividir un problema grande en partes más pequeñas", "Resolver un problema muy rápido"], answer: "Dividir un problema grande en partes más pequeñas", explanation: "La descomposición ayuda a abordar problemas complejos al dividirlos en sub-problemas más manejables." },
+            { question: "El primer paso en el algoritmo para hornear un pastel sería:", options: ["Comer el pastel", "Mezclar los ingredientes", "Calentar el horno", "Decorar el pastel"], answer: "Calentar el horno", explanation: "Preparar el horno es el paso inicial para asegurarse de que esté a la temperatura correcta antes de hornear." },
+            { question: "Si quieres ir del punto A al punto B en un mapa, estás usando:", options: ["Un algoritmo", "Un sensor", "Un patrón", "Un motor"], answer: "Un algoritmo", explanation: "Un algoritmo de búsqueda de ruta te da la secuencia de pasos para ir de un lugar a otro." },
+            { question: "¿Qué es el pensamiento computacional?", options: ["Solo programar computadoras", "Resolver problemas usando conceptos de la informática", "Jugar videojuegos", "Ser bueno en matemáticas"], answer: "Resolver problemas usando conceptos de la informática", explanation: "Es una habilidad que nos ayuda a resolver problemas de forma lógica, incluso sin una computadora." },
+            { question: "La 'abstracción' en pensamiento computacional es:", options: ["Esconder información", "Identificar las partes importantes y dejar de lado los detalles innecesarios", "Hacer el problema más complejo", "Usar solo las primeras ideas"], answer: "Identificar las partes importantes y dejar de lado los detalles innecesarios", explanation: "La abstracción se enfoca en los aspectos cruciales de un problema sin preocuparse por los detalles." },
+            // Programación visual
+            { question: "En Scratch, ¿qué bloque usarías para hacer que un personaje se mueva diez pasos y luego se mueva diez pasos de nuevo?", options: ["Un bloque 'repetir'", "Un bloque 'cambiar disfraz'", "Un bloque 'tocar sonido'", "Un bloque 'preguntar'"], answer: "Un bloque 'repetir'", explanation: "El bloque 'repetir' se usa para ejecutar una serie de instrucciones varias veces." },
+            { question: "Si ves una secuencia de bloques de 'movimiento' que se repite una y otra vez, estás identificando un:", options: ["Algoritmo", "Patrón", "Sensor", "Error"], answer: "Patrón", explanation: "Reconocer patrones es la habilidad de identificar similitudes o secuencias que se repiten en un problema o programa." },
+            { question: "En programación visual, ¿qué tipo de patrón se repite para dibujar un círculo?", options: ["Avanzar y retroceder", "Avanzar y girar en un ángulo pequeño", "Saltar y girar", "No hay patrón"], answer: "Avanzar y girar en un ángulo pequeño", explanation: "Para dibujar un círculo, el programa avanza un poco y gira un poco, repitiendo este patrón muchas veces." },
+            { question: "Identificar similitudes y patrones en los problemas nos ayuda a:", options: ["Complicar el problema", "Crear soluciones más fáciles y eficientes", "Escribir más código", "No resolver el problema"], answer: "Crear soluciones más fáciles y eficientes", explanation: "El reconocimiento de patrones nos permite reutilizar soluciones y simplificar el proceso de programación." },
+            { question: "En un programa de Scratch, el bloque 'Por siempre' crea un bucle que:", options: ["Se ejecuta una vez", "Se ejecuta un número limitado de veces", "Se ejecuta para siempre hasta que el programa se detiene", "Se ejecuta solo al principio"], answer: "Se ejecuta para siempre hasta que el programa se detiene", explanation: "El bucle 'Por siempre' es útil para acciones que deben continuar durante toda la ejecución del programa." },
+            { question: "¿Cuál es el propósito de los bloques de 'control' en Scratch?", options: ["Mover el personaje", "Cambiar el color del fondo", "Controlar cuándo y cómo se ejecutan otros bloques", "Reproducir música"], answer: "Controlar cuándo y cómo se ejecutan otros bloques", explanation: "Los bloques de control manejan la lógica del programa, como bucles y condiciones." },
+            // Robótica escolar
+            { question: "¿Cuál es el cerebro de un robot?", options: ["El motor", "El sensor", "El microcontrolador", "El engranaje"], answer: "El microcontrolador", explanation: "El microcontrolador es el componente que recibe las instrucciones del programa y controla los demás componentes del robot." },
+            { question: "La función de un sensor de luz en un robot es:", options: ["Encender una bombilla", "Detectar la presencia o ausencia de luz", "Hacer ruido", "Darle energía al robot"], answer: "Detectar la presencia o ausencia de luz", explanation: "Los sensores le dan al robot la capacidad de interactuar con su entorno, detectando luz, sonido, tacto, etc." },
+            { question: "En robótica, ¿qué es un actuador?", options: ["La parte que le da movimiento al robot (como un motor)", "El 'cerebro' del robot", "Una batería", "Un tipo de sensor"], answer: "La parte que le da movimiento al robot (como un motor)", explanation: "Los actuadores son los componentes del robot que realizan acciones físicas, como moverse o girar." },
+            { question: "El propósito de la robótica escolar es:", options: ["Construir robots de forma profesional", "Desarrollar habilidades de resolución de problemas y programación", "Solo para niños mayores", "No es útil para el futuro"], answer: "Desarrollar habilidades de resolución de problemas y programación", explanation: "La robótica escolar fomenta el pensamiento lógico, la creatividad y el trabajo en equipo." },
+            { question: "¿Qué tipo de lenguaje se usa para programar un robot?", options: ["Un lenguaje de robot", "Un lenguaje de programación", "Solo bloques", "Solo números"], answer: "Un lenguaje de programación", explanation: "Se utilizan lenguajes de programación, que pueden ser visuales (como en Scratch) o basados en texto." },
+            { question: "¿Qué es un robot?", options: ["Un carro de juguete", "Una máquina programable que puede realizar tareas", "Una computadora muy rápida", "Un juguete electrónico"], answer: "Una máquina programable que puede realizar tareas", explanation: "Un robot es una máquina que puede ser programada para realizar una serie de tareas de forma automática." },
+            // Seguridad digital
+            { question: "¿Qué información NO debes compartir en internet con desconocidos?", options: ["Tu nombre de usuario de un juego", "El nombre de tu personaje favorito", "Tu dirección de casa y número de teléfono", "El nombre de tu mascota"], answer: "Tu dirección de casa y número de teléfono", explanation: "Compartir información personal sensible puede poner en riesgo tu seguridad." },
+            { question: "¿Qué es una 'huella digital'?", options: ["Una marca de tu dedo en la pantalla", "Un tipo de contraseña", "El rastro de todas tus actividades en línea", "Una aplicación de dibujo"], answer: "El rastro de todas tus actividades en línea", explanation: "Tu huella digital incluye todo lo que haces en internet, desde las publicaciones que compartes hasta las páginas que visitas." },
+            { question: "Para tener una contraseña segura, debes usar:", options: ["La misma contraseña para todas tus cuentas", "Tu fecha de cumpleaños", "Una combinación de letras mayúsculas, minúsculas, números y símbolos", "Solo números"], answer: "Una combinación de letras mayúsculas, minúsculas, números y símbolos", explanation: "Las contraseñas seguras son difíciles de adivinar y protegen tu información." },
+            { question: "Si un sitio web te pide mucha información personal para un simple juego, ¿qué debes hacer?", options: ["Darle toda la información", "Crear información falsa", "No usar ese sitio web", "Compartir información con tus amigos"], answer: "No usar ese sitio web", explanation: "Debes ser cauteloso con la información que compartes en línea y sospechar de sitios que piden demasiado." },
+            { question: "Si alguien te envía un mensaje con un enlace que dice que ganaste un premio, ¿cuál es la mejor acción?", options: ["Hacer clic en el enlace inmediatamente", "Compartir el enlace con tus amigos", "Borrar el mensaje y no hacer clic", "Responder 'gracias'"], answer: "Borrar el mensaje y no hacer clic", explanation: "Los mensajes que prometen premios inesperados suelen ser intentos de estafa o phishing." },
+            { question: "¿Qué es la ciberconvivencia?", options: ["Acosar a otras personas en línea", "Ignorar los comentarios de los demás", "El respeto y la buena conducta en el uso de internet", "Compartir información personal sin permiso"], answer: "El respeto y la buena conducta en el uso de internet", explanation: "La ciberconvivencia es la forma responsable de interactuar en el mundo digital, respetando a los demás y las normas de la comunidad." },
+            { question: "¿Qué es un 'phishing'?", options: ["Un tipo de videojuego", "Un intento de robar tu información personal haciéndose pasar por alguien de confianza", "Una forma de comunicación segura", "Un tipo de navegador de internet"], answer: "Un intento de robar tu información personal haciéndose pasar por alguien de confianza", explanation: "El phishing es una técnica de ciberdelincuencia que busca obtener datos personales y financieros de los usuarios." },
+            { question: "¿Cuál es una buena práctica para proteger tus datos en internet?", options: ["Usar siempre contraseñas cortas", "Compartir tus contraseñas con amigos", "Ignorar las actualizaciones de seguridad", "Activar la verificación en dos pasos"], answer: "Activar la verificación en dos pasos", explanation: "La verificación en dos pasos añade una capa extra de seguridad a tus cuentas." }
+        ]
+    };
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+    const questionsPerSubject = 10;
+    let subjectScores = {
+        'Matemáticas': { correct: 0, incorrect: 0 },
+        'Lenguaje': { correct: 0, incorrect: 0 },
+        'Ciencias Sociales': { correct: 0, incorrect: 0 },
+        'Tecnologías e Innovación': { correct: 0, incorrect: 0 }
+    };
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+        subjectScores = {
+            'Matemáticas': { correct: 0, incorrect: 0 },
+            'Lenguaje': { correct: 0, incorrect: 0 },
+            'Ciencias Sociales': { correct: 0, incorrect: 0 },
+            'Tecnologías e Innovación': { correct: 0, incorrect: 0 }
+        };
+
+        currentQuestions = [];
+        for (const subject in allQuestions) {
+            shuffleArray(allQuestions[subject]);
+            currentQuestions.push(...allQuestions[subject].slice(0, questionsPerSubject).map(q => ({ ...q, subject })));
+        }
+
+        shuffleArray(currentQuestions);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            const subjectTag = document.createElement('span');
+            subjectTag.className = 'subject-tag';
+            subjectTag.textContent = q.subject;
+            questionCard.appendChild(subjectTag);
+
+            if (q.type === 'reading') {
+                const readingContainer = document.createElement('div');
+                readingContainer.className = 'long-text-container';
+                readingContainer.textContent = q.text;
+                questionCard.appendChild(readingContainer);
+            }
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            const optionsContainer = document.createElement('div');
+            shuffleArray(q.options);
+            q.options.forEach(option => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.onclick = () => handleAnswer(index, option);
+                optionsContainer.appendChild(optionButton);
+            });
+            questionCard.appendChild(optionsContainer);
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const questionData = currentQuestions[questionIndex];
+        const buttons = questionCard.querySelectorAll('.option-button');
+        const isCorrect = (selectedOption === questionData.answer);
+
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === questionData.answer) {
+                button.classList.add('correct');
+            } else if (button.textContent === selectedOption) {
+                button.classList.add('incorrect');
+            }
+        });
+
+        questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if (isCorrect) {
+            score++;
+            subjectScores[questionData.subject].correct++;
+        } else {
+            subjectScores[questionData.subject].incorrect++;
+        }
+
+        questionsAnswered++;
+
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${isCorrect ? 'correct' : 'incorrect'}`;
+        explanationDiv.innerHTML = isCorrect ?
+            `¡Correcto! ${questionData.explanation}` :
+            `Incorrecto. La respuesta correcta era '${questionData.answer}'. ${questionData.explanation}`;
+
+        questionCard.appendChild(explanationDiv);
+
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000);
+        }
+    }
+
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const subjectResultsDiv = document.getElementById('subject-results');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const totalQuestions = Object.keys(allQuestions).length * questionsPerSubject;
+        const scorePercentage = Math.round((score / totalQuestions) * 100);
+
+        finalScore.textContent = `${score} / ${totalQuestions}`;
+        subjectResultsDiv.innerHTML = `<h3>Desempeño por Materia:</h3>`;
+
+        for (const subject in subjectScores) {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${subject}:</strong> ${subjectScores[subject].correct} aciertos, ${subjectScores[subject].incorrect} errores.`;
+            subjectResultsDiv.appendChild(p);
+        }
+
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba unificada de estudio. Mi puntaje total fue de ${score} de ${totalQuestions} (${scorePercentage}%). ¡Me fue así por materia: ${Object.entries(subjectScores).map(([subj, res]) => `${subj}: ${res.correct} aciertos`).join(', ')}! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>

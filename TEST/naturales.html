@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estudio: Ciencias Naturales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .question-card.correct {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .question-card.incorrect {
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .option-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .option-button:hover:not([disabled]) {
+            background-color: #e5e7eb;
+        }
+        .option-button.correct {
+            background-color: #dcfce7;
+            border-color: #10b981;
+            color: #15803d;
+            font-weight: 600;
+        }
+        .option-button.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        .explanation {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .explanation.correct {
+            background-color: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #166534;
+        }
+        .explanation.incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+        }
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4f46e5;
+            margin: 16px 0;
+        }
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #25d366;
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ea04d;
+        }
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .long-text {
+            background-color: #f3f4f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="container bg-white p-8 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-700">Guía de Estudio: Ciencias Naturales</h1>
+    <p class="text-center text-gray-600 mb-8">¡Pon a prueba tu conocimiento sobre la naturaleza y la materia!</p>
+
+    <div id="quiz-container">
+        <!-- Las preguntas se generarán aquí por JavaScript -->
+    </div>
+
+    <div id="summary-container" class="summary-card">
+        <h2 class="summary-title">¡Prueba Terminada!</h2>
+        <p class="text-gray-600 mt-2">Has completado todas las preguntas. Tu resultado es:</p>
+        <div id="final-score" class="score"></div>
+        <button id="restart-button" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full hover:bg-indigo-700 transition">Volver a Intentar</button>
+        <a id="whatsapp-link" href="#" class="whatsapp-button">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.843c-5.83 0-10.557 4.726-10.557 10.556 0 1.954.526 3.82 1.528 5.467L1.87 21.144l3.193-.837c1.556.883 3.321 1.346 5.127 1.346 5.83 0 10.556-4.726 10.556-10.557C22.596 7.57 17.87 2.843 12.04 2.843zm4.62 14.808c-.287.19-.68.304-1.258.125-.578-.179-1.92-1.056-2.227-1.168-.307-.112-.533-.168-.758.169-.225.337-.872 1.169-1.06 1.394-.188.225-.376.253-.69.074-.313-.18-1.328-.485-2.527-1.56-.934-.84-1.567-1.872-1.745-2.179-.178-.307-.019-.476.159-.654.162-.164.385-.436.576-.653.19-.217.253-.362.376-.605.123-.242.062-.45-.031-.63-.09-.18-.847-2.04-.995-2.784-.148-.744-.296-.628-.409-.64-.112-.01-.242-.01-.409-.01-.167 0-.448.062-.68.337-.23.275-.872.84-1.06 1.018-.187.178-.34.337-.34.872s.409.68 1.169 1.705c.76 1.025 1.562 1.872 2.76 2.868 1.198.995 2.226 1.302 2.656 1.48s.66.19.94.125c.28-.06.92-.376 1.056-.744.137-.367.137-.68.09-1.257-.046-.578-.168-.962-.253-1.127-.084-.165-.18-.307-.26-.448-.08-.142-.014-.23.111-.476.125-.245 1.169 1.025 2.193 1.54 1.025.514 1.25.597 1.48.625.225.027 1.25 0 1.438-.15.188-.15.376-.476.533-.807.158-.33.158-.62.112-.68-.045-.06-.17-.11-.358-.19-.187-.08-.448-.156-.68-.28-.23-.125-.494-.28-.758-.514-.264-.234-.526-.612-.526-1.14 0-.528.28-1.025.59-1.353.31-.328.718-.745 1.094-1.112.376-.367.656-.479.94-.494.28-.015.758.075 1.127.375.368.3.575.652.72.84.144.187.28.409.408.62.129.21.28.452.377.653.097.202.19.26.22.408.03.148-.253.355-.38.543-.127.187-.27.376-.408.533-.138.158-.28.324-.42.479-.142.155-.26.29-.26.447z"/>
+            </svg>
+            Compartir resultado
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner"></div>
+</div>
+
+<script>
+    const allQuestions = [
+        // Cuerpo humano: órganos y sistemas básicos
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál de estos órganos es el centro de control del cuerpo humano?",
+            options: ["Corazón", "Pulmones", "Cerebro", "Estómago"],
+            answer: "Cerebro",
+            explanation: "El cerebro es el órgano que controla todas las funciones del cuerpo."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El sistema digestivo es responsable de:",
+            options: ["Bombear sangre", "Respirar", "Procesar los alimentos", "Proteger el cuerpo"],
+            answer: "Procesar los alimentos",
+            explanation: "El sistema digestivo descompone los alimentos para que el cuerpo pueda absorber los nutrientes."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué sistema transporta la sangre por todo el cuerpo?",
+            options: ["Sistema respiratorio", "Sistema nervioso", "Sistema circulatorio", "Sistema óseo"],
+            answer: "Sistema circulatorio",
+            explanation: "El sistema circulatorio, que incluye el corazón y los vasos sanguíneos, transporta la sangre."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Los pulmones son los órganos principales del sistema:",
+            options: ["Digestivo", "Respiratorio", "Nervioso", "Muscular"],
+            answer: "Respiratorio",
+            explanation: "Los pulmones son esenciales para la respiración, que es la función del sistema respiratorio."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué sistema proporciona soporte y protección al cuerpo?",
+            options: ["Sistema digestivo", "Sistema muscular", "Sistema óseo", "Sistema circulatorio"],
+            answer: "Sistema óseo",
+            explanation: "El sistema óseo, formado por huesos, brinda estructura y protege los órganos internos."
+        },
+        // Seres vivos: clasificación
+        {
+            type: 'multiple-choice',
+            question: "¿Qué característica define a los animales?",
+            options: ["Producen su propio alimento", "Se desplazan para buscar comida", "Tienen raíces", "Son descomponedores"],
+            answer: "Se desplazan para buscar comida",
+            explanation: "La mayoría de los animales son capaces de moverse para encontrar su alimento."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Los seres vivos que producen su propio alimento a través de la fotosíntesis son:",
+            options: ["Animales", "Plantas", "Hongos", "Bacterias"],
+            answer: "Plantas",
+            explanation: "Las plantas son seres autótrofos, lo que significa que fabrican su propio alimento."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿A qué reino pertenecen las setas y los mohos?",
+            options: ["Animales", "Plantas", "Hongos", "Bacterias"],
+            answer: "Hongos",
+            explanation: "Las setas y los mohos son parte del reino de los hongos, que se alimentan de materia orgánica en descomposición."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Un ser vivo que no se puede mover, tiene tallo y hojas, es un/a:",
+            options: ["Animal", "Hongo", "Planta", "Bacteria"],
+            answer: "Planta",
+            explanation: "La descripción corresponde a una planta, que es un organismo inmóvil con partes como tallo y hojas."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Un perro, un pez y una ave son ejemplos de:",
+            options: ["Plantas", "Hongos", "Animales", "Seres inertes"],
+            answer: "Animales",
+            explanation: "Perros, peces y aves son parte del reino animal."
+        },
+        // Estados de la materia y cambios
+        {
+            type: 'multiple-choice',
+            question: "¿Qué estado de la materia tiene volumen y forma definidos?",
+            options: ["Sólido", "Líquido", "Gas", "Plasma"],
+            answer: "Sólido",
+            explanation: "Los sólidos tienen una estructura molecular fija, lo que les da una forma y volumen definidos."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el cambio de estado de sólido a líquido?",
+            options: ["Evaporación", "Solidificación", "Fusión", "Condensación"],
+            answer: "Fusión",
+            explanation: "La fusión es el proceso por el cual una sustancia pasa del estado sólido al líquido al aplicar calor."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Las partículas de un gas están:",
+            options: ["Muy juntas y ordenadas", "Muy separadas y desordenadas", "Cerca unas de otras, pero se mueven", "Inmóviles"],
+            answer: "Muy separadas y desordenadas",
+            explanation: "En el estado gaseoso, las partículas tienen mucha energía y se mueven libremente y de forma desordenada."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Qué cambio de estado ocurre cuando el vapor de agua se convierte en líquido?",
+            options: ["Fusión", "Evaporación", "Condensación", "Sublimación"],
+            answer: "Condensación",
+            explanation: "La condensación es el proceso de cambio de estado de gas a líquido, como ocurre cuando se forman las nubes."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Cuando el agua se congela, pasa de estado líquido a:",
+            options: ["Gaseoso", "Sólido", "Plasma", "No cambia"],
+            answer: "Sólido",
+            explanation: "La congelación es el proceso de cambio de estado de líquido a sólido."
+        },
+        // Recursos naturales
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál de estos es un recurso natural renovable?",
+            options: ["Petróleo", "Carbón", "Agua", "Gas natural"],
+            answer: "Agua",
+            explanation: "El agua es un recurso renovable, ya que se regenera a través del ciclo del agua."
+        },
+        {
+            type: 'multiple-choice',
+            question: "El suelo es importante porque:",
+            options: ["Contiene agua salada", "Es una fuente de energía", "Permite el crecimiento de las plantas", "Está en constante movimiento"],
+            answer: "Permite el crecimiento de las plantas",
+            explanation: "El suelo proporciona los nutrientes y el soporte necesarios para el crecimiento de la vegetación."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es el principal componente del aire que respiramos?",
+            options: ["Dióxido de carbono", "Nitrógeno", "Oxígeno", "Vapor de agua"],
+            answer: "Oxígeno",
+            explanation: "El aire está compuesto principalmente por nitrógeno (78%) y oxígeno (21%), pero el oxígeno es el que necesitamos para respirar."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Un recurso natural que no se regenera a corto plazo es:",
+            options: ["Agua", "Viento", "Suelo", "Minerales"],
+            answer: "Minerales",
+            explanation: "Los minerales y los combustibles fósiles son recursos no renovables, ya que su formación tarda millones de años."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cuál es una de las principales fuentes de contaminación del agua?",
+            options: ["La lluvia", "El sol", "Desechos industriales", "El viento"],
+            answer: "Desechos industriales",
+            explanation: "Los desechos de fábricas y la actividad humana son una de las principales causas de la contaminación del agua."
+        },
+        // Conceptos básicos de energía
+        {
+            type: 'multiple-choice',
+            question: "¿Qué tipo de energía nos llega del sol?",
+            options: ["Energía eólica", "Energía lumínica y calórica", "Energía sonora", "Energía cinética"],
+            answer: "Energía lumínica y calórica",
+            explanation: "El sol emite luz (energía lumínica) y calor (energía calórica)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "La energía de movimiento se conoce como:",
+            options: ["Energía potencial", "Energía cinética", "Energía calórica", "Energía lumínica"],
+            answer: "Energía cinética",
+            explanation: "La energía cinética es la energía que posee un objeto debido a su movimiento."
+        },
+        {
+            type: 'multiple-choice',
+            question: "¿Cómo se produce la energía calórica?",
+            options: ["Con la luz", "Con el sonido", "Con el roce (fricción)", "Con el viento"],
+            answer: "Con el roce (fricción)",
+            explanation: "La fricción entre dos objetos genera calor (energía calórica)."
+        },
+        // Experimentos sencillos
+        {
+            type: 'multiple-choice',
+            question: "Para observar el proceso de fotosíntesis, ¿qué necesitarías, además de una planta?",
+            options: ["Oscuridad", "Hielo", "Luz solar y agua", "Fuego"],
+            answer: "Luz solar y agua",
+            explanation: "La fotosíntesis es un proceso que requiere luz solar y agua para que la planta produzca su alimento."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Si pones un cubito de hielo en un vaso a temperatura ambiente, observarás el cambio de estado de:",
+            options: ["Líquido a gas", "Gas a líquido", "Sólido a líquido", "Líquido a sólido"],
+            answer: "Sólido a líquido",
+            explanation: "El hielo (sólido) se derrite (fusión) y se convierte en agua (líquido)."
+        },
+        {
+            type: 'multiple-choice',
+            question: "Para demostrar la energía del viento, ¿qué podrías construir?",
+            options: ["Un péndulo", "Un molino de viento de papel", "Una lupa", "Una brújula"],
+            answer: "Un molino de viento de papel",
+            explanation: "Un molino de viento se mueve con la fuerza del viento, demostrando su energía cinética."
+        },
+    ];
+
+    let currentQuestions = [];
+    let score = 0;
+    let questionsAnswered = 0;
+    const numQuestionsPerSession = 20;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initializeQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.innerHTML = '';
+        summaryContainer.style.display = 'none';
+        score = 0;
+        questionsAnswered = 0;
+
+        shuffleArray(allQuestions);
+        currentQuestions = allQuestions.slice(0, numQuestionsPerSession);
+
+        currentQuestions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-card-${index}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `${index + 1}. ${q.question}`;
+            questionCard.appendChild(questionText);
+
+            const optionsContainer = document.createElement('div');
+            shuffleArray(q.options);
+            q.options.forEach(option => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.onclick = () => handleAnswer(index, option);
+                optionsContainer.appendChild(optionButton);
+            });
+            questionCard.appendChild(optionsContainer);
+            quizContainer.appendChild(questionCard);
+        });
+    }
+
+    function handleAnswer(questionIndex, selectedOption) {
+        const questionCard = document.getElementById(`question-card-${questionIndex}`);
+        const questionData = currentQuestions[questionIndex];
+        const buttons = questionCard.querySelectorAll('.option-button');
+        const isCorrect = (selectedOption === questionData.answer);
+
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === questionData.answer) {
+                button.classList.add('correct');
+            } else if (button.textContent === selectedOption) {
+                button.classList.add('incorrect');
+            }
+        });
+
+        questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if (isCorrect) {
+            score++;
+        }
+
+        questionsAnswered++;
+
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = `explanation ${isCorrect ? 'correct' : 'incorrect'}`;
+        explanationDiv.innerHTML = isCorrect ?
+            `¡Correcto! ${questionData.explanation}` :
+            `Incorrecto. La respuesta correcta era '${questionData.answer}'. ${questionData.explanation}`;
+
+        questionCard.appendChild(explanationDiv);
+
+        if (questionsAnswered === currentQuestions.length) {
+            setTimeout(showSummary, 1000);
+        }
+    }
+
+    function showSummary() {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const finalScore = document.getElementById('final-score');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const scorePercentage = Math.round((score / numQuestionsPerSession) * 100);
+
+        finalScore.textContent = `${score} / ${numQuestionsPerSession}`;
+
+        const whatsappMessage = `¡Hola! Acabo de completar la prueba de Ciencias Naturales y obtuve una puntuación de ${score} de ${numQuestionsPerSession} (${scorePercentage}%). ¡A seguir practicando! 💪`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+        whatsappLink.href = whatsappUrl;
+
+        quizContainer.style.display = 'none';
+        summaryContainer.style.display = 'block';
+    }
+
+    document.getElementById('restart-button').addEventListener('click', () => {
+        const quizContainer = document.getElementById('quiz-container');
+        const summaryContainer = document.getElementById('summary-container');
+        quizContainer.style.display = 'block';
+        summaryContainer.style.display = 'none';
+        initializeQuiz();
+    });
+
+    document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
+
+</body>
+</html>
